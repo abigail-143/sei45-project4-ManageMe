@@ -8,4 +8,5 @@ exports.pool = new pg_1.Pool({
     host: "localhost",
     port: 5432,
     database: 'manageme',
+    max: 10,
 });
