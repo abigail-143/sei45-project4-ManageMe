@@ -16,19 +16,17 @@ const limit = rateLimit({
   legacyHeaders: false,
 });
 
+// routers
+import test from "./src/routers/test";
+
 app.use(cors());
 app.use(helmet());
 app.use(limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("hello world!!!!!");
-});
-
-app.get("/bye", (req: Request, res: Response) => {
-  res.send("byebye world");
-});
+// routers
+app.use("/test", test);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
