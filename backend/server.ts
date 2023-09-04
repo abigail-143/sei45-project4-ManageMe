@@ -18,6 +18,7 @@ const limit = rateLimit({
 
 // routers
 import test from "./src/routers/test";
+import users from "./src/routers/users";
 
 app.use(cors());
 app.use(helmet());
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // routers
 app.use("/test", test);
+app.use("/user", users);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
