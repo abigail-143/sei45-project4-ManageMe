@@ -44,6 +44,7 @@ const addOneProductToWarehouse = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const product_id = req.body.productID.toUpperCase();
         const warehouse_quantity = Number(req.body.warehouseQuantity);
+        // check if product exists in warehouse
         const firstCheck = yield database_1.pool.query("SELECT * FROM warehouse WHERE product_id = ($1)", [product_id]);
         if (firstCheck.rows.length != 0) {
             res.json({
@@ -52,6 +53,7 @@ const addOneProductToWarehouse = (req, res) => __awaiter(void 0, void 0, void 0,
             });
         }
         else {
+            // adding product to warehouse (only if product doesn't exist in warehouse)
             const addOneProductToWarehouse = yield database_1.pool.query("INSERT INTO warehouse (product_id, warehouse_quantity) VALUES ($1, $2) RETURNING *", [product_id, warehouse_quantity]);
             res.json({
                 status: "ok",
@@ -70,8 +72,10 @@ const updateOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void
     try {
         const product_id = req.params.productID.toUpperCase();
         const warehouse_quantity = Number(req.body.warehouseQuantity);
+        // check if product exists in product
         const firstCheck = yield database_1.pool.query("SELECT * FROM warehouse WHERE product_id = ($1)", [product_id]);
         if (firstCheck.rows.length != 0) {
+            // updating product
             const updateOneProduct = yield database_1.pool.query("UPDATE warehouse SET warehouse_quantity = ($1) WHERE product_id = ($2) RETURNING *", [warehouse_quantity, product_id]);
             res.json({
                 status: "ok",

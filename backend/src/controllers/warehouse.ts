@@ -41,6 +41,7 @@ export const addOneProductToWarehouse = async (req: Request, res: Response) => {
     const product_id: string = req.body.productID.toUpperCase();
     const warehouse_quantity: number = Number(req.body.warehouseQuantity);
 
+    // check if product exists in warehouse
     const firstCheck = await pool.query(
       "SELECT * FROM warehouse WHERE product_id = ($1)",
       [product_id]
@@ -52,6 +53,7 @@ export const addOneProductToWarehouse = async (req: Request, res: Response) => {
         message: "product already exists in warehouse",
       });
     } else {
+      // adding product to warehouse (only if product doesn't exist in warehouse)
       const addOneProductToWarehouse = await pool.query(
         "INSERT INTO warehouse (product_id, warehouse_quantity) VALUES ($1, $2) RETURNING *",
         [product_id, warehouse_quantity]
@@ -77,12 +79,14 @@ export const updateOneProductInWarehouse = async (
     const product_id: string = req.params.productID.toUpperCase();
     const warehouse_quantity: number = Number(req.body.warehouseQuantity);
 
+    // check if product exists in product
     const firstCheck = await pool.query(
       "SELECT * FROM warehouse WHERE product_id = ($1)",
       [product_id]
     );
 
     if (firstCheck.rows.length != 0) {
+      // updating product
       const updateOneProduct = await pool.query(
         "UPDATE warehouse SET warehouse_quantity = ($1) WHERE product_id = ($2) RETURNING *",
         [warehouse_quantity, product_id]
