@@ -29,8 +29,7 @@ export const getDataForOneProduct = async (req: Request, res: Response) => {
     } else {
       res.json({
         status: "error",
-        message: "no data found for this product!!",
-        my: "hi",
+        message: "no data found for this product",
       });
     }
   } catch (error) {

@@ -33,8 +33,7 @@ const getDataForOneProduct = (req, res) => __awaiter(void 0, void 0, void 0, fun
         else {
             res.json({
                 status: "error",
-                message: "no data found for this product!!",
-                my: "hi",
+                message: "no data found for this product",
             });
         }
     }
