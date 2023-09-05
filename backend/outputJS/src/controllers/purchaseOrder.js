@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPurchaseOrders = void 0;
 const database_1 = require("../db/database");
+// GET all purchase orders
 const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allPurchaseOrders = yield database_1.pool.query("SELECT * FROM purchase_order");
@@ -21,9 +22,11 @@ const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getAllPurchaseOrders = getAllPurchaseOrders;
+// GET one purchase order
 const getOnePurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const order_id = Number(req.params.poID);
+        // check if purchase order exists
         const onePurchaseOrder = yield database_1.pool.query("SELECT * FROM purchase_order WHERE order_id = ($1)", [order_id]);
         if (onePurchaseOrder.rows.length != 0) {
             res.json(onePurchaseOrder.rows);
@@ -37,16 +40,19 @@ const getOnePurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getOnePurchaseOrder = getOnePurchaseOrder;
+// PUT adding a new purchase order
 const addNewPurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const username = req.body.username;
         const product_id = req.body.productID.toUpperCase();
         const order_quantity = req.body.orderQuantity;
         const order_placed_date = new Date(req.body.orderPlacedDate);
+        // getting leadtime duration in days from product_inventory table
         const leadtime = yield database_1.pool.query("SELECT supplier_leadtime FROM product_inventory WHERE product_id = ($1)", [product_id]);
         const leadtimeInDays = leadtime.rows[0].supplier_leadtime;
         // calculate new Date using the time (milliseconds)
         const estimated_receive_date = new Date(order_placed_date.getTime() + leadtimeInDays * 24 * 60 * 60 * 1000);
+        // adding a new purchase order
         const placeNewPurchaseOrder = yield database_1.pool.query("INSERT INTO purchase_order(username, product_id, order_quantity, order_placed_date, estimated_receive_date) VALUES ($1, $2, $3, $4, $5) RETURNING order_id, username, product_id, order_quantity, order_placed_date, estimated_receive_date", [
             username,
             product_id,
@@ -65,6 +71,7 @@ const addNewPurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.addNewPurchaseOrder = addNewPurchaseOrder;
+// PATCH updating purchase order
 const updatePurchaseOrderWhenReceived = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // take from req
     const received_date = new Date(req.body.receivedDate);

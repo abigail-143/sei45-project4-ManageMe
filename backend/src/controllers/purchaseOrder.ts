@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../db/database";
 
+// GET all purchase orders
 export const getAllPurchaseOrders = async (req: Request, res: Response) => {
   try {
     const allPurchaseOrders = await pool.query("SELECT * FROM purchase_order");
@@ -11,9 +12,12 @@ export const getAllPurchaseOrders = async (req: Request, res: Response) => {
   }
 };
 
+// GET one purchase order
 export const getOnePurchaseOrder = async (req: Request, res: Response) => {
   try {
     const order_id: number = Number(req.params.poID);
+
+    // check if purchase order exists
     const onePurchaseOrder = await pool.query(
       "SELECT * FROM purchase_order WHERE order_id = ($1)",
       [order_id]
@@ -29,6 +33,7 @@ export const getOnePurchaseOrder = async (req: Request, res: Response) => {
   }
 };
 
+// PUT adding a new purchase order
 export const addNewPurchaseOrder = async (req: Request, res: Response) => {
   try {
     const username: string = req.body.username;
@@ -36,6 +41,7 @@ export const addNewPurchaseOrder = async (req: Request, res: Response) => {
     const order_quantity: number = req.body.orderQuantity;
     const order_placed_date: Date = new Date(req.body.orderPlacedDate);
 
+    // getting leadtime duration in days from product_inventory table
     const leadtime = await pool.query(
       "SELECT supplier_leadtime FROM product_inventory WHERE product_id = ($1)",
       [product_id]
@@ -47,6 +53,7 @@ export const addNewPurchaseOrder = async (req: Request, res: Response) => {
       order_placed_date.getTime() + leadtimeInDays * 24 * 60 * 60 * 1000
     );
 
+    // adding a new purchase order
     const placeNewPurchaseOrder = await pool.query(
       "INSERT INTO purchase_order(username, product_id, order_quantity, order_placed_date, estimated_receive_date) VALUES ($1, $2, $3, $4, $5) RETURNING order_id, username, product_id, order_quantity, order_placed_date, estimated_receive_date",
       [
@@ -68,6 +75,7 @@ export const addNewPurchaseOrder = async (req: Request, res: Response) => {
   }
 };
 
+// PATCH updating purchase order
 export const updatePurchaseOrderWhenReceived = async (
   req: Request,
   res: Response
