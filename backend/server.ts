@@ -23,6 +23,7 @@ import productInventory from "./src/routers/products";
 import warehouse from "./src/routers/warehouse";
 import store from "./src/routers/store";
 import purchaseOrders from "./src/routers/purchaseOrder";
+import deliveryOrders from "./src/routers/deliveryOrders";
 
 app.use(cors());
 app.use(helmet());
@@ -37,6 +38,7 @@ app.use("/products", productInventory);
 app.use("/warehouse", warehouse);
 app.use("/store", store);
 app.use("/po", purchaseOrders);
+app.use("/do", deliveryOrders);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
