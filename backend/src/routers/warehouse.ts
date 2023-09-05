@@ -3,6 +3,7 @@ import {
   addOneProductToWarehouse,
   getAllProductsInWarehouse,
   getOneProductInWarehouse,
+  updateOneProductInWarehouse,
 } from "../controllers/warehouse";
 
 const router = express.Router();
@@ -10,6 +11,6 @@ const router = express.Router();
 router.get("/all", getAllProductsInWarehouse);
 router.post("/:productID", getOneProductInWarehouse);
 router.put("/add", addOneProductToWarehouse);
-router.patch("/:productID");
+router.patch("/:productID", updateOneProductInWarehouse);
 
 export default router;

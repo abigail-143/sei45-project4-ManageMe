@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../db/database";
 
+// GET all products in warehouse
 export const getAllProductsInWarehouse = async (
   req: Request,
   res: Response
@@ -15,6 +16,7 @@ export const getAllProductsInWarehouse = async (
   }
 };
 
+// GET one product in warehouse
 export const getOneProductInWarehouse = async (req: Request, res: Response) => {
   try {
     const product_id: string = req.params.productID.toUpperCase();
@@ -33,6 +35,7 @@ export const getOneProductInWarehouse = async (req: Request, res: Response) => {
   }
 };
 
+// PUT add one product to warehouse (only if it doesn't already exist)
 export const addOneProductToWarehouse = async (req: Request, res: Response) => {
   try {
     const product_id: string = req.body.productID.toUpperCase();
@@ -58,6 +61,42 @@ export const addOneProductToWarehouse = async (req: Request, res: Response) => {
         status: "ok",
         message: "product added to warehouse",
         warehouseItem: addOneProductToWarehouse.rows[0],
+      });
+    }
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
+// PATCH update one product in warehouse (only if product already exists in warehouse)
+export const updateOneProductInWarehouse = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const product_id: string = req.params.productID.toUpperCase();
+    const warehouse_quantity: number = Number(req.body.warehouseQuantity);
+
+    const firstCheck = await pool.query(
+      "SELECT * FROM warehouse WHERE product_id = ($1)",
+      [product_id]
+    );
+
+    if (firstCheck.rows.length != 0) {
+      const updateOneProduct = await pool.query(
+        "UPDATE warehouse SET warehouse_quantity = ($1) WHERE product_id = ($2) RETURNING *",
+        [warehouse_quantity, product_id]
+      );
+
+      res.json({
+        status: "ok",
+        message: "Product in warehouse updated",
+        product: updateOneProduct.rows[0]
+      });
+    } else {
+      res.json({
+        status: "error",
+        message: "product doesn't exist in warehouse",
       });
     }
   } catch (error) {

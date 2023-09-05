@@ -9,5 +9,5 @@ const router = express_1.default.Router();
 router.get("/all", warehouse_1.getAllProductsInWarehouse);
 router.post("/:productID", warehouse_1.getOneProductInWarehouse);
 router.put("/add", warehouse_1.addOneProductToWarehouse);
-router.patch("/:productID");
+router.patch("/:productID", warehouse_1.updateOneProductInWarehouse);
 exports.default = router;

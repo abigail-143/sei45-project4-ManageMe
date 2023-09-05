@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addOneProductToWarehouse = exports.getOneProductInWarehouse = exports.getAllProductsInWarehouse = void 0;
+exports.updateOneProductInWarehouse = exports.addOneProductToWarehouse = exports.getOneProductInWarehouse = exports.getAllProductsInWarehouse = void 0;
 const database_1 = require("../db/database");
+// GET all products in warehouse
 const getAllProductsInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const warehouseProducts = yield database_1.pool.query("SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id");
@@ -21,6 +22,7 @@ const getAllProductsInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.getAllProductsInWarehouse = getAllProductsInWarehouse;
+// GET one product in warehouse
 const getOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product_id = req.params.productID.toUpperCase();
@@ -37,6 +39,7 @@ const getOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getOneProductInWarehouse = getOneProductInWarehouse;
+// PUT add one product to warehouse (only if it doesn't already exist)
 const addOneProductToWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product_id = req.body.productID.toUpperCase();
@@ -62,3 +65,29 @@ const addOneProductToWarehouse = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.addOneProductToWarehouse = addOneProductToWarehouse;
+// PATCH update one product in warehouse (only if product already exists in warehouse)
+const updateOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const product_id = req.params.productID.toUpperCase();
+        const warehouse_quantity = Number(req.body.warehouseQuantity);
+        const firstCheck = yield database_1.pool.query("SELECT * FROM warehouse WHERE product_id = ($1)", [product_id]);
+        if (firstCheck.rows.length != 0) {
+            const updateOneProduct = yield database_1.pool.query("UPDATE warehouse SET warehouse_quantity = ($1) WHERE product_id = ($2) RETURNING *", [warehouse_quantity, product_id]);
+            res.json({
+                status: "ok",
+                message: "Product in warehouse updated",
+                product: updateOneProduct.rows[0]
+            });
+        }
+        else {
+            res.json({
+                status: "error",
+                message: "product doesn't exist in warehouse",
+            });
+        }
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.updateOneProductInWarehouse = updateOneProductInWarehouse;
