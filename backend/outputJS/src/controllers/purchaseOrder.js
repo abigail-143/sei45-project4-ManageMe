@@ -66,11 +66,14 @@ const addNewPurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.addNewPurchaseOrder = addNewPurchaseOrder;
 const updatePurchaseOrderWhenReceived = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // take from req
     const received_date = new Date(req.body.receivedDate);
     const fulfilled = req.body.fulfilled;
     const order_id = Number(req.params.poID);
+    // retrieve estimated date for the order to compare with received date
     const estimated_receive_date = yield database_1.pool.query("SELECT estimated_receive_date FROM purchase_order WHERE order_id = ($1)", [order_id]);
     const estimated = estimated_receive_date.rows[0].estimated_receive_date;
+    // function to compare 2 dates
     const compareDates = (estimated, received) => {
         if (estimated > received) {
             return true;
@@ -82,6 +85,7 @@ const updatePurchaseOrderWhenReceived = (req, res) => __awaiter(void 0, void 0, 
             return true;
         }
     };
+    // the function will determine if the order was on_time or late
     const on_time = compareDates(estimated, received_date);
     const updateOnePurchaseOrder = yield database_1.pool.query("UPDATE purchase_order SET received_date = ($1), fulfilled = ($2), on_time = ($3) WHERE order_id = ($4) RETURNING *", [received_date, fulfilled, on_time, order_id]);
     res.json({

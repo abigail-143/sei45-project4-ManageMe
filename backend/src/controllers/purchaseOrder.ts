@@ -72,15 +72,19 @@ export const updatePurchaseOrderWhenReceived = async (
   req: Request,
   res: Response
 ) => {
+    // take from req
   const received_date: Date = new Date(req.body.receivedDate);
   const fulfilled: boolean = req.body.fulfilled;
   const order_id: Number = Number(req.params.poID);
+
+  // retrieve estimated date for the order to compare with received date
   const estimated_receive_date = await pool.query(
     "SELECT estimated_receive_date FROM purchase_order WHERE order_id = ($1)",
     [order_id]
   );
   const estimated: Date = estimated_receive_date.rows[0].estimated_receive_date;
 
+  // function to compare 2 dates
   const compareDates = (estimated: Date, received: Date): boolean => {
     if (estimated > received) {
       return true;
@@ -91,6 +95,7 @@ export const updatePurchaseOrderWhenReceived = async (
     }
   };
 
+  // the function will determine if the order was on_time or late
   const on_time: boolean = compareDates(estimated, received_date);
 
   const updateOnePurchaseOrder = await pool.query(
