@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../db/database";
 
+// GET all products in store
 export const getAllProductsInStore = async (req: Request, res: Response) => {
   try {
     const storeProducts = await pool.query(
@@ -13,6 +14,7 @@ export const getAllProductsInStore = async (req: Request, res: Response) => {
   }
 };
 
+// GET one product in store
 export const getOneProductInStore = async (req: Request, res: Response) => {
   try {
     const product_id: string = req.params.productID.toUpperCase();
@@ -31,21 +33,39 @@ export const getOneProductInStore = async (req: Request, res: Response) => {
   }
 };
 
+// PUT adding a product to store (if it doesn't already exists)
 export const addOneProductToStore = async (req: Request, res: Response) => {
   try {
     const product_id: string = req.body.productID.toUpperCase();
     const store_quantity: number = req.body.storeQuantity;
-    const addNewProduct = await pool.query(
-      "INSERT INTO store (product_id, store_quantity) VALUES ($1, $2)",
-      [product_id, store_quantity]
+
+    // check if product already exists
+    const firstCheck = await pool.query(
+      "SELECT * FROM store WHERE product_id = ($1)",
+      [product_id]
     );
 
-    res.json({ status: "ok", message: "new product added to store" });
+    if (firstCheck.rows.length != 0) {
+      res.json({ status: "error", message: "product already exists in store" });
+    } else {
+      // adding new item (since it doesn't exists in store)
+      const addNewProduct = await pool.query(
+        "INSERT INTO store (product_id, store_quantity) VALUES ($1, $2) RETURNING *",
+        [product_id, store_quantity]
+      );
+
+      res.json({
+        status: "ok",
+        message: "new product added to store",
+        product: addNewProduct.rows[0],
+      });
+    }
   } catch (error) {
     res.json({ status: "error", message: "unable to add product to store" });
   }
 };
 
+// PATCH amend an existing product
 export const amendOneProductInStore = async (req: Request, res: Response) => {
   try {
     const product_id: string = req.params.productID.toUpperCase();
@@ -55,7 +75,11 @@ export const amendOneProductInStore = async (req: Request, res: Response) => {
       [store_quantity, product_id]
     );
 
-    res.json({ status: "ok", message: "product quantity updated" });
+    res.json({
+      status: "ok",
+      message: "product quantity updated",
+      product: amendProduct.rows[0],
+    });
   } catch (error) {
     res.json({ status: "error", message: error });
   }
