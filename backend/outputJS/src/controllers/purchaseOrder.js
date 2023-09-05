@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPurchaseOrders = void 0;
+exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPurchaseOrders = void 0;
 const database_1 = require("../db/database");
 const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -65,12 +65,34 @@ const addNewPurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.addNewPurchaseOrder = addNewPurchaseOrder;
-// export const updatePurchaseOrderWhenReceived = async (
-//   req: Request,
-//   res: Response
-// ) => {
-//   try {
-//   } catch (error) {
-//     res.json({ status: "error", message: error });
-//   }
-// };
+const updatePurchaseOrderWhenReceived = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const received_date = new Date(req.body.receivedDate);
+    const fulfilled = req.body.fulfilled;
+    const order_id = Number(req.params.poID);
+    const estimated_receive_date = yield database_1.pool.query("SELECT estimated_receive_date FROM purchase_order WHERE order_id = ($1)", [order_id]);
+    const estimated = estimated_receive_date.rows[0].estimated_receive_date;
+    const compareDates = (estimated, received) => {
+        if (estimated > received) {
+            return true;
+        }
+        else if (received > estimated) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+    const on_time = compareDates(estimated, received_date);
+    const updateOnePurchaseOrder = yield database_1.pool.query("UPDATE purchase_order SET received_date = ($1), fulfilled = ($2), on_time = ($3) WHERE order_id = ($4) RETURNING *", [received_date, fulfilled, on_time, order_id]);
+    res.json({
+        status: "ok",
+        message: "PO updated",
+        order: updateOnePurchaseOrder.rows[0],
+    });
+    try {
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.updatePurchaseOrderWhenReceived = updatePurchaseOrderWhenReceived;

@@ -68,12 +68,43 @@ export const addNewPurchaseOrder = async (req: Request, res: Response) => {
   }
 };
 
-// export const updatePurchaseOrderWhenReceived = async (
-//   req: Request,
-//   res: Response
-// ) => {
-//   try {
-//   } catch (error) {
-//     res.json({ status: "error", message: error });
-//   }
-// };
+export const updatePurchaseOrderWhenReceived = async (
+  req: Request,
+  res: Response
+) => {
+  const received_date: Date = new Date(req.body.receivedDate);
+  const fulfilled: boolean = req.body.fulfilled;
+  const order_id: Number = Number(req.params.poID);
+  const estimated_receive_date = await pool.query(
+    "SELECT estimated_receive_date FROM purchase_order WHERE order_id = ($1)",
+    [order_id]
+  );
+  const estimated: Date = estimated_receive_date.rows[0].estimated_receive_date;
+
+  const compareDates = (estimated: Date, received: Date): boolean => {
+    if (estimated > received) {
+      return true;
+    } else if (received > estimated) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const on_time: boolean = compareDates(estimated, received_date);
+
+  const updateOnePurchaseOrder = await pool.query(
+    "UPDATE purchase_order SET received_date = ($1), fulfilled = ($2), on_time = ($3) WHERE order_id = ($4) RETURNING *",
+    [received_date, fulfilled, on_time, order_id]
+  );
+
+  res.json({
+    status: "ok",
+    message: "PO updated",
+    order: updateOnePurchaseOrder.rows[0],
+  });
+  try {
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};

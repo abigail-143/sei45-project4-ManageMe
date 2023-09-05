@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../db/database";
 
-export const getAllProductsInWarehouse = async (
-  req: Request,
-  res: Response
-) => {
+export const getAllProductsInWarehouse = async (req: Request, res: Response) => {
   try {
     const warehouseProducts = await pool.query(
       "SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id"

@@ -9,4 +9,5 @@ const router = express_1.default.Router();
 router.get("/all", purchaseOrder_1.getAllPurchaseOrders);
 router.post("/:poID", purchaseOrder_1.getOnePurchaseOrder);
 router.put("/new", purchaseOrder_1.addNewPurchaseOrder);
+router.patch("/:poID", purchaseOrder_1.updatePurchaseOrderWhenReceived);
 exports.default = router;
