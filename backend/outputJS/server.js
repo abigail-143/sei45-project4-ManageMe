@@ -23,6 +23,7 @@ const users_1 = __importDefault(require("./src/routers/users"));
 const products_1 = __importDefault(require("./src/routers/products"));
 const warehouse_1 = __importDefault(require("./src/routers/warehouse"));
 const store_1 = __importDefault(require("./src/routers/store"));
+const purchaseOrder_1 = __importDefault(require("./src/routers/purchaseOrder"));
 app.use((0, cors_1.default)());
 app.use((0, helmet_1.default)());
 app.use(limit);
@@ -34,6 +35,7 @@ app.use("/user", users_1.default);
 app.use("/products", products_1.default);
 app.use("/warehouse", warehouse_1.default);
 app.use("/store", store_1.default);
+app.use("/po", purchaseOrder_1.default);
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
