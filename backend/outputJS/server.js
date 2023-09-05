@@ -26,6 +26,7 @@ const store_1 = __importDefault(require("./src/routers/store"));
 const purchaseOrder_1 = __importDefault(require("./src/routers/purchaseOrder"));
 const deliveryOrders_1 = __importDefault(require("./src/routers/deliveryOrders"));
 const deliveryOrderList_1 = __importDefault(require("./src/routers/deliveryOrderList"));
+const monthlyUsage_1 = __importDefault(require("./src/routers/monthlyUsage"));
 app.use((0, cors_1.default)());
 app.use((0, helmet_1.default)());
 app.use(limit);
@@ -40,6 +41,7 @@ app.use("/store", store_1.default);
 app.use("/po", purchaseOrder_1.default);
 app.use("/do", deliveryOrders_1.default);
 app.use("/list", deliveryOrderList_1.default);
+app.use("/monthly", monthlyUsage_1.default);
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
