@@ -8,6 +8,6 @@ const deliveryOrders_1 = require("../controllers/deliveryOrders");
 const router = express_1.default.Router();
 router.get("/all", deliveryOrders_1.getAllStoreDeliveryOrders);
 router.post("/:doID", deliveryOrders_1.getOneStoreDeliveryOrder);
-// router.put("new")
-// router.patch("/:doID")
+router.put("/new", deliveryOrders_1.addNewStoreDeliveryOrder);
+router.patch("/:doID", deliveryOrders_1.updateOneStoreDeliveryOrder);
 exports.default = router;
