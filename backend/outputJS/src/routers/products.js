@@ -8,4 +8,5 @@ const products_1 = require("../controllers/products");
 const router = express_1.default.Router();
 router.get("/all", products_1.getAllProducts);
 router.put("/new", products_1.addOneProduct);
+router.patch("/:productID", products_1.updateIfProductInUse);
 exports.default = router;
