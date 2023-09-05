@@ -17,14 +17,14 @@ export const getAllProductsInWarehouse = async (
 
 export const getOneProductInWarehouse = async (req: Request, res: Response) => {
   try {
-    const product_id: string = req.params.productID;
-    const oneProductFromWarehouse = await pool.query(
+    const product_id: string = req.params.productID.toUpperCase();
+    const oneProductInWarehouse = await pool.query(
       "SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id WHERE warehouse.product_id = ($1)",
       [product_id]
     );
 
-    if (oneProductFromWarehouse.rows.length != 0) {
-      res.json(oneProductFromWarehouse.rows);
+    if (oneProductInWarehouse.rows.length != 0) {
+      res.json(oneProductInWarehouse.rows);
     } else {
       res.json({ status: "error", message: "no such product in warehouse" });
     }

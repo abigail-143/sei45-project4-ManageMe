@@ -23,10 +23,10 @@ const getAllProductsInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0
 exports.getAllProductsInWarehouse = getAllProductsInWarehouse;
 const getOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product_id = req.params.productID;
-        const oneProductFromWarehouse = yield database_1.pool.query("SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id WHERE warehouse.product_id = ($1)", [product_id]);
-        if (oneProductFromWarehouse.rows.length != 0) {
-            res.json(oneProductFromWarehouse.rows);
+        const product_id = req.params.productID.toUpperCase();
+        const oneProductInWarehouse = yield database_1.pool.query("SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id WHERE warehouse.product_id = ($1)", [product_id]);
+        if (oneProductInWarehouse.rows.length != 0) {
+            res.json(oneProductInWarehouse.rows);
         }
         else {
             res.json({ status: "error", message: "no such product in warehouse" });
