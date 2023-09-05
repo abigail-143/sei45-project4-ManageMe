@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDataForSpecificPeriod = exports.getDataForOneProduct = exports.getAllData = void 0;
+exports.addNewDataSet = exports.getDataForSpecificPeriod = exports.getDataForOneProduct = exports.getAllData = void 0;
 const database_1 = require("../db/database");
 // GET all data
 const getAllData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,7 +54,7 @@ const getDataForSpecificPeriod = (req, res) => __awaiter(void 0, void 0, void 0,
         else {
             res.json({
                 status: "error",
-                message: "no data found for this period"
+                message: "no data found for this period",
             });
         }
     }
@@ -63,3 +63,28 @@ const getDataForSpecificPeriod = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.getDataForSpecificPeriod = getDataForSpecificPeriod;
+// PUT add a new row to date
+const addNewDataSet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const product_id = req.body.productID.toUpperCase();
+        const month_year = new Date(req.body.monthYear);
+        const total_order_quantity = req.body.totalOrderQuantity;
+        // check if there's already a unique row i.e. productID x monthYear
+        const firstCheck = yield database_1.pool.query("SELECT * FROM monthly_store_usage WHERE product_id = ($1) AND month_year = ($2)", [product_id, month_year]);
+        if (firstCheck.rows.length != 0) {
+            res.json({ status: "error", message: "data point already exists" });
+        }
+        else {
+            const addNewData = yield database_1.pool.query("INSERT INTO monthly_store_usage (product_id, month_year, total_order_quantity) VALUES ($1, $2, $3) RETURNING *", [product_id, month_year, total_order_quantity]);
+            res.json({
+                status: "ok",
+                message: "data point added",
+                data: addNewData.rows[0],
+            });
+        }
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.addNewDataSet = addNewDataSet;

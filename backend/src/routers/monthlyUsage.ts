@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addNewDataSet,
   getAllData,
   getDataForOneProduct,
   getDataForSpecificPeriod,
@@ -8,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/all", getAllData);
-router.put("/add");
+router.put("/add", addNewDataSet);
 router.post("/product/:productID", getDataForOneProduct);
 router.post("/period", getDataForSpecificPeriod);
 
