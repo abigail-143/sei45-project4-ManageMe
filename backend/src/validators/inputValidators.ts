@@ -15,7 +15,36 @@ export const checkDeliveryOrderIDParams = [
   param("doID", "Delivery Order ID is invalid").isInt({ min: 1 }),
 ];
 
+export const checkUsernameParams = [
+  param("username", "invalid username input").isLength({ min: 5, max: 25 }),
+];
+
 // BODY
+
+// USERS
+
+export const checkUserLoginInput = [
+  body("username", "username is required").trim().not().isEmpty(),
+  body("username", "invalid username input")
+    .trim()
+    .isLength({ min: 5, max: 25 }),
+];
+
+export const addNewUserInput = [
+  body("username", "username is required").trim().not().isEmpty(),
+  body("username", "invalid username input")
+    .trim()
+    .isLength({ min: 5, max: 25 }),
+  body("password", "password is required").trim().not().isEmpty(),
+  body("password", "invalid password input")
+    .trim()
+    .isLength({ min: 8, max: 25 }),
+  body("email", "email is required").trim().not().isEmpty(),
+  body("email", "invalid email input").isEmail(),
+  body("company", "company is required").notEmpty(),
+  body("status", "invalid user status input").isBoolean(),
+  body("account", "invalid account type input").isIn(["Manager", "Staff"]),
+];
 
 // PRODUCTS
 
