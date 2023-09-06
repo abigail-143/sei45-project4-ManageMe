@@ -12,3 +12,4 @@ npm i express-rate-limite express-validator helmet
 npm i ts-postgres@latest
 npm i pg
 npm i -D @types/pg
+npm i -D @types/jsonwebtoken @types/uuid
