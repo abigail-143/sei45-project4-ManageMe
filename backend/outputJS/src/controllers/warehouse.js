@@ -46,10 +46,18 @@ const addOneProductToWarehouse = (req, res) => __awaiter(void 0, void 0, void 0,
         const warehouse_quantity = Number(req.body.warehouseQuantity);
         // check if product exists in warehouse
         const firstCheck = yield database_1.pool.query("SELECT * FROM warehouse WHERE product_id = ($1)", [product_id]);
+        // check if product exists in inventory
+        const secondCheck = yield database_1.pool.query("SELECT * FROM product_inventory WHERE product_id = ($1)", [product_id]);
         if (firstCheck.rows.length != 0) {
             res.json({
                 status: "error",
                 message: "product already exists in warehouse",
+            });
+        }
+        else if (secondCheck.rows.length == 0) {
+            res.json({
+                status: "error",
+                message: "no such product in inventory, unable to add to warehouse",
             });
         }
         else {
@@ -80,7 +88,7 @@ const updateOneProductInWarehouse = (req, res) => __awaiter(void 0, void 0, void
             res.json({
                 status: "ok",
                 message: "Product in warehouse updated",
-                product: updateOneProduct.rows[0]
+                product: updateOneProduct.rows[0],
             });
         }
         else {

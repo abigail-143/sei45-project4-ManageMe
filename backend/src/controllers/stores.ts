@@ -39,14 +39,25 @@ export const addOneProductToStore = async (req: Request, res: Response) => {
     const product_id: string = req.body.productID.toUpperCase();
     const store_quantity: number = req.body.storeQuantity;
 
-    // check if product already exists
+    // check if product already exists in store
     const firstCheck = await pool.query(
       "SELECT * FROM store WHERE product_id = ($1)",
       [product_id]
     );
 
+    // check if product exists in warehouse
+    const secondCheck = await pool.query(
+      "SELECT * FROM warehouse WHERE product_id = ($1)",
+      [product_id]
+    );
+
     if (firstCheck.rows.length != 0) {
       res.json({ status: "error", message: "product already exists in store" });
+    } else if (secondCheck.rows.length == 0) {
+      res.json({
+        status: "error",
+        message: "no such product in warehouse, unable to add to store",
+      });
     } else {
       // adding new item (since it doesn't exists in store)
       const addNewProduct = await pool.query(

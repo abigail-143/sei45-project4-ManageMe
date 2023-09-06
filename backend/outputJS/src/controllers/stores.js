@@ -44,10 +44,18 @@ const addOneProductToStore = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const product_id = req.body.productID.toUpperCase();
         const store_quantity = req.body.storeQuantity;
-        // check if product already exists
+        // check if product already exists in store
         const firstCheck = yield database_1.pool.query("SELECT * FROM store WHERE product_id = ($1)", [product_id]);
+        // check if product exists in warehouse
+        const secondCheck = yield database_1.pool.query("SELECT * FROM warehouse WHERE product_id = ($1)", [product_id]);
         if (firstCheck.rows.length != 0) {
             res.json({ status: "error", message: "product already exists in store" });
+        }
+        else if (secondCheck.rows.length == 0) {
+            res.json({
+                status: "error",
+                message: "no such product in warehouse, unable to add to store",
+            });
         }
         else {
             // adding new item (since it doesn't exists in store)

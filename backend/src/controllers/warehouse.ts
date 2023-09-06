@@ -47,10 +47,21 @@ export const addOneProductToWarehouse = async (req: Request, res: Response) => {
       [product_id]
     );
 
+    // check if product exists in inventory
+    const secondCheck = await pool.query(
+      "SELECT * FROM product_inventory WHERE product_id = ($1)",
+      [product_id]
+    );
+
     if (firstCheck.rows.length != 0) {
       res.json({
         status: "error",
         message: "product already exists in warehouse",
+      });
+    } else if (secondCheck.rows.length == 0) {
+      res.json({
+        status: "error",
+        message: "no such product in inventory, unable to add to warehouse",
       });
     } else {
       // adding product to warehouse (only if product doesn't exist in warehouse)
@@ -95,7 +106,7 @@ export const updateOneProductInWarehouse = async (
       res.json({
         status: "ok",
         message: "Product in warehouse updated",
-        product: updateOneProduct.rows[0]
+        product: updateOneProduct.rows[0],
       });
     } else {
       res.json({
