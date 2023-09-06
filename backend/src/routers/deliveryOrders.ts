@@ -11,24 +11,28 @@ import {
   checkUpdateDeliveryOrderInput,
 } from "../validators/inputValidators";
 import { inputValidation } from "../middlewares/inputValidatorsCheck";
+import { auth } from "../middlewares/authUsers";
 
 const router = express.Router();
 
-router.get("/all", getAllStoreDeliveryOrders);
+router.get("/all", auth, getAllStoreDeliveryOrders);
 router.post(
   "/:doID",
+  auth,
   checkDeliveryOrderIDParams,
   inputValidation,
   getOneStoreDeliveryOrder
 );
 router.put(
   "/new",
+  auth,
   checkAddNewDeliveryOrderInput,
   inputValidation,
   addNewStoreDeliveryOrder
 );
 router.patch(
   "/:doID",
+  auth,
   checkDeliveryOrderIDParams,
   checkUpdateDeliveryOrderInput,
   inputValidation,
