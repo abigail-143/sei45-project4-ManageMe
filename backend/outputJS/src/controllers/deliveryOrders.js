@@ -63,12 +63,19 @@ const updateOneStoreDeliveryOrder = (req, res) => __awaiter(void 0, void 0, void
         const delivered_date = new Date(req.body.deliveredDate);
         const completed = req.body.completed;
         const delivery_id = Number(req.params.doID);
-        const updateOneDeliveryOrder = yield database_1.pool.query("UPDATE store_delivery SET delivered_date = ($1), completed = ($2) WHERE delivery_id = ($3) RETURNING *", [delivered_date, completed, delivery_id]);
-        res.json({
-            status: "ok",
-            message: "DO updated",
-            order: updateOneDeliveryOrder.rows[0],
-        });
+        // check if delivery order is valid/existing
+        const firstCheck = yield database_1.pool.query("SELECT * FROM store_delivery WHERE delivery_id = ($1)", [delivery_id]);
+        if (firstCheck.rows.length != 0) {
+            const updateOneDeliveryOrder = yield database_1.pool.query("UPDATE store_delivery SET delivered_date = ($1), completed = ($2) WHERE delivery_id = ($3) RETURNING *", [delivered_date, completed, delivery_id]);
+            res.json({
+                status: "ok",
+                message: "DO updated",
+                order: updateOneDeliveryOrder.rows[0],
+            });
+        }
+        else {
+            res.json({ status: "error", message: "Delivery Order does not exist" });
+        }
     }
     catch (error) {
         res.json({ status: "error", message: error });

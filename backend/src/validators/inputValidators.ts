@@ -112,5 +112,22 @@ export const checkAddNewPurchaseOrderInput = [
 
 export const checkUpdatePurchaseOrderInput = [
   body("receivedDate", "Received Date is required").notEmpty(),
-  body("fulfilled", "invalid fulfilled response").isBoolean(),
+  body("fulfilled", "invalid Fulfilled input").isBoolean(),
+];
+
+// DELIVERY ORDER
+
+export const checkAddNewDeliveryOrderInput = [
+  body("username", "username is required").trim().not().isEmpty(),
+  body("username", "invalid username").trim().isLength({ min: 5, max: 25 }),
+  body(
+    "deliveryPlacedDate",
+    "Delivery Order placed date is required"
+  ).notEmpty(),
+  body("toDeliverDate", "Delivery Date is required").notEmpty(),
+];
+
+export const checkUpdateDeliveryOrderInput = [
+  body("deliveredDate", "Order Delivered Date is required").notEmpty(),
+  body("completed", "invalid Completed input").isBoolean(),
 ];

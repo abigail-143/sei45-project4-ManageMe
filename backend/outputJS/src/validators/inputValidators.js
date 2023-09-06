@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
+exports.checkUpdateDeliveryOrderInput = exports.checkAddNewDeliveryOrderInput = exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
 const express_validator_1 = require("express-validator");
 // PARAMS
 exports.checkProductIDParams = [
@@ -97,5 +97,16 @@ exports.checkAddNewPurchaseOrderInput = [
 ];
 exports.checkUpdatePurchaseOrderInput = [
     (0, express_validator_1.body)("receivedDate", "Received Date is required").notEmpty(),
-    (0, express_validator_1.body)("fulfilled", "invalid fulfilled response").isBoolean(),
+    (0, express_validator_1.body)("fulfilled", "invalid Fulfilled input").isBoolean(),
+];
+// DELIVERY ORDER
+exports.checkAddNewDeliveryOrderInput = [
+    (0, express_validator_1.body)("username", "username is required").trim().not().isEmpty(),
+    (0, express_validator_1.body)("username", "invalid username").trim().isLength({ min: 5, max: 25 }),
+    (0, express_validator_1.body)("deliveryPlacedDate", "Delivery Order placed date is required").notEmpty(),
+    (0, express_validator_1.body)("toDeliverDate", "Delivery Date is required").notEmpty(),
+];
+exports.checkUpdateDeliveryOrderInput = [
+    (0, express_validator_1.body)("deliveredDate", "Order Delivered Date is required").notEmpty(),
+    (0, express_validator_1.body)("completed", "invalid Completed input").isBoolean(),
 ];
