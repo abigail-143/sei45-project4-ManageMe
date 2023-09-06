@@ -24,6 +24,7 @@ const auth = (req, res, next) => {
     }
 };
 exports.auth = auth;
+// authentication to site/endpoint only if user is a Manager
 const authManager = (req, res, next) => {
     if (!("authorization" in req.headers)) {
         res.json({ status: "error", message: "no token found" });

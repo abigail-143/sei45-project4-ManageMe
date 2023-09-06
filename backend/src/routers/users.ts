@@ -9,9 +9,9 @@ import { auth, authManager } from "../middlewares/authUsers";
 
 const router = express.Router();
 
-router.get("/all", auth, getAllUsers);
+router.get("/all", authManager, getAllUsers);
 router.put("/register", authManager, addUser);
-router.patch("/deactivate/:username", deactivateUser);
+router.patch("/deactivate/:username", authManager, deactivateUser);
 router.post("/login", loginUser);
 
 export default router;

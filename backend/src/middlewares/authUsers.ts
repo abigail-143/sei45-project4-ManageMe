@@ -30,6 +30,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// authentication to site/endpoint only if user is a Manager
 export const authManager = (
   req: Request,
   res: Response,
