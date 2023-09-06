@@ -11,24 +11,28 @@ import {
   checkUpdateProductInWarehouseInput,
 } from "../validators/inputValidators";
 import { inputValidation } from "../middlewares/inputValidatorsCheck";
+import { authManager } from "../middlewares/authUsers";
 
 const router = express.Router();
 
-router.get("/all", getAllProductsInWarehouse);
+router.get("/all", authManager, getAllProductsInWarehouse);
 router.post(
   "/:productID",
+  authManager,
   checkProductIDParams,
   inputValidation,
   getOneProductInWarehouse
 );
 router.put(
   "/add",
+  authManager,
   checkAddProductToWarehouseInput,
   inputValidation,
   addOneProductToWarehouse
 );
 router.patch(
   "/:productID",
+  authManager,
   checkProductIDParams,
   checkUpdateProductInWarehouseInput,
   inputValidation,
