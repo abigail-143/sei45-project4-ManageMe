@@ -69,3 +69,24 @@ export const checkUpdateProductInWarehouseInput = [
     .notEmpty()
     .isInt({ min: 1 }),
 ];
+
+// STORE
+
+export const checkAddProductToStoreInput = [
+  // not.isEmpty checks for key
+  body("productID", "Product ID is required").trim().not().isEmpty(),
+  // isLength checks for value input
+  body("productID", "invalid format for Product ID").trim().isLength({
+    min: 7,
+    max: 7,
+  }),
+  body("storeQuantity", "Store Quantity is required")
+    .notEmpty()
+    .isInt({ min: 1 }),
+];
+
+export const checkUpdateProductInStoreInput = [
+  body("storeQuantity", "Store Quantity is required")
+    .notEmpty()
+    .isInt({ min: 1 }),
+];

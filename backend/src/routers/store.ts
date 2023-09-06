@@ -5,12 +5,34 @@ import {
   getAllProductsInStore,
   getOneProductInStore,
 } from "../controllers/stores";
+import {
+  checkAddProductToStoreInput,
+  checkProductIDParams,
+  checkUpdateProductInStoreInput,
+} from "../validators/inputValidators";
+import { inputValidation } from "../middlewares/inputValidatorsCheck";
 
 const router = express.Router();
 
 router.get("/all", getAllProductsInStore);
-router.post("/:productID", getOneProductInStore);
-router.put("/add", addOneProductToStore);
-router.patch("/:productID", amendOneProductInStore);
+router.post(
+  "/:productID",
+  checkProductIDParams,
+  inputValidation,
+  getOneProductInStore
+);
+router.put(
+  "/add",
+  checkAddProductToStoreInput,
+  inputValidation,
+  addOneProductToStore
+);
+router.patch(
+  "/:productID",
+  checkProductIDParams,
+  checkUpdateProductInStoreInput,
+  inputValidation,
+  amendOneProductInStore
+);
 
 export default router;

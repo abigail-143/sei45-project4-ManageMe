@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
+exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
 const express_validator_1 = require("express-validator");
 // PARAMS
 exports.checkProductIDParams = [
@@ -58,6 +58,24 @@ exports.checkAddProductToWarehouseInput = [
 ];
 exports.checkUpdateProductInWarehouseInput = [
     (0, express_validator_1.body)("warehouseQuantity", "Warehouse Quantity is required")
+        .notEmpty()
+        .isInt({ min: 1 }),
+];
+// STORE
+exports.checkAddProductToStoreInput = [
+    // not.isEmpty checks for key
+    (0, express_validator_1.body)("productID", "Product ID is required").trim().not().isEmpty(),
+    // isLength checks for value input
+    (0, express_validator_1.body)("productID", "invalid format for Product ID").trim().isLength({
+        min: 7,
+        max: 7,
+    }),
+    (0, express_validator_1.body)("storeQuantity", "Store Quantity is required")
+        .notEmpty()
+        .isInt({ min: 1 }),
+];
+exports.checkUpdateProductInStoreInput = [
+    (0, express_validator_1.body)("storeQuantity", "Store Quantity is required")
         .notEmpty()
         .isInt({ min: 1 }),
 ];
