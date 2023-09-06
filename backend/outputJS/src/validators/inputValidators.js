@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
+exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
 const express_validator_1 = require("express-validator");
 // PARAMS
 exports.checkProductIDParams = [
@@ -78,4 +78,24 @@ exports.checkUpdateProductInStoreInput = [
     (0, express_validator_1.body)("storeQuantity", "Store Quantity is required")
         .notEmpty()
         .isInt({ min: 1 }),
+];
+// PURCHASE ORDER
+exports.checkAddNewPurchaseOrderInput = [
+    (0, express_validator_1.body)("username", "username is required").trim().not().isEmpty(),
+    (0, express_validator_1.body)("username", "invalid username").trim().isLength({ min: 5, max: 25 }),
+    (0, express_validator_1.body)("productID", "Product ID is required").trim().not().isEmpty(),
+    // isLength checks for value input
+    (0, express_validator_1.body)("productID", "invalid format for Product ID").trim().isLength({
+        min: 7,
+        max: 7,
+    }),
+    (0, express_validator_1.body)("orderQuantity", "Order Quantity is required")
+        .notEmpty()
+        .isInt({ min: 1 }),
+    // just check that the orderplaceddate is not empty cause in the controllers, we're converting it to a Date input alread
+    (0, express_validator_1.body)("orderPlacedDate", "order placed date required").notEmpty(),
+];
+exports.checkUpdatePurchaseOrderInput = [
+    (0, express_validator_1.body)("receivedDate", "Received Date is required").notEmpty(),
+    (0, express_validator_1.body)("fulfilled", "invalid fulfilled response").isBoolean(),
 ];
