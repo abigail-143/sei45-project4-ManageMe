@@ -10,13 +10,21 @@ import {
   checkProductInUseInput,
 } from "../validators/inputValidators";
 import { inputValidation } from "../middlewares/inputValidatorsCheck";
+import { authManager } from "../middlewares/authUsers";
 
 const router = express.Router();
 
-router.get("/all", getAllProducts);
-router.put("/new", checkNewProductInput, inputValidation, addOneProduct);
+router.get("/all", authManager, getAllProducts);
+router.put(
+  "/new",
+  authManager,
+  checkNewProductInput,
+  inputValidation,
+  addOneProduct
+);
 router.patch(
   "/:productID",
+  authManager,
   checkProductIDParams,
   checkProductInUseInput,
   inputValidation,
