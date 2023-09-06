@@ -131,3 +131,16 @@ export const checkUpdateDeliveryOrderInput = [
   body("deliveredDate", "Order Delivered Date is required").notEmpty(),
   body("completed", "invalid Completed input").isBoolean(),
 ];
+
+// DELIVERY ORDER LIST
+
+export const checkAddNewProductToDeliveryOrderInput = [
+  body("deliveryID", "Delivery ID is required").notEmpty().isInt(),
+  body("productID", "Product ID is required").trim().not().isEmpty(),
+  // isLength checks for value input
+  body("productID", "invalid format for Product ID").trim().isLength({
+    min: 7,
+    max: 7,
+  }),
+  body("deliveryQuantity", "Delivery Quantity is required").isInt({ min: 1 }),
+];

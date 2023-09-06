@@ -59,4 +59,3 @@ const addOneItemToOneDeliveryOrder = (req, res) => __awaiter(void 0, void 0, voi
     }
 });
 exports.addOneItemToOneDeliveryOrder = addOneItemToOneDeliveryOrder;
-// how do i prevent a duplicate dataset i.e. same do_id and prod_id

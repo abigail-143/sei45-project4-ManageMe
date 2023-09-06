@@ -64,4 +64,3 @@ export const addOneItemToOneDeliveryOrder = async (
     res.json({ status: "error", message: error });
   }
 };
-// how do i prevent a duplicate dataset i.e. same do_id and prod_id

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUpdateDeliveryOrderInput = exports.checkAddNewDeliveryOrderInput = exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
+exports.checkAddNewProductToDeliveryOrderInput = exports.checkUpdateDeliveryOrderInput = exports.checkAddNewDeliveryOrderInput = exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
 const express_validator_1 = require("express-validator");
 // PARAMS
 exports.checkProductIDParams = [
@@ -109,4 +109,15 @@ exports.checkAddNewDeliveryOrderInput = [
 exports.checkUpdateDeliveryOrderInput = [
     (0, express_validator_1.body)("deliveredDate", "Order Delivered Date is required").notEmpty(),
     (0, express_validator_1.body)("completed", "invalid Completed input").isBoolean(),
+];
+// DELIVERY ORDER LIST
+exports.checkAddNewProductToDeliveryOrderInput = [
+    (0, express_validator_1.body)("deliveryID", "Delivery ID is required").notEmpty().isInt(),
+    (0, express_validator_1.body)("productID", "Product ID is required").trim().not().isEmpty(),
+    // isLength checks for value input
+    (0, express_validator_1.body)("productID", "invalid format for Product ID").trim().isLength({
+        min: 7,
+        max: 7,
+    }),
+    (0, express_validator_1.body)("deliveryQuantity", "Delivery Quantity is required").isInt({ min: 1 }),
 ];
