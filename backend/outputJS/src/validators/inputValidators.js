@@ -22,6 +22,8 @@ exports.checkUserLoginInput = [
     (0, express_validator_1.body)("username", "invalid username input")
         .trim()
         .isLength({ min: 5, max: 25 }),
+    (0, express_validator_1.body)("password", "password is required").trim().not().isEmpty(),
+    (0, express_validator_1.body)("password", "invalid password input").isLength({ min: 8, max: 25 }),
 ];
 exports.addNewUserInput = [
     (0, express_validator_1.body)("username", "username is required").trim().not().isEmpty(),
@@ -35,6 +37,7 @@ exports.addNewUserInput = [
     (0, express_validator_1.body)("email", "email is required").trim().not().isEmpty(),
     (0, express_validator_1.body)("email", "invalid email input").isEmail(),
     (0, express_validator_1.body)("company", "company is required").notEmpty(),
+    (0, express_validator_1.body)("company", "invalid company input").trim().isLength({ min: 1, max: 50 }),
     (0, express_validator_1.body)("status", "invalid user status input").isBoolean(),
     (0, express_validator_1.body)("account", "invalid account type input").isIn(["Manager", "Staff"]),
 ];
