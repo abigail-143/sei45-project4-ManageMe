@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkAddNewProductToDeliveryOrderInput = exports.checkUpdateDeliveryOrderInput = exports.checkAddNewDeliveryOrderInput = exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
+exports.checkPeriodForMonthlyUsage = exports.checkAddNewDataMonthlyUsage = exports.checkAddNewProductToDeliveryOrderInput = exports.checkUpdateDeliveryOrderInput = exports.checkAddNewDeliveryOrderInput = exports.checkUpdatePurchaseOrderInput = exports.checkAddNewPurchaseOrderInput = exports.checkUpdateProductInStoreInput = exports.checkAddProductToStoreInput = exports.checkUpdateProductInWarehouseInput = exports.checkAddProductToWarehouseInput = exports.checkProductInUseInput = exports.checkNewProductInput = exports.checkDeliveryOrderIDParams = exports.checkPurchaseOrderIDParams = exports.checkProductIDParams = void 0;
 const express_validator_1 = require("express-validator");
 // PARAMS
 exports.checkProductIDParams = [
@@ -96,6 +96,7 @@ exports.checkAddNewPurchaseOrderInput = [
     (0, express_validator_1.body)("orderPlacedDate", "order placed date required").notEmpty(),
 ];
 exports.checkUpdatePurchaseOrderInput = [
+    // just check if the input is empty, cause on the controllers end, it will convert it to a date format
     (0, express_validator_1.body)("receivedDate", "Received Date is required").notEmpty(),
     (0, express_validator_1.body)("fulfilled", "invalid Fulfilled input").isBoolean(),
 ];
@@ -103,10 +104,12 @@ exports.checkUpdatePurchaseOrderInput = [
 exports.checkAddNewDeliveryOrderInput = [
     (0, express_validator_1.body)("username", "username is required").trim().not().isEmpty(),
     (0, express_validator_1.body)("username", "invalid username").trim().isLength({ min: 5, max: 25 }),
+    // just check if the input is empty, cause on the controllers end, it will convert it to a date formats
     (0, express_validator_1.body)("deliveryPlacedDate", "Delivery Order placed date is required").notEmpty(),
     (0, express_validator_1.body)("toDeliverDate", "Delivery Date is required").notEmpty(),
 ];
 exports.checkUpdateDeliveryOrderInput = [
+    // just check if the input is empty, cause on the controllers end, it will convert it to a date format
     (0, express_validator_1.body)("deliveredDate", "Order Delivered Date is required").notEmpty(),
     (0, express_validator_1.body)("completed", "invalid Completed input").isBoolean(),
 ];
@@ -120,4 +123,22 @@ exports.checkAddNewProductToDeliveryOrderInput = [
         max: 7,
     }),
     (0, express_validator_1.body)("deliveryQuantity", "Delivery Quantity is required").isInt({ min: 1 }),
+];
+// MONTHLY USAGE
+exports.checkAddNewDataMonthlyUsage = [
+    (0, express_validator_1.body)("productID", "Product ID is required").trim().not().isEmpty(),
+    // isLength checks for value input
+    (0, express_validator_1.body)("productID", "invalid format for Product ID").trim().isLength({
+        min: 7,
+        max: 7,
+    }),
+    // just check if the input is empty, cause on the controllers end, it will convert it to a date format
+    (0, express_validator_1.body)("monthYear", "Usage period is required").notEmpty(),
+    (0, express_validator_1.body)("totalOrderQuantity", "Total Order Quantity is required").isInt({
+        min: 1,
+    }),
+];
+exports.checkPeriodForMonthlyUsage = [
+    // just check if the input is empty, cause on the controllers end, it will convert it to a date format
+    (0, express_validator_1.body)("monthYear", "Usage period is required").notEmpty(),
 ];

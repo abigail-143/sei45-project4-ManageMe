@@ -111,6 +111,7 @@ export const checkAddNewPurchaseOrderInput = [
 ];
 
 export const checkUpdatePurchaseOrderInput = [
+  // just check if the input is empty, cause on the controllers end, it will convert it to a date format
   body("receivedDate", "Received Date is required").notEmpty(),
   body("fulfilled", "invalid Fulfilled input").isBoolean(),
 ];
@@ -120,6 +121,7 @@ export const checkUpdatePurchaseOrderInput = [
 export const checkAddNewDeliveryOrderInput = [
   body("username", "username is required").trim().not().isEmpty(),
   body("username", "invalid username").trim().isLength({ min: 5, max: 25 }),
+  // just check if the input is empty, cause on the controllers end, it will convert it to a date formats
   body(
     "deliveryPlacedDate",
     "Delivery Order placed date is required"
@@ -128,6 +130,7 @@ export const checkAddNewDeliveryOrderInput = [
 ];
 
 export const checkUpdateDeliveryOrderInput = [
+  // just check if the input is empty, cause on the controllers end, it will convert it to a date format
   body("deliveredDate", "Order Delivered Date is required").notEmpty(),
   body("completed", "invalid Completed input").isBoolean(),
 ];
@@ -143,4 +146,25 @@ export const checkAddNewProductToDeliveryOrderInput = [
     max: 7,
   }),
   body("deliveryQuantity", "Delivery Quantity is required").isInt({ min: 1 }),
+];
+
+// MONTHLY USAGE
+
+export const checkAddNewDataMonthlyUsage = [
+  body("productID", "Product ID is required").trim().not().isEmpty(),
+  // isLength checks for value input
+  body("productID", "invalid format for Product ID").trim().isLength({
+    min: 7,
+    max: 7,
+  }),
+  // just check if the input is empty, cause on the controllers end, it will convert it to a date format
+  body("monthYear", "Usage period is required").notEmpty(),
+  body("totalOrderQuantity", "Total Order Quantity is required").isInt({
+    min: 1,
+  }),
+];
+
+export const checkPeriodForMonthlyUsage = [
+  // just check if the input is empty, cause on the controllers end, it will convert it to a date format
+  body("monthYear", "Usage period is required").notEmpty(),
 ];
