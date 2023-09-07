@@ -1,10 +1,13 @@
 import React from "react";
 
-const App = () => {
-  return <div>hello world</div>;
+const App: React.FC = () => {
+  return <></>;
 };
 
 export default App;
 
-// <Login />
-// <Site />
+// <LoginPage />
+// <StaffSite />
+// <ManagerSite />
+
+// should pass the user headers here (useState)
