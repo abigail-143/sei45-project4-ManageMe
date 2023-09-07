@@ -1,0 +1,104 @@
+.p {
+  margin: 0;
+  margin: 0 100px;
+  text-align: left;
+}
+
+.input {
+  width: 350px;
+  height: 30px;
+  margin-top: 10px;
+  text-indent: 5px;
+  border-radius: 5px;
+}
+
+.loginPage {
+  /* border: 1px solid black;
+    background-color: lightgoldenrodyellow; */
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.loginImgDiv {
+  /* border: 1px solid blue;
+    background-color: lightblue; */
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginImg {
+  width: 70%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.loginFormDiv {
+  /* border: 1px solid purple;
+    background-color: lightgreen; */
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.companyLogo {
+  width: 120px;
+  height: 120px;
+}
+
+.loginForm {
+  /* border: 1px solid green;
+    background-color: plum; */
+  width: 550px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(67, 66, 66, 0.4);
+  margin-top: 30px;
+}
+
+.companyName {
+  width: inherit;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.loginUsername {
+  /* border: 1px solid grey;
+    background-color: aquamarine; */
+  width: inherit;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.loginPassword {
+  /* border: 1px solid grey;
+    background-color: aquamarine; */
+  width: inherit;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.loginBtn {
+  width: 350px;
+  height: 45px;
+  margin: 20px 0 50px 0;
+}
+
+.smallInfo {
+  width: 550px;
+  text-align: left;
+  margin: 10px 0;
+}
+
+.span {
+  font-weight: bold;
+}
