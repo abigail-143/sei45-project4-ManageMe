@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Header.module.css";
 
-interface props {
-  role: string;
-  children?: React.ReactNode;
-}
+// interface props {
+//   role: string;
+//   children?: React.ReactNode;
+// }
 
-export const Header: React.FC<props> = (props) => {
+export const Header: React.FC = () => {
+  const role = "Manager";
 
   return (
     <>
-      {props.role === "Manager" ? (
+      {role === "Manager" ? (
         <div className={styles.headerBar}>
           <div className={styles.searchBar}>
             <img className={styles.searchIcon} src="search.png"></img>

@@ -1,15 +1,16 @@
 import React from "react";
 import styles from "./NavBar.module.css";
 
-interface props {
-  role: string;
-  children?: React.ReactNode;
-}
+// interface props {
+//   role: string;
+//   children?: React.ReactNode;
+// }
 
-export const NavBar: React.FC<props> = (props) => {
+export const NavBar: React.FC = () => {
+  const role = "Manager";
   return (
     <>
-      {props.role === "Manager" ? (
+      {role === "Manager" ? (
         <div className={`${styles.navbar} ${styles.blue}`}>
           <div className={styles.companyLogo}>
             <img className={styles.companyImg} src="/simulation.png"></img>

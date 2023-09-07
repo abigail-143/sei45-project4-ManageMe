@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 import { LoginPage } from "./Pages/LoginPage";
-import { Header } from "./Components/Header";
-import { NavBar } from "./Components/NavBar";
+import { ManagerSite } from "./Pages/ManagerSite";
+import { StaffSite } from "./Pages/StaffSite";
 
 const App: React.FC = () => {
-  const [role, setRole] = useState<string>("Manager")
 
   return (
-    <>
-      {/* <LoginPage></LoginPage> */}
-      <Header role={role}></Header>
-      <NavBar role={role}></NavBar>
-    </>
+    <div>
+      <Suspense>
+        <Routes>
+          <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+          <Route
+            path="/staff"
+            element={<StaffSite></StaffSite>}
+          ></Route>
+          <Route path="/manager" element={<ManagerSite />}></Route>
+        </Routes>
+      </Suspense>
+    </div>
   );
 };
 
 export default App;
 
 // <LoginPage />
+// <Header />
+// <NavBar />
 // <StaffSite />
 // <ManagerSite />
 
