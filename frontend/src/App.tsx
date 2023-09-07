@@ -1,7 +1,12 @@
 import React from "react";
+import { LoginPage } from "./Pages/LoginPage";
 
 const App: React.FC = () => {
-  return <></>;
+  return (
+    <>
+      <LoginPage></LoginPage>
+    </>
+  );
 };
 
 export default App;
