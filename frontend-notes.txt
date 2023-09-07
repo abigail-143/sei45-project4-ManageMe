@@ -1,0 +1,39 @@
+npm create vite@latest React, TypeScript
+npm i jwt-decode
+
+
+<Parent /> file
+
+import { Child } from './Child'
+
+export const Parent = () => {
+    return <Child keyName=value color="red" onClick={()} => console.log("something")/>
+}
+
+export const Parent2: React.FC = () => {
+    return <Child> </Child>
+
+}
+
+<Child /> file
+
+# declare the props being passed down
+interface ChildProps {
+    keyName: dataType;
+    color: string;
+    functionName: () => void; # void cause in the parent the function returns a console.log if the function returns some value, need to declare the type here
+    children?: React.ReactNode; # this is to declare if the Child component has more children props
+}
+
+# you can deconstruct the props or just do (props: ChildProps) then in the return you need to props.keyName
+export const Child = ({ keyName }: ChildProps) => {
+    return <div>{keyName}</div>
+}
+
+# you can also declare a React Component like this
+export const ChildAsFC: React.FC<ChildPropsInterface> = (props) => {
+    return <div>{props.keyName}</div>
+}
+
+# FC refers to Function Component. you need to declare the props interface between the <>.
+# if you declare the component with the React.FC, when you import the Child into the Parent file, you can use <Child></Child> cause it's expecting chidren automatically (built in)
