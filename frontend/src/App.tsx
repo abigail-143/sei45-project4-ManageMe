@@ -1,10 +1,14 @@
 import React from "react";
 import { LoginPage } from "./Pages/LoginPage";
+import { Header } from "./Components/Header";
+import { NavBar } from "./Components/NavBar";
 
 const App: React.FC = () => {
   return (
     <>
-      <LoginPage></LoginPage>
+      {/* <LoginPage></LoginPage> */}
+      <Header></Header>
+      <NavBar></NavBar>
     </>
   );
 };
