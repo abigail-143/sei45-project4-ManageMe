@@ -1,5 +1,4 @@
 import { body, param } from "express-validator";
-import { format } from "path";
 
 // PARAMS
 
