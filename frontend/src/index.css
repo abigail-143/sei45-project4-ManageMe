@@ -1,32 +1,15 @@
+:root {
+  --light-blue: #7c9dbb;
+  --blue: #2570b3;
+  --dark-grey: #434242;
+  --light-grey: #c4bab8;
+  --offwhite: #eeeeee;
+  --green: #42795b;
+  --light-green: #b4cd93;
+  --light-yellow: #fcf5b8;
+}
+
 body {
   margin: 0;
   background-color: whitesmoke;
-}
-
-.headerBar {
-  width: calc(100vw - 200px);
-  height: 74px;
-  border: 1px solid black;
-  background-color: lightgoldenrodyellow;
-  position: fixed;
-  right: 0;
-  top: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.searchBar {
-  width: 350px;
-  height: 30px;
-}
-
-button {
-  height: 30px;
-}
-
-.profilePic {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
 }

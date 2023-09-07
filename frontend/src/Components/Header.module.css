@@ -1,0 +1,74 @@
+.headerBar {
+    width: calc(100vw - 200px);
+    height: 74px;
+    background-color: whitesmoke;
+    position: fixed;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .searchBar {
+    width: 350px;
+    height: 30px;
+    position: fixed;
+    left: 225px;
+    text-indent: 10px;
+    border: 1px solid var(--light-grey);
+    background-color: whitesmoke;
+  }
+  
+  .searchIcon {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 0;
+  }
+  
+  .input {
+    text-indent: 10px;
+    border: none;
+    width: 320px;
+    height: 28px;
+    position: absolute;
+    right: 0;
+    background-color: whitesmoke;
+  }
+  
+  .button {
+    height: 30px;
+    background: none;
+    margin: 0 25px 0 0;
+  }
+  
+  .blue {
+    border: 1px solid var(--blue);
+    color: var(--blue);
+  }
+  
+  .green {
+    border: 1px solid var(--green);
+    color: var(--green);
+  }
+  
+  .delivery {
+    position: fixed;
+    right: 80px;
+  }
+  
+  .purchase {
+    position: absolute;
+    right: 200px;
+  }
+  
+  .profilePic {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    position: fixed;
+    right: 25px;
+  }
