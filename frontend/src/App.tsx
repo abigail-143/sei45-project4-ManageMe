@@ -3,11 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import { LoginPage } from "./Pages/LoginPage";
 import { ManagerSite } from "./Pages/ManagerSite";
 import { StaffSite } from "./Pages/StaffSite";
-import { RegisterUser } from "./Components/ManagerOnly/RegisterUser";
 
 const App: React.FC = () => {
   const [login, setLogin] = useState<boolean>(true);
-  const [role, setRole] = useState<string>("Register");
+  const [role, setRole] = useState<string>("Manager");
 
   return (
     <div>
@@ -25,9 +24,6 @@ const App: React.FC = () => {
               path="/main"
               element={<StaffSite role={role}></StaffSite>}
             ></Route>
-          )}
-          {role === "Register" && (
-            <Route path="/main" element={<RegisterUser role={role}></RegisterUser>}></Route>
           )}
         </Routes>
       </Suspense>

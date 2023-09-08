@@ -1,6 +1,4 @@
 import React from "react";
-import { Header } from "../Header";
-import { NavBar } from "../NavBar";
 
 interface props {
   role: string;
@@ -28,8 +26,6 @@ export const RegisterUser: React.FC<props> = (props) => {
 
   return (
     <>
-      <Header role="Manager"></Header>
-      <NavBar role="Manager"></NavBar>
       <div className="registerPage">
         <div className="formSection">
           <div className="registerForm">
