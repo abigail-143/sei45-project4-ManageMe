@@ -1,12 +1,24 @@
 import React from "react";
+import { Header } from "../Components/Header";
+import { NavBar } from "../Components/NavBar";
 
-export const StaffSite: React.FC = () => {
-  return <div>staff site</div>;
+interface props {
+  role: string;
+  children?: React.ReactNode;
+}
+
+export const StaffSite: React.FC<props> = (props) => {
+  return (
+    <>
+      <Header role={props.role}></Header>
+      <NavBar role={props.role}></NavBar>
+    </>
+  );
 };
 
 // <Header />
 // <NavBar />
-// if dashboard && <StaffDashboard />
-// if delivery && <StoreDelivery />
-// if stocklevel && <StoreStockLevel />
-// if reports && <Reports /> * stretch goal
+// <Dashboard />
+// <StoreDelivery />
+// <StockLevels />
+// <Reports />
