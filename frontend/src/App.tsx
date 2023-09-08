@@ -1,8 +1,8 @@
 import React, { Suspense, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { LoginPage } from "./Pages/LoginPage";
-import { ManagerSite } from "./Pages/ManagerSite";
-import { StaffSite } from "./Pages/StaffSite";
+import { ManagerSite } from "./Components/ManagerSite";
+import { StaffSite } from "./Components/StaffSite";
 
 const App: React.FC = () => {
   const [login, setLogin] = useState<boolean>(true);

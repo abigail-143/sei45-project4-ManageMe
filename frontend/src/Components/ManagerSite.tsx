@@ -1,16 +1,17 @@
-import React, { PropsWithChildren, useState } from "react";
+import React from "react";
 import { Header } from "./Header";
 import { NavBar } from "./NavBar";
 
-interface IProps {
+interface props {
   role: string;
+  children?: React.ReactNode;
 }
 
-export const ManagerSite: React.FC<IProps> = ({ role }) => {
+export const ManagerSite: React.FC<props> = (props) => {
   return (
     <>
-      <Header role={role}></Header>
-      <NavBar role={role}></NavBar>
+      <Header role={props.role}></Header>
+      <NavBar role={props.role}></NavBar>
       <h1>manager site</h1>
     </>
   );
