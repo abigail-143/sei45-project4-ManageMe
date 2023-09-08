@@ -5,10 +5,11 @@ interface props {
   children?: React.ReactNode;
 }
 
-export const RegisterUser: React.FC = () => {
+export const RegisterUser: React.FC<props> = (props) => {
   return (
     <>
       <div>register user</div>
+      <div>{props.role}</div>
     </>
   );
 };
