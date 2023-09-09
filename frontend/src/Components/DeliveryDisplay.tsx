@@ -35,9 +35,9 @@ export const DeliveryDisplay: React.FC = () => {
   ];
 
   // this maps the data returned to give the rows in the list
-  const orders = deliveredOrders.map((item) => {
+  const orders = deliveredOrders.map((item, index) => {
     return (
-      <div className={styles.listBodyRows}>
+      <div key={index} className={styles.listBodyRows}>
         <p className={styles.orderID}>{item.orderID}</p>
         <p className={styles.orderDate}>{item.orderDate}</p>
         <p className={styles.deliveredDate}>{item.deliveredDate}</p>
