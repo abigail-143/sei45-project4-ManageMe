@@ -4,6 +4,7 @@
     position: fixed;
     top: 60px;
     right: 0;
+    overflow-y: scroll;
   }
   
   .formSection {
@@ -76,19 +77,18 @@
   
   .listSection {
     width: calc(100vw - 200px);
-    height: calc((100vh - 60px) / 2);
-    padding: 0;
+    height: calc(100vh - 350px);
+    padding: 35px 0 10px 0;
     margin: 0;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-evenly;
   }
   
   .userList {
     background-color: white;
-    width: 510px;
-    height: 330px;
+    width: 600px;
+    height: 430px;
     padding: 0;
     margin: 0;
     box-shadow: 0 0 25px 2px lightgray;
@@ -132,7 +132,7 @@
   }
   
   .listBody {
-    height: 230px;
+    height: 330px;
     overflow-y: scroll;
   }
   
