@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./DeliveryDisplay.module.css";
 
 export const DeliveryDisplay: React.FC = () => {
   const deliveredOrders: {
@@ -33,37 +34,40 @@ export const DeliveryDisplay: React.FC = () => {
     },
   ];
 
+  // this maps the data returned to give the rows in the list
   const orders = deliveredOrders.map((item) => {
     return (
-      <div className="listBodyRows">
-        <p className="orderID">{item.orderID}</p>
-        <p className="orderDate">{item.orderDate}</p>
-        <p className="deliveredDate">{item.deliveredDate}</p>
-        <p className="orderUser">{item.orderUser}</p>
+      <div className={styles.listBodyRows}>
+        <p className={styles.orderID}>{item.orderID}</p>
+        <p className={styles.orderDate}>{item.orderDate}</p>
+        <p className={styles.deliveredDate}>{item.deliveredDate}</p>
+        <p className={styles.orderUser}>{item.orderUser}</p>
       </div>
     );
   });
   return (
-    <div className="deliveryPage">
-      <div className="deliveryListDiv left">
-        <div className="listTitle">
-          <h1 className="titleName">Completed Deliveries</h1>
-          <div className="searchBar">
-            <img className="searchBarImg" src="/search.png"></img>
+    <div className={styles.deliveryPage}>
+      <div className={`${styles.deliveryListDiv} ${styles.left}`}>
+        <div className={styles.listTitle}>
+          <h1 className={`${styles.titleName} ${styles.blue}`}>
+            Completed Deliveries
+          </h1>
+          <div className={styles.searchBar}>
+            <img className={styles.searchBarImg} src="/search.png"></img>
             <input
-              className="searchBarInput"
+              className={styles.searchBarInput}
               placeholder="Search Delivery"
             ></input>
           </div>
         </div>
-        <div className="listBody">
-          <div className="listBodyRowsHeader">
-            <p className="orderID">Order ID</p>
-            <p className="orderDate">Ordered Date</p>
-            <p className="deliveredDate">Delivered Date</p>
-            <p className="orderUser">Placed By</p>
+        <div className={styles.listBody}>
+          <div className={styles.listBodyRowsHeader}>
+            <p className={styles.orderID}>Order ID</p>
+            <p className={styles.orderDate}>Ordered Date</p>
+            <p className={styles.deliveredDate}>Delivered Date</p>
+            <p className={styles.orderUser}>Placed By</p>
           </div>
-          <div className="listBodyInput">
+          <div className={styles.listBodyInput}>
             {orders}
             {orders}
             {orders}
@@ -74,30 +78,27 @@ export const DeliveryDisplay: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="deliveryListDiv right">
-        <div className="listTitle">
-          <h1 className="titleName">Pending Deliveries</h1>
-          <div className="searchBar">
-            <img className="searchBarImg" src="/search.png"></img>
+      <div className={`${styles.deliveryListDiv} ${styles.right}`}>
+        <div className={styles.listTitle}>
+          <h1 className={`${styles.titleName} ${styles.blue}`}>
+            Pending Deliveries
+          </h1>
+          <div className={styles.searchBar}>
+            <img className={styles.searchBarImg} src="/search.png"></img>
             <input
-              className="searchBarInput"
+              className={styles.searchBarInput}
               placeholder="Search Delivery"
             ></input>
           </div>
         </div>
-        <div className="listBody">
-          <div className="listBodyRowsHeader">
-            <p className="orderID">Order ID</p>
-            <p className="orderDate">Ordered Date</p>
-            <p className="deliveredDate">Delivered Date</p>
-            <p className="orderUser">Placed By</p>
+        <div className={styles.listBody}>
+          <div className={styles.listBodyRowsHeader}>
+            <p className={styles.orderID}>Order ID</p>
+            <p className={styles.orderDate}>Ordered Date</p>
+            <p className={styles.deliveredDate}>Delivered Date</p>
+            <p className={styles.orderUser}>Placed By</p>
           </div>
-          <div className="listBodyInput">
-            {orders}
-            {orders}
-            {orders}
-            {orders}
-            {orders}
+          <div className={styles.listBodyInput}>
             {orders}
             {orders}
           </div>
