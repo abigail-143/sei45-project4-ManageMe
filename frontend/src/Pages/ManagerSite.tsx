@@ -29,13 +29,19 @@ export const ManagerSite: React.FC<props> = (props) => {
       <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "register" && <RegisterUser role={props.role}></RegisterUser>}
       {page == "purchase" && <PurchaseDisplay></PurchaseDisplay>}
-      {page == "newPO" && <NewPurchaseOrder></NewPurchaseOrder>}
+      {page == "newPO" && (
+        <NewPurchaseOrder setPage={setPage} page={page}></NewPurchaseOrder>
+      )}
       {page == "poSummary" && <PurchaseOrderSummary></PurchaseOrderSummary>}
       {page == "delivery" && (
         <DeliveryDisplay role={props.role}></DeliveryDisplay>
       )}
       {page == "newDO" && (
-        <NewDeliveryOrder role={props.role}></NewDeliveryOrder>
+        <NewDeliveryOrder
+          role={props.role}
+          setPage={setPage}
+          page={page}
+        ></NewDeliveryOrder>
       )}
       {page == "doSummary" && (
         <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>

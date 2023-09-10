@@ -1,7 +1,17 @@
 import React from "react";
 import styles from "./NewPurchaseOrder.module.css";
 
-export const NewPurchaseOrder: React.FC = () => {
+interface props {
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  page: string;
+  children?: React.ReactNode;
+}
+
+export const NewPurchaseOrder: React.FC<props> = (props) => {
+  // need to include updating backend database
+  const handleClick = () => {
+    props.setPage("poSummary");
+  };
   return (
     <div className={styles.purchaseOrderPage}>
       <div className={styles.purchaseOrderBox}>
@@ -53,7 +63,9 @@ export const NewPurchaseOrder: React.FC = () => {
             <input placeholder="Lead Time"></input>
           </div>
         </div>
-        <button className={styles.submitButton}>Submit Purchase Order</button>
+        <button className={styles.submitButton} onClick={handleClick}>
+          Submit Purchase Order
+        </button>
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import styles from "./NewDeliveryOrder.module.css";
 
 interface props {
   role: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  page: string;
   children?: React.ReactNode;
 }
 
@@ -48,6 +50,11 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
     }
   };
 
+  // need to include updating backend
+  const handleClick = () => {
+    props.setPage("doSummary");
+  };
+
   useEffect(() => {
     rows;
   }, []);
@@ -57,7 +64,9 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
       <div className={styles.deliveryOrderBox}>
         <h1
           className={`${
-            props.role == "Manager" ? styles.boxHeaderBlue : styles.boxHeaderGreen
+            props.role == "Manager"
+              ? styles.boxHeaderBlue
+              : styles.boxHeaderGreen
           }`}
         >
           New Store Delivery Order
@@ -134,6 +143,7 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
           className={`${styles.submitButton} ${
             props.role == "Manager" ? styles.blueBG : styles.greenBG
           }`}
+          onClick={handleClick}
         >
           Submit Store Deliver Order
         </button>

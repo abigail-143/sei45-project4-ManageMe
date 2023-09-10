@@ -23,7 +23,11 @@ export const StaffSite: React.FC<props> = (props) => {
         <DeliveryDisplay role={props.role}></DeliveryDisplay>
       )}
       {page == "newDO" && (
-        <NewDeliveryOrder role={props.role}></NewDeliveryOrder>
+        <NewDeliveryOrder
+          role={props.role}
+          setPage={setPage}
+          page={page}
+        ></NewDeliveryOrder>
       )}
       {page == "doSummary" && (
         <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
