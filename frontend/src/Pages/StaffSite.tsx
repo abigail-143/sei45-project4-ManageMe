@@ -4,6 +4,7 @@ import { NavBar } from "../Components/NavBar";
 import { DeliveryDisplay } from "../Components/DeliveryDisplay";
 import { NewDeliveryOrder } from "../Components/NewDeliveryOrder";
 import { DeliveryOrderSummary } from "../Components/DeliveryOrderSummary";
+import { StockLevelStore } from "../Components/StockLevelStore";
 
 interface props {
   role: string;
@@ -11,7 +12,7 @@ interface props {
 }
 
 export const StaffSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("doSummary");
+  const [page, setPage] = useState<string>("stockstore");
   return (
     <>
       <Header role={props.role}></Header>
@@ -24,6 +25,9 @@ export const StaffSite: React.FC<props> = (props) => {
       )}
       {page == "doSummary" && (
         <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
+      )}
+      {page == "stockstore" && (
+        <StockLevelStore role={props.role}></StockLevelStore>
       )}
     </>
   );

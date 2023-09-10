@@ -10,6 +10,7 @@ import { NewDeliveryOrder } from "../Components/NewDeliveryOrder";
 import { DeliveryOrderSummary } from "../Components/DeliveryOrderSummary";
 import { StockLevelDisplay } from "../Components/StockLevelDisplay";
 import { StockLevelWarehouse } from "../Components/StockLevelWarehouse";
+import { StockLevelStore } from "../Components/StockLevelStore";
 
 interface props {
   role: string;
@@ -17,7 +18,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("stockwarehouse");
+  const [page, setPage] = useState<string>("stockstore");
 
   // navbar, onclick should set the page to something
 
@@ -40,6 +41,9 @@ export const ManagerSite: React.FC<props> = (props) => {
       )}
       {page == "stocklevel" && <StockLevelDisplay></StockLevelDisplay>}
       {page == "stockwarehouse" && <StockLevelWarehouse></StockLevelWarehouse>}
+      {page == "stockstore" && (
+        <StockLevelStore role={props.role}></StockLevelStore>
+      )}
     </>
   );
 };

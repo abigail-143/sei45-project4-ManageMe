@@ -1,0 +1,125 @@
+.stockWarehouse {
+  width: calc(100vw - 200px);
+  height: calc(100vh - 60px);
+  position: fixed;
+  top: 60px;
+  right: 0;
+  /* background-color: lavender;
+      border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.greenFont {
+  color: var(--green);
+}
+
+.blueFont {
+  color: var(--blue);
+}
+
+.greenBG {
+  background-color: var(--light-green);
+}
+
+.blueBG {
+  background-color: var(--light-blue);
+}
+
+.tabRow {
+  /* background-color: lavenderblush;
+      border: 1px solid red; */
+  width: calc(100vw - 250px);
+  height: auto;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tabSection {
+  /* border: 1px solid grey;
+      background-color: floralwhite; */
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 0 15px var(--light-grey);
+  min-width: 250px;
+  max-height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.tabBtn {
+  width: 200px;
+  height: 50px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  /* background-color: gainsboro; */
+  padding: 0;
+  cursor: pointer;
+}
+
+.searchLabel {
+  /* background-color: lavenderblush;
+      border: 1px solid blue; */
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.searchInput {
+  background: none;
+  border: 1px solid var(--light-grey);
+  padding: none;
+  margin: none;
+  text-indent: 10px;
+  height: 20px;
+  width: 170px;
+  outline: none;
+}
+
+.searchBtn {
+  /* border: 1px solid purple; */
+  color: whitesmoke;
+  border: none;
+  padding: 3px 7px;
+  margin-right: 10px;
+  margin-left: 5px;
+  height: 25px;
+  width: 50px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.tableDisplay {
+  /* background-color: navajowhite;
+      border: 1px solid indigo; */
+  width: calc(100vw - 250px);
+  height: calc(100vh - 210px);
+  padding: 10px 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 15px var(--light-grey);
+  border-radius: 10px;
+  background-color: white;
+}
+
+.title {
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+  width: calc(100% - 30px);
+  /* background-color: lightblue; */
+}
+
+.table {
+  width: calc(100% - 30px);
+  height: calc(100% - 50px);
+  /* background-color: lightcyan; */
+  margin-top: 10px;
+}
