@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./DeliveryDisplay.module.css";
 
-export const DeliveryDisplay: React.FC = () => {
+interface props {
+  role: string;
+  children?: React.ReactNode;
+}
+
+export const DeliveryDisplay: React.FC<props> = (props) => {
+
   const deliveredOrders: {
     orderID: number;
     orderDate: string;
@@ -49,7 +55,11 @@ export const DeliveryDisplay: React.FC = () => {
     <div className={styles.deliveryPage}>
       <div className={`${styles.deliveryListDiv} ${styles.left}`}>
         <div className={styles.listTitle}>
-          <h1 className={`${styles.titleName} ${styles.blue}`}>
+          <h1
+            className={`${styles.titleName} ${
+              props.role == "Manager" ? styles.blueFont : styles.greenFont
+            }`}
+          >
             Completed Deliveries
           </h1>
           <div className={styles.searchBar}>
@@ -80,7 +90,11 @@ export const DeliveryDisplay: React.FC = () => {
       </div>
       <div className={`${styles.deliveryListDiv} ${styles.right}`}>
         <div className={styles.listTitle}>
-          <h1 className={`${styles.titleName} ${styles.blue}`}>
+          <h1
+            className={`${styles.titleName} ${
+              props.role == "Manager" ? styles.blueFont : styles.greenFont
+            }`}
+          >
             Pending Deliveries
           </h1>
           <div className={styles.searchBar}>

@@ -14,7 +14,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("newDO");
+  const [page, setPage] = useState<string>("delivery");
 
   // navbar, onclick should set the page to something
 
@@ -26,7 +26,9 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "purchase" && <PurchaseDisplay></PurchaseDisplay>}
       {page == "newPO" && <NewPurchaseOrder></NewPurchaseOrder>}
       {page == "poSummary" && <PurchaseOrderSummary></PurchaseOrderSummary>}
-      {page == "delivery" && <DeliveryDisplay></DeliveryDisplay>}
+      {page == "delivery" && (
+        <DeliveryDisplay role={props.role}></DeliveryDisplay>
+      )}
       {page == "newDO" && (
         <NewDeliveryOrder role={props.role}></NewDeliveryOrder>
       )}
