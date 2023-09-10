@@ -1,7 +1,59 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./NewDeliveryOrder.module.css";
 
 export const NewDeliveryOrder: React.FC = () => {
+  // declare a new row
+  const newRow: JSX.Element = (
+    <div className={styles.columnInputs}>
+      <input
+        className={`${styles.newInput} ${styles.first}`}
+        placeholder="Product ID"
+      ></input>
+      <input
+        className={`${styles.newInput} ${styles.middle}`}
+        placeholder="Product Description"
+      ></input>
+      <input
+        className={`${styles.newInput} ${styles.middle}`}
+        placeholder="Quantity"
+      ></input>
+      <div className={`${styles.newInput} ${styles.middle}`}>
+        <select
+          className={`${styles.select}`}
+          id="uom"
+          name="Unit of Measurement"
+        >
+          <option value="CTN">CTN</option>
+          <option value="BOX">BOX</option>
+          <option value="EA">EA</option>
+        </select>
+      </div>
+      <input
+        className={`${styles.newInput} ${styles.middle}`}
+        placeholder="Supplier"
+      ></input>
+      <input
+        className={`${styles.newInput} ${styles.last}`}
+        placeholder="Lead Time"
+      ></input>
+    </div>
+  );
+
+  // this is the array of rows to be mapped
+  const [rows, setRows] = useState<JSX.Element[]>([newRow]);
+  const rowRef = useRef<HTMLDivElement | null>(null);
+
+  // this is to handle click and add new row
+  const addRow = () => {
+    setRows([...rows, newRow]);
+    if (rowRef.current) {
+      rowRef.current.scrollTop = rowRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    rows;
+  }, []);
 
   return (
     <div className={styles.deliveryOrderPage}>
@@ -62,76 +114,19 @@ export const NewDeliveryOrder: React.FC = () => {
             <p>Supplier</p>
             <p>Lead Time</p>
           </div>
-          <div className={styles.columnInputs}>
-            <input
-              className={`${styles.newInput} ${styles.first}`}
-              placeholder="Product ID"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Product Description"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Quantity"
-            ></input>
-            <div className={`${styles.newInput} ${styles.middle}`}>
-              <select
-                className={`${styles.middle} ${styles.select}`}
-                id="uom"
-                name="Unit of Measurement"
-              >
-                <option value="CTN">CTN</option>
-                <option value="BOX">BOX</option>
-                <option value="EA">EA</option>
-              </select>
-            </div>
-
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Supplier"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.last}`}
-              placeholder="Lead Time"
-            ></input>
-          </div>
-          <div className={styles.columnInputs}>
-            <input
-              className={`${styles.newInput} ${styles.first}`}
-              placeholder="Product ID"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Product Description"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Quantity"
-            ></input>
-            <div className={`${styles.newInput} ${styles.middle}`}>
-              <select
-                className={`${styles.middle} ${styles.select}`}
-                id="uom"
-                name="Unit of Measurement"
-              >
-                <option value="CTN">CTN</option>
-                <option value="BOX">BOX</option>
-                <option value="EA">EA</option>
-              </select>
-            </div>
-
-            <input
-              className={`${styles.newInput} ${styles.middle}`}
-              placeholder="Supplier"
-            ></input>
-            <input
-              className={`${styles.newInput} ${styles.last}`}
-              placeholder="Lead Time"
-            ></input>
+          {/* map out the number of rows here */}
+          <div className={styles.inputRows} ref={rowRef}>
+            {rows.map((row) => row)}
           </div>
         </div>
-        <button className={styles.addButton}>Add New Row</button>
+        <button
+          className={styles.addButton}
+          onClick={() => {
+            addRow();
+          }}
+        >
+          Add New Row
+        </button>
         <button className={styles.submitButton}>Submit Purchase Order</button>
       </div>
     </div>
