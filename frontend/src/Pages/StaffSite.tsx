@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../Components/Header";
 import { NavBar } from "../Components/NavBar";
 import { DeliveryDisplay } from "../Components/DeliveryDisplay";
@@ -14,10 +14,14 @@ interface props {
 
 export const StaffSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
+
+  useEffect(() => {
+    console.log(page);
+  }, [page]);
   return (
     <>
       <Header role={props.role}></Header>
-      <NavBar role={props.role}></NavBar>
+      <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "delivery" && (
         <DeliveryDisplay role={props.role}></DeliveryDisplay>
       )}

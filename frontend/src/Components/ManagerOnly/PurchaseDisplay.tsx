@@ -85,8 +85,8 @@ export const PurchaseDisplay: React.FC = () => {
             <p className={styles.orderID}>Order ID</p>
             <p className={styles.orderItem}>Item</p>
             <p className={styles.orderUser}>Placed By</p>
-            <p className={styles.orderDate}>Ordered Date</p>
-            <p className={styles.deliveredDate}>Delivered Date</p>
+            <p className={styles.orderDate}>Ordered</p>
+            <p className={styles.deliveredDate}>Delivered</p>
           </div>
           <div className={styles.listBodyInput}>
             {deliveredOrders}
@@ -114,8 +114,8 @@ export const PurchaseDisplay: React.FC = () => {
             <p className={styles.orderID}>Order ID</p>
             <p className={styles.orderItem}>Item</p>
             <p className={styles.orderUser}>Placed By</p>
-            <p className={styles.orderDate}>Ordered Date</p>
-            <p className={styles.estimatedDate}>Estimated Date</p>
+            <p className={styles.orderDate}>Ordered</p>
+            <p className={styles.estimatedDate}>Estimated</p>
           </div>
           <div className={styles.listBodyInput}>
             {pendingOrders}

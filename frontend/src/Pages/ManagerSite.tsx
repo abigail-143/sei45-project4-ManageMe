@@ -26,7 +26,7 @@ export const ManagerSite: React.FC<props> = (props) => {
   return (
     <>
       <Header role={props.role}></Header>
-      <NavBar role={props.role}></NavBar>
+      <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "register" && <RegisterUser role={props.role}></RegisterUser>}
       {page == "purchase" && <PurchaseDisplay></PurchaseDisplay>}
       {page == "newPO" && <NewPurchaseOrder></NewPurchaseOrder>}

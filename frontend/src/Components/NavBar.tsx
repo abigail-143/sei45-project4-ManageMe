@@ -3,6 +3,8 @@ import styles from "./NavBar.module.css";
 
 interface props {
   role: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  page: string;
   children?: React.ReactNode;
 }
 
@@ -19,22 +21,67 @@ export const NavBar: React.FC<props> = (props) => {
 
           <ul className={styles.navlinks}>
             <li>
-              <a href="#">Dashboard</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => props.setPage("dashboard")}
+              >
+                Dashboard
+              </a>
             </li>
             <li>
-              <a href="#">Store Delivery</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("delivery");
+                  console.log(props.page);
+                }}
+              >
+                Store Delivery
+              </a>
             </li>
             <li>
-              <a href="#">Purchase Orders</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("purchase");
+                  console.log(props.page);
+                }}
+              >
+                Purchase Orders
+              </a>
             </li>
             <li>
-              <a href="#">Stock Levels</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("stocklevel");
+                  console.log(props.page);
+                }}
+              >
+                Stock Levels
+              </a>
             </li>
             <li>
-              <a href="#">Reports</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("report");
+                  console.log(props.page);
+                }}
+              >
+                Reports
+              </a>
             </li>
             <li>
-              <a href="#">Register User</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("register");
+                  console.log(props.page);
+                }}
+              >
+                Register User
+              </a>
             </li>
           </ul>
         </div>
@@ -47,16 +94,48 @@ export const NavBar: React.FC<props> = (props) => {
 
           <ul className={styles.navlinks}>
             <li>
-              <a href="#">Dashboard</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("dashboard");
+                  console.log(props.page);
+                }}
+              >
+                Dashboard
+              </a>
             </li>
             <li>
-              <a href="#">Store Delivery</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("delivery");
+                  console.log(props.page);
+                }}
+              >
+                Store Delivery
+              </a>
             </li>
             <li>
-              <a href="#">Stock Levels</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("stockstore");
+                  console.log(props.page);
+                }}
+              >
+                Stock Levels
+              </a>
             </li>
             <li>
-              <a href="#">Reports</a>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("report");
+                  console.log(props.page);
+                }}
+              >
+                Reports
+              </a>
             </li>
           </ul>
         </div>
