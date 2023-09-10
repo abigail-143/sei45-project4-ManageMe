@@ -5,6 +5,7 @@ import { RegisterUser } from "../Components/ManagerOnly/RegisterUser";
 import { DeliveryDisplay } from "../Components/DeliveryDisplay";
 import { PurchaseDisplay } from "../Components/ManagerOnly/PurchaseDisplay";
 import { NewPurchaseOrder } from "../Components/ManagerOnly/NewPurchaseOrder";
+import { PurchaseOrderSummary } from "../Components/ManagerOnly/PurchaseOrderSummary";
 
 interface props {
   role: string;
@@ -12,7 +13,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("newPO");
+  const [page, setPage] = useState<string>("poSummary");
 
   // navbar, onclick should set the page to something
 
@@ -24,6 +25,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "delivery" && <DeliveryDisplay></DeliveryDisplay>}
       {page == "purchase" && <PurchaseDisplay></PurchaseDisplay>}
       {page == "newPO" && <NewPurchaseOrder></NewPurchaseOrder>}
+      {page == "poSummary" && <PurchaseOrderSummary></PurchaseOrderSummary>}
     </>
   );
 };
