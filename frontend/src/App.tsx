@@ -6,7 +6,7 @@ import { StaffSite } from "./Pages/StaffSite";
 
 const App: React.FC = () => {
   const [login, setLogin] = useState<boolean>(true);
-  const [role, setRole] = useState<string>("Manager");
+  const [role, setRole] = useState<string>("Staff");
 
   return (
     <div>
