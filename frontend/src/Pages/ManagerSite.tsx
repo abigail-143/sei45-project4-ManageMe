@@ -27,7 +27,9 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "newPO" && <NewPurchaseOrder></NewPurchaseOrder>}
       {page == "poSummary" && <PurchaseOrderSummary></PurchaseOrderSummary>}
       {page == "delivery" && <DeliveryDisplay></DeliveryDisplay>}
-      {page == "newDO" && <NewDeliveryOrder></NewDeliveryOrder>}
+      {page == "newDO" && (
+        <NewDeliveryOrder role={props.role}></NewDeliveryOrder>
+      )}
     </>
   );
 };

@@ -23,10 +23,15 @@
   box-shadow: 0 0 20px var(--light-grey);
 }
 
-.boxHeader {
-  color: var(--blue);
+.boxHeaderBlue {
   margin-bottom: 10px;
+  color: var(--blue);
 }
+
+.boxHeaderGreen {
+    margin-bottom: 10px;
+    color: var(--green);
+  }
 
 .orderDetails {
   /* background-color: lemonchiffon;
@@ -49,6 +54,22 @@
 
 .right {
   margin: 0 30px 0 20px;
+}
+
+.blueBG {
+  background-color: var(--blue);
+}
+
+.greenBG {
+  background-color: var(--green);
+}
+
+.lightBlueBG {
+  background-color: var(--light-blue);
+}
+
+.lightGreenBG {
+  background-color: var(--light-green);
 }
 
 .labelDetails {
@@ -179,7 +200,7 @@
   width: 290px;
   font-size: 16px;
   border: none;
-  background-color: var(--light-blue);
+  /* background-color: var(--light-blue); */
   color: whitesmoke;
   cursor: pointer;
   margin-bottom: 10px;
@@ -190,7 +211,7 @@
   width: 290px;
   font-size: 16px;
   border: none;
-  background-color: var(--blue);
+  /* background-color: var(--blue); */
   color: whitesmoke;
   cursor: pointer;
 }

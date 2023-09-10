@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./NewDeliveryOrder.module.css";
 
-export const NewDeliveryOrder: React.FC = () => {
+interface props {
+  role: string;
+  children?: React.ReactNode;
+}
+
+export const NewDeliveryOrder: React.FC<props> = (props) => {
   // declare a new row
   const newRow: JSX.Element = (
     <div className={styles.columnInputs}>
@@ -50,7 +55,13 @@ export const NewDeliveryOrder: React.FC = () => {
   return (
     <div className={styles.deliveryOrderPage}>
       <div className={styles.deliveryOrderBox}>
-        <h1 className={styles.boxHeader}>New Store Delivery Order</h1>
+        <h1
+          className={`${
+            props.role == "Manager" ? styles.boxHeaderBlue : styles.boxHeaderGreen
+          }`}
+        >
+          New Store Delivery Order
+        </h1>
         <div className={styles.orderDetails}>
           <div className={`${styles.orderDetailsInput} ${styles.left}`}>
             <div className={styles.labelDetails}>
@@ -110,14 +121,22 @@ export const NewDeliveryOrder: React.FC = () => {
           </div>
         </div>
         <button
-          className={styles.addButton}
+          className={`${styles.addButton} ${
+            props.role == "Manager" ? styles.lightBlueBG : styles.lightGreenBG
+          }`}
           onClick={() => {
             addRow();
           }}
         >
           Add New Row
         </button>
-        <button className={styles.submitButton}>Submit Purchase Order</button>
+        <button
+          className={`${styles.submitButton} ${
+            props.role == "Manager" ? styles.blueBG : styles.greenBG
+          }`}
+        >
+          Submit Store Deliver Order
+        </button>
       </div>
     </div>
   );
