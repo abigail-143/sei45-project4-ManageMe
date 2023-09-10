@@ -7,7 +7,6 @@ interface props {
 }
 
 export const StockLevelStore: React.FC<props> = (props) => {
-  const userRole: string = "Staff";
   return (
     <div className={styles.stockWarehouse}>
       <div className={styles.tabRow}>
