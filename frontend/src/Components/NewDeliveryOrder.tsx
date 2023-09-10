@@ -17,7 +17,7 @@ export const NewDeliveryOrder: React.FC = () => {
         className={`${styles.newInput} ${styles.middle}`}
         placeholder="Quantity"
       ></input>
-      <div className={`${styles.newInput} ${styles.middle}`}>
+      <div className={`${styles.newInput} ${styles.last}`}>
         <select
           className={`${styles.select}`}
           id="uom"
@@ -28,14 +28,6 @@ export const NewDeliveryOrder: React.FC = () => {
           <option value="EA">EA</option>
         </select>
       </div>
-      <input
-        className={`${styles.newInput} ${styles.middle}`}
-        placeholder="Supplier"
-      ></input>
-      <input
-        className={`${styles.newInput} ${styles.last}`}
-        placeholder="Lead Time"
-      ></input>
     </div>
   );
 
@@ -111,8 +103,6 @@ export const NewDeliveryOrder: React.FC = () => {
             <p>Product Description</p>
             <p>Quantity</p>
             <p>Unit Of Measurement</p>
-            <p>Supplier</p>
-            <p>Lead Time</p>
           </div>
           {/* map out the number of rows here */}
           <div className={styles.inputRows} ref={rowRef}>

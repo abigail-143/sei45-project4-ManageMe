@@ -113,7 +113,7 @@
 }
 
 .columnHeaders > p {
-  width: calc(100% / 6);
+  width: calc(100% / 4);
   text-align: center;
   /* border: 1px solid pink; */
   padding: 0;
@@ -135,7 +135,7 @@
 }
 
 .newInput {
-  width: calc(100% / 6);
+  width: calc(100% / 4);
   text-align: left;
   text-indent: 10px;
   border: 1px solid var(--light-grey);
@@ -145,27 +145,33 @@
 }
 
 .select {
-  width: 82%;
+  width: 80%;
   text-align: left;
   text-indent: 10px;
   border: none;
   background: none;
   outline: none;
-  padding: 0;
+  padding-left: 10%;
+  margin: 0;
+}
+
+.select > option {
+  width: 80%;
+  padding-left: 10%;
   margin: 0;
 }
 
 .first {
-  margin-left: 20px;
+  margin-left: 40px;
 }
 
 .middle {
-  margin-left: 40px;
+  margin-left: 80px;
 }
 
 .last {
-  margin-left: 40px;
-  margin-right: 20px;
+  margin-left: 80px;
+  margin-right: 40px;
 }
 
 .addButton {
