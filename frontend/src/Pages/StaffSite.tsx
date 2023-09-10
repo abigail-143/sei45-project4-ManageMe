@@ -15,12 +15,9 @@ interface props {
 export const StaffSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
 
-  useEffect(() => {
-    console.log(page);
-  }, [page]);
   return (
     <>
-      <Header role={props.role}></Header>
+      <Header role={props.role} setPage={setPage} page={page}></Header>
       <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "delivery" && (
         <DeliveryDisplay role={props.role}></DeliveryDisplay>

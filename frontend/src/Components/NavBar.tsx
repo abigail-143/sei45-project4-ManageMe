@@ -18,7 +18,6 @@ export const NavBar: React.FC<props> = (props) => {
             <img className={styles.companyImg} src="/simulation.png"></img>
             <p className={styles.companyName}>ManageMe</p>
           </div>
-
           <ul className={styles.navlinks}>
             <li>
               <a

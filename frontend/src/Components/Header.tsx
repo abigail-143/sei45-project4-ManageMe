@@ -3,6 +3,8 @@ import styles from "./Header.module.css";
 
 interface props {
   role: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  page: string;
   children?: React.ReactNode;
 }
 
@@ -22,11 +24,13 @@ export const Header: React.FC<props> = (props) => {
           </div>
           <button
             className={`${styles.button} ${styles.purchase}  ${styles.blue}`}
+            onClick={() => props.setPage("newPO")}
           >
             New Purchase
           </button>
           <button
             className={`${styles.button} ${styles.delivery}  ${styles.blue}`}
+            onClick={() => props.setPage("newDO")}
           >
             New Delivery
           </button>
@@ -46,6 +50,7 @@ export const Header: React.FC<props> = (props) => {
           </div>
           <button
             className={`${styles.button} ${styles.delivery}  ${styles.green}`}
+            onClick={() => props.setPage("newDO")}
           >
             New Delivery
           </button>
