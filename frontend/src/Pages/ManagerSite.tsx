@@ -8,6 +8,7 @@ import { NewPurchaseOrder } from "../Components/ManagerOnly/NewPurchaseOrder";
 import { PurchaseOrderSummary } from "../Components/ManagerOnly/PurchaseOrderSummary";
 import { NewDeliveryOrder } from "../Components/NewDeliveryOrder";
 import { DeliveryOrderSummary } from "../Components/DeliveryOrderSummary";
+import { StockLevelDisplay } from "../Components/StockLevelDisplay";
 
 interface props {
   role: string;
@@ -15,7 +16,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("doSummary");
+  const [page, setPage] = useState<string>("stocklevel");
 
   // navbar, onclick should set the page to something
 
@@ -36,6 +37,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "doSummary" && (
         <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
       )}
+      {page == "stocklevel" && <StockLevelDisplay></StockLevelDisplay>}
     </>
   );
 };
