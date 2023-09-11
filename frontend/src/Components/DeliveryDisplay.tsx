@@ -33,37 +33,6 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
   >([]);
 
   // pull data from backend
-  const deliveredOrders: {
-    orderID: number;
-    orderDate: string;
-    deliveredDate: string;
-    orderUser: string;
-  }[] = [
-    {
-      orderID: 1,
-      orderDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-    },
-    {
-      orderID: 2,
-      orderDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-    },
-    {
-      orderID: 3,
-      orderDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-    },
-    {
-      orderID: 4,
-      orderDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-    },
-  ];
 
   const pullAllCompletedDO = async () => {
     const res = await fetchData(
@@ -75,7 +44,7 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("Completed DO ok");
-      console.log(res.data);
+      // console.log(res.data);
       setCompletedDO(res.data);
     } else {
       console.log("fetch completed DO error");
@@ -93,7 +62,7 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("Pending DO ok");
-      console.log(res.data);
+      // console.log(res.data);
       setPendingDO(res.data);
     } else {
       console.log("fetch pending DO error");
@@ -147,6 +116,7 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
           <div className={styles.listBodyInput}>
             {/* this is Completed Deliveries */}
             {completedDO.map((item, index) => {
+              // change Date datatype into string format
               const orderDate = String(item.delivery_placed_date).split("T")[0];
               const deliveredDate = String(item.delivered_date).split("T")[0];
               return (

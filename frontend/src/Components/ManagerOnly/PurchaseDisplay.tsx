@@ -1,72 +1,105 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./PurchaseDisplay.module.css";
+import { useFetch } from "../../hooks/useFetch";
+import UserContext from "../../context/user";
 
 export const PurchaseDisplay: React.FC = () => {
-  const purchaseOrders: {
-    poID: number;
-    poDate: string;
-    deliveredDate: string;
-    estimatedDate: string;
-    orderUser: string;
-    orderItem: string;
-  }[] = [
+  const fetchData = useFetch();
+  const context = useContext(UserContext);
+  const [completedPO, setCompletedPO] = useState<
     {
-      poID: 1,
-      poDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      estimatedDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-      orderItem: "item1",
-    },
+      order_id: number;
+      username: string;
+      product_id: string;
+      order_quantity: number;
+      order_placed_date: Date;
+      estimated_receive_date: Date;
+      received_date: Date;
+      fulfilled: boolean;
+      on_time: boolean;
+    }[]
+  >([]);
+  const [pendingPO, setPendingPO] = useState<
     {
-      poID: 2,
-      poDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      estimatedDate: new Date().toISOString().split("T")[0],
-      orderUser: "user1",
-      orderItem: "item2",
-    },
-    {
-      poID: 3,
-      poDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      estimatedDate: new Date().toISOString().split("T")[0],
-      orderUser: "user2",
-      orderItem: "item1",
-    },
-    {
-      poID: 4,
-      poDate: new Date().toISOString().split("T")[0],
-      deliveredDate: new Date().toISOString().split("T")[0],
-      estimatedDate: new Date().toISOString().split("T")[0],
-      orderUser: "user2",
-      orderItem: "item2",
-    },
-  ];
+      order_id: number;
+      username: string;
+      product_id: string;
+      order_quantity: number;
+      order_placed_date: Date;
+      estimated_receive_date: Date;
+      received_date: Date;
+      fulfilled: boolean;
+      on_time: boolean;
+    }[]
+  >([]);
 
-  const deliveredOrders = purchaseOrders.map((item, index) => {
-    return (
-      <div key={index} className={styles.listBodyRows}>
-        <p className={styles.orderID}>{item.poID}</p>
-        <p className="orderItem">{item.orderItem}</p>
-        <p className={styles.orderUser}>{item.orderUser}</p>
-        <p className={styles.orderDate}>{item.poDate}</p>
-        <p className={styles.deliveredDate}>{item.deliveredDate}</p>
-      </div>
+  const pullAllCompletedPO = async () => {
+    const res = await fetchData(
+      "/po/all/completed",
+      "GET",
+      undefined,
+      context?.accessToken
     );
-  });
 
-  const pendingOrders = purchaseOrders.map((item, index) => {
-    return (
-      <div key={index} className={styles.listBodyRows}>
-        <p className={styles.orderID}>{item.poID}</p>
-        <p className="orderItem">{item.orderItem}</p>
-        <p className={styles.orderUser}>{item.orderUser}</p>
-        <p className={styles.orderDate}>{item.poDate}</p>
-        <p className={styles.estimatedDate}>{item.estimatedDate}</p>
-      </div>
+    if (res.ok) {
+      console.log("Completed PO ok");
+      // console.log(res.data);
+      setCompletedPO(res.data);
+    } else {
+      console.log("fetch completed PO error");
+      console.log(res.data);
+    }
+  };
+
+  const pullAllPendingPO = async () => {
+    const res = await fetchData(
+      "/po/all/pending",
+      "GET",
+      undefined,
+      context?.accessToken
     );
-  });
+
+    if (res.ok) {
+      console.log("Pending PO ok");
+      // console.log(res.data);
+      setPendingPO(res.data);
+    } else {
+      console.log("fetch pending PO error");
+      console.log(res.data);
+    }
+  };
+
+
+  // move the map into jsx
+  // const deliveredOrders = purchaseOrders.map((item, index) => {
+  //   return (
+  //     <div key={index} className={styles.listBodyRows}>
+  //       <p className={styles.orderID}>{item.poID}</p>
+  //       <p className={styles.orderItem}>{item.orderItem}</p>
+  //       <p className={styles.orderUser}>{item.orderUser}</p>
+  //       <p className={styles.orderDate}>{item.poDate}</p>
+  //       <p className={styles.deliveredDate}>{item.deliveredDate}</p>
+  //     </div>
+  //   );
+  // });
+
+  // const pendingOrders = purchaseOrders.map((item, index) => {
+  //   return (
+  //     <div key={index} className={styles.listBodyRows}>
+  //       <p className={styles.orderID}>{item.poID}</p>
+  //       <p className={styles.orderItem}>{item.orderItem}</p>
+  //       <p className={styles.orderUser}>{item.orderUser}</p>
+  //       <p className={styles.orderDate}>{item.poDate}</p>
+  //       <p className={styles.estimatedDate}>{item.estimatedDate}</p>
+  //     </div>
+  //   );
+  // });
+
+  useEffect(() => {
+    pullAllCompletedPO();
+    pullAllPendingPO();
+  }, []);
+
   return (
     <div className={styles.poPage}>
       <div className={`${styles.poListDiv} ${styles.left}`}>
@@ -89,12 +122,25 @@ export const PurchaseDisplay: React.FC = () => {
             <p className={styles.deliveredDate}>Delivered</p>
           </div>
           <div className={styles.listBodyInput}>
+            {completedPO.map((item, index) => {
+              const orderDate = String(item.order_placed_date).split("T")[0];
+              const deliveredDate = String(item.received_date).split("T")[0];
+              return (
+                <div key={index} className={styles.listBodyRows}>
+                  <p className={styles.orderID}>{item.order_id}</p>
+                  <p className={styles.orderItem}>{item.product_id}</p>
+                  <p className={styles.orderUser}>{item.username}</p>
+                  <p className={styles.orderDate}>{orderDate}</p>
+                  <p className={styles.deliveredDate}>{deliveredDate}</p>
+                </div>
+              );
+            })}
+            {/* {deliveredOrders}
             {deliveredOrders}
             {deliveredOrders}
             {deliveredOrders}
             {deliveredOrders}
-            {deliveredOrders}
-            {deliveredOrders}
+            {deliveredOrders} */}
           </div>
         </div>
       </div>
@@ -118,8 +164,23 @@ export const PurchaseDisplay: React.FC = () => {
             <p className={styles.estimatedDate}>Estimated</p>
           </div>
           <div className={styles.listBodyInput}>
-            {pendingOrders}
-            {pendingOrders}
+            {pendingPO.map((item, index) => {
+              const orderDate = String(item.order_placed_date).split("T")[0];
+              const estimatedDate = String(item.estimated_receive_date).split(
+                "T"
+              )[0];
+              return (
+                <div key={index} className={styles.listBodyRows}>
+                  <p className={styles.orderID}>{item.order_id}</p>
+                  <p className={styles.orderItem}>{item.product_id}</p>
+                  <p className={styles.orderUser}>{item.username}</p>
+                  <p className={styles.orderDate}>{orderDate}</p>
+                  <p className={styles.deliveredDate}>{estimatedDate}</p>
+                </div>
+              );
+            })}
+            {/* {pendingOrders}
+            {pendingOrders} */}
           </div>
         </div>
       </div>
