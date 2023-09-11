@@ -16,6 +16,7 @@ import { StockLevelStore } from "../Components/StockLevelStore";
 import { DashboardManager } from "../Components/DashboardManager";
 import { ProductsDisplay } from "../Components/ProductsDisplay";
 import { ProductsAll } from "../Components/ProductsAll";
+import { ProductStore } from "../Components/ProductStore";
 
 interface props {
   role: string;
@@ -87,6 +88,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "products" && <ProductsDisplay></ProductsDisplay>}
       <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
+      {page == "storeproducts" && <ProductStore></ProductStore>}
     </>
   );
 };
