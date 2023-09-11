@@ -25,7 +25,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("warehouseproducts");
+  const [page, setPage] = useState<string>("storeproducts");
   const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
   const [productID, setProductID] = useState<string>("");
