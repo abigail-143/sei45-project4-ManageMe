@@ -4,8 +4,8 @@
   position: fixed;
   top: 60px;
   right: 0;
-  background-color: lavender;
-  border: 1px solid black;
+  /* background-color: lavender;
+  border: 1px solid black; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,7 +15,7 @@
 .firstRow {
   width: 100%;
   min-height: 500px;
-  background-color: lavenderblush;
+  /* background-color: lavenderblush; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@
 .secondRow {
   width: 100%;
   min-height: 850px;
-  background-color: lightsalmon;
+  /* background-color: lightsalmon; */
   display: flex;
   justify-content: center;
 }
@@ -32,7 +32,7 @@
 .addForm {
   width: 800px;
   min-height: 430px;
-  background-color: lightblue;
+  /* background-color: lightblue; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@
 .formInput {
   display: flex;
   width: 600px;
-  background-color: lightpink;
+  /* background-color: lightpink; */
   margin: 7px 0;
 }
 
@@ -90,7 +90,7 @@
 .productList {
   width: calc(100% - 90px);
   max-height: 820px;
-  background-color: papayawhip;
+  /* background-color: papayawhip; */
   display: flex;
   flex-direction: column;
   padding: 0 20px;
@@ -102,12 +102,12 @@
   margin: 15px 0;
 }
 
-.listHeaders {
+/* .listHeaders {
   background-color: paleturquoise;
-}
+} */
 
 .listBody {
-  background-color: khaki;
+  /* background-color: khaki; */
   min-height: 700px;
   overflow-y: scroll;
 }
@@ -120,8 +120,8 @@
 
 .headerInput {
   width: calc(100% / 8);
-  background-color: aliceblue;
-  border: 1px solid greenyellow;
+  /* background-color: aliceblue;
+  border: 1px solid greenyellow; */
   margin: 0;
   padding-bottom: 2px;
   margin-bottom: 5px;
@@ -131,8 +131,8 @@
 
 .bodyInput {
   width: calc(100% / 8);
-  background-color: aliceblue;
-  border: 1px solid greenyellow;
+  /* background-color: aliceblue;
+  border: 1px solid greenyellow; */
   margin: 0;
   padding-bottom: 2px;
   margin-bottom: 5px;
