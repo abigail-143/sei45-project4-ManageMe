@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./DeliveryDisplay.module.css";
+import { useFetch } from "../hooks/useFetch";
+import UserContext from "../context/user";
 
 interface props {
   role: string;
@@ -7,7 +9,30 @@ interface props {
 }
 
 export const DeliveryDisplay: React.FC<props> = (props) => {
+  const fetchData = useFetch();
+  const context = useContext(UserContext);
+  const [completedDO, setCompletedDO] = useState<
+    {
+      delivery_id: number;
+      username: string;
+      delivery_placed_date: Date;
+      to_deliver_date: Date;
+      delivered_date: Date;
+      completed: boolean;
+    }[]
+  >([]);
+  const [pendingDO, setPendingDO] = useState<
+    {
+      delivery_id: number;
+      username: string;
+      delivery_placed_date: Date;
+      to_deliver_date: Date;
+      delivered_date: Date;
+      completed: boolean;
+    }[]
+  >([]);
 
+  // pull data from backend
   const deliveredOrders: {
     orderID: number;
     orderDate: string;
@@ -40,17 +65,59 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
     },
   ];
 
-  // this maps the data returned to give the rows in the list
-  const orders = deliveredOrders.map((item, index) => {
-    return (
-      <div key={index} className={styles.listBodyRows}>
-        <p className={styles.orderID}>{item.orderID}</p>
-        <p className={styles.orderDate}>{item.orderDate}</p>
-        <p className={styles.deliveredDate}>{item.deliveredDate}</p>
-        <p className={styles.orderUser}>{item.orderUser}</p>
-      </div>
+  const pullAllCompletedDO = async () => {
+    const res = await fetchData(
+      "/do/all/completed",
+      "GET",
+      undefined,
+      context?.accessToken
     );
-  });
+
+    if (res.ok) {
+      console.log("Completed DO ok");
+      console.log(res.data);
+      setCompletedDO(res.data);
+    } else {
+      console.log("fetch completed DO error");
+      console.log(res.data);
+    }
+  };
+
+  const pullAllPendingDO = async () => {
+    const res = await fetchData(
+      "/do/all/pending",
+      "GET",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("Pending DO ok");
+      console.log(res.data);
+      setPendingDO(res.data);
+    } else {
+      console.log("fetch pending DO error");
+      console.log(res.data);
+    }
+  };
+
+  // this maps the data returned to give the rows in the list MOVED IT INTO JSX
+  // const orders = deliveredOrders.map((item, index) => {
+  //   return (
+  //     <div key={index} className={styles.listBodyRows}>
+  //       <p className={styles.orderID}>{item.orderID}</p>
+  //       <p className={styles.orderDate}>{item.orderDate}</p>
+  //       <p className={styles.deliveredDate}>{item.deliveredDate}</p>
+  //       <p className={styles.orderUser}>{item.orderUser}</p>
+  //     </div>
+  //   );
+  // });
+
+  useEffect(() => {
+    pullAllCompletedDO();
+    pullAllPendingDO();
+  }, []);
+
   return (
     <div className={styles.deliveryPage}>
       <div className={`${styles.deliveryListDiv} ${styles.left}`}>
@@ -78,13 +145,26 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
             <p className={styles.orderUser}>Placed By</p>
           </div>
           <div className={styles.listBodyInput}>
+            {/* this is Completed Deliveries */}
+            {completedDO.map((item, index) => {
+              const orderDate = String(item.delivery_placed_date).split("T")[0];
+              const deliveredDate = String(item.delivered_date).split("T")[0];
+              return (
+                <div key={index} className={styles.listBodyRows}>
+                  <p className={styles.orderID}>{item.delivery_id}</p>
+                  <p className={styles.orderDate}>{orderDate}</p>
+                  <p className={styles.deliveredDate}>{deliveredDate}</p>
+                  <p className={styles.orderUser}>{item.username}</p>
+                </div>
+              );
+            })}
+            {/* {orders}
             {orders}
             {orders}
             {orders}
             {orders}
             {orders}
-            {orders}
-            {orders}
+            {orders} */}
           </div>
         </div>
       </div>
@@ -113,8 +193,21 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
             <p className={styles.orderUser}>Placed By</p>
           </div>
           <div className={styles.listBodyInput}>
-            {orders}
-            {orders}
+            {/* this is pending deliveries */}
+            {pendingDO.map((item, index) => {
+              const orderDate = String(item.delivery_placed_date).split("T")[0];
+              const deliveredDate = String(item.delivered_date).split("T")[0];
+              return (
+                <div key={index} className={styles.listBodyRows}>
+                  <p className={styles.orderID}>{item.delivery_id}</p>
+                  <p className={styles.orderDate}>{orderDate}</p>
+                  <p className={styles.deliveredDate}>{deliveredDate}</p>
+                  <p className={styles.orderUser}>{item.username}</p>
+                </div>
+              );
+            })}
+            {/* {orders}
+            {orders} */}
           </div>
         </div>
       </div>
