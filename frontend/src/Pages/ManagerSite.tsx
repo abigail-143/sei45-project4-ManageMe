@@ -17,6 +17,7 @@ import { DashboardManager } from "../Components/DashboardManager";
 import { ProductsDisplay } from "../Components/ProductsDisplay";
 import { ProductsAll } from "../Components/ProductsAll";
 import { ProductStore } from "../Components/ProductStore";
+import { ProductWarehouse } from "../Components/ProductWarehouse";
 
 interface props {
   role: string;
@@ -24,7 +25,7 @@ interface props {
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("allproducts");
+  const [page, setPage] = useState<string>("warehouseproducts");
   const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
   const [productID, setProductID] = useState<string>("");
@@ -89,6 +90,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
       {page == "storeproducts" && <ProductStore></ProductStore>}
+      {page == "warehouseproducts" && <ProductWarehouse></ProductWarehouse>}
     </>
   );
 };

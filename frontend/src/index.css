@@ -15,7 +15,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.allProductsPage {
+.storeProductsPage {
   width: calc(100vw - 200px);
   height: calc(100vh - 60px);
   position: fixed;
@@ -31,7 +31,7 @@ body {
 
 .firstRow {
   width: 100%;
-  min-height: 500px;
+  min-height: 300px;
   background-color: lavenderblush;
   display: flex;
   align-items: center;
@@ -47,8 +47,8 @@ body {
 }
 
 .addForm {
-  width: 800px;
-  min-height: 430px;
+  width: 780px;
+  min-height: 200px;
   background-color: lightblue;
   display: flex;
   flex-direction: column;

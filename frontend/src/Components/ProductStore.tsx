@@ -2,7 +2,7 @@ import React from "react";
 
 export const ProductStore: React.FC = () => {
   return (
-    <div className="allProductsPage">
+    <div className="storeProductsPage">
       <div className="firstRow">
         <div className="addForm">
           <h1 className="formTitle">Add New Product To Store</h1>
@@ -11,41 +11,10 @@ export const ProductStore: React.FC = () => {
             <input className="input" placeholder="input"></input>
           </div>
           <div className="formInput">
-            <label className="label">Product Description:</label>
+            <label className="label">Quantity</label>
             <input className="input" placeholder="input"></input>
           </div>
-          <div className="formInput">
-            <label className="label">Unit Of Measurement:</label>
-            <select className="inputSelect" id="uom" name="Unit of Measurement">
-              <option value="CTN">CTN</option>
-              <option value="BOX">BOX</option>
-              <option value="EA">EA</option>
-            </select>
-          </div>
-          <div className="formInput">
-            <label className="label">Piece Per UOM:</label>
-            <input className="input" placeholder="input"></input>
-          </div>
-          <div className="formInput">
-            <label className="label">Cost Per UOM:</label>
-            <input className="input" placeholder="input"></input>
-          </div>
-          <div className="formInput">
-            <label className="label">Supplier:</label>
-            <input className="input" placeholder="input"></input>
-          </div>
-          <div className="formInput">
-            <label className="label">Supplier Leadtime:</label>
-            <input className="input" placeholder="input"></input>
-          </div>
-          <div className="formInput">
-            <label className="label">In Use:</label>
-            <select className="inputSelect" id="inUse" name="in use">
-              <option value="true">In Use</option>
-              <option value="false">Not In Use</option>
-            </select>
-          </div>
-          <button className="addBtn">Add New Product</button>
+          <button className="addBtn">Add To Store</button>
         </div>
       </div>
       <div className="secondRow">
