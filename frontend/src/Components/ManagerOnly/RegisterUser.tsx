@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./RegisterUser.module.css";
+import { useFetch } from "../../hooks/useFetch";
+import UserContext from "../../context/user";
 
 interface props {
   role: string;
@@ -7,23 +9,86 @@ interface props {
 }
 
 export const RegisterUser: React.FC<props> = (props) => {
-  const staffList: { username: string; email: string; userStatus: string }[] = [
-    { username: "user1", email: "user1@staff.com", userStatus: "active" },
-    { username: "user2", email: "user2@staff.com", userStatus: "active" },
-    { username: "user3", email: "user3@staff.com", userStatus: "active" },
-    { username: "user4", email: "user4@staff.com", userStatus: "inactive" },
-  ];
+  const fetchData = useFetch();
+  const context = useContext(UserContext);
+  const [users, setUsers] = useState<
+    {
+      username: string;
+      email: String;
+      company: Date;
+      user_status: Boolean;
+      account_type: string;
+    }[]
+  >([]);
+  const [staffAccounts, setStaffAccounts] = useState<
+    {
+      username: string;
+      email: String;
+      company: Date;
+      user_status: Boolean;
+      account_type: string;
+    }[]
+  >([]);
+  const [managerAccounts, setManagerAccounts] = useState<
+    {
+      username: string;
+      email: String;
+      company: Date;
+      user_status: Boolean;
+      account_type: string;
+    }[]
+  >([]);
 
-  // map out the data from backend to get the table rows
-  const staff = staffList.map((user, index) => {
-    return (
-      <div key={index} className={styles.listBodyRows}>
-        <p className={`${styles.column} ${styles.username}`}>{user.username}</p>
-        <p className={`${styles.column} ${styles.email}`}>{user.email}</p>
-        <p className={`${styles.column} ${styles.status}`}>{user.userStatus}</p>
-      </div>
+  // GET all data in user_list table
+  const pullAllUsers = async () => {
+    const res = await fetchData(
+      "/user/all",
+      "GET",
+      undefined,
+      context?.accessToken
     );
-  });
+
+    if (res.ok) {
+      console.log("all users ok");
+      console.log(res.data);
+      setUsers(res.data);
+    } else {
+      console.log("all users error");
+      console.log(res.data);
+    }
+
+    // get users that are "staff"
+    const staffUsers = await res.data.filter(
+      (user: {
+        username: string;
+        email: String;
+        company: Date;
+        user_status: Boolean;
+        account_type: string;
+      }) => {
+        return user.account_type == "Staff";
+      }
+    );
+    setStaffAccounts(staffUsers);
+
+    // get users that are "managers"
+    const managerUsers = await res.data.filter(
+      (user: {
+        username: string;
+        email: String;
+        company: Date;
+        user_status: Boolean;
+        account_type: string;
+      }) => {
+        return user.account_type == "Manager";
+      }
+    );
+    setManagerAccounts(managerUsers);
+  };
+
+  useEffect(() => {
+    pullAllUsers();
+  }, []);
 
   return (
     <>
@@ -84,8 +149,23 @@ export const RegisterUser: React.FC<props> = (props) => {
               </div>
             </div>
             <div className={styles.listBody}>
-              {staff}
-              {staff}
+              {managerAccounts.map((user, index) => {
+                return (
+                  <div key={index} className={styles.listBodyRows}>
+                    <p className={`${styles.column} ${styles.username}`}>
+                      {user.username}
+                    </p>
+                    <p className={`${styles.column} ${styles.email}`}>
+                      {user.email}
+                    </p>
+                    <p className={`${styles.column} ${styles.status}`}>
+                      {user.user_status ? "Active" : "Not Active"}
+                    </p>
+                  </div>
+                );
+              })}
+              {/* {staff}
+              {staff} */}
             </div>
           </div>
           {/* this is the staff list */}
@@ -111,8 +191,23 @@ export const RegisterUser: React.FC<props> = (props) => {
               </div>
             </div>
             <div className={styles.listBody}>
-              {staff}
-              {staff}
+              {staffAccounts.map((user, index) => {
+                return (
+                  <div key={index} className={styles.listBodyRows}>
+                    <p className={`${styles.column} ${styles.username}`}>
+                      {user.username}
+                    </p>
+                    <p className={`${styles.column} ${styles.email}`}>
+                      {user.email}
+                    </p>
+                    <p className={`${styles.column} ${styles.status}`}>
+                      {user.user_status ? "Active" : "Not Active"}
+                    </p>
+                  </div>
+                );
+              })}
+              {/* {staff}
+              {staff} */}
             </div>
           </div>
         </div>
