@@ -128,13 +128,6 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
                 </div>
               );
             })}
-            {/* {orders}
-            {orders}
-            {orders}
-            {orders}
-            {orders}
-            {orders}
-            {orders} */}
           </div>
         </div>
       </div>
@@ -176,8 +169,6 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
                 </div>
               );
             })}
-            {/* {orders}
-            {orders} */}
           </div>
         </div>
       </div>

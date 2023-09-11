@@ -11,6 +11,7 @@
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+    padding-top: 20px;
   }
   
   .first {
@@ -26,8 +27,8 @@
   }
   
   .second {
-    /* background-color: lavender; */
-    /* border: 1px solid red; */
+    /* background-color: lavender;
+    border: 1px solid red; */
     width: calc(100vw - 250px);
     min-height: 485px;
     margin-top: 10px;
@@ -36,21 +37,14 @@
   }
   
   .firstTable {
-    width: calc(100% / 2);
-    height: 80%;
+    width: 100%;
+    height: 90%;
     /* background-color: skyblue;
     border: 1px solid purple; */
+    margin: 0;
     padding: 10px 15px;
     border-top-left-radius: 10px;
     box-shadow: 0 0 15px var(--light-grey);
-  }
-  
-  .one {
-    margin: 10px 10px 10px 0;
-  }
-  
-  .two {
-    margin: 10px 0 10px 10px;
   }
   
   .title {
@@ -107,11 +101,16 @@
     width: calc(100% / 4);
     margin: 0;
   }
+
+  .doTable {
+    max-height: 170px;
+    margin-bottom: 5px;
+    overflow-y: scroll;
+  }
   
   .doTableRowsDiv {
     height: 170px;
     /* background-color: greenyellow; */
-    overflow-y: scroll;
   }
   
   .doTableRows {

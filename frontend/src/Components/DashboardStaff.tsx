@@ -100,20 +100,7 @@ export const DashboardStaff: React.FC = () => {
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.first}>
-        <div className={`${styles.firstTable} ${styles.one}`}>
-          <h1 className={styles.title}>Recent Purchase Orders</h1>
-          <div className={styles.poTable}>
-            <div className={styles.poTableHeaders}>
-              <p>PO ID</p>
-              <p>Product ID</p>
-              <p>Raised By</p>
-              <p>Order Date</p>
-              <p>Expected Date</p>
-            </div>
-            <div className={styles.poTableRowsDiv}>{poRows}</div>
-          </div>
-        </div>
-        <div className={`${styles.firstTable} ${styles.two}`}>
+        <div className={`${styles.firstTable}`}>
           <h1 className={styles.title}>Recent Store Delivery Orders</h1>
           <div className={styles.doTable}>
             <div className={styles.doTableHeaders}>
