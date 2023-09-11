@@ -15,13 +15,15 @@ import { StockLevelWarehouse } from "../Components/StockLevelWarehouse";
 import { StockLevelStore } from "../Components/StockLevelStore";
 import { DashboardManager } from "../Components/DashboardManager";
 import { ProductsDisplay } from "../Components/ProductsDisplay";
+import { ProductsAll } from "../Components/ProductsAll";
+
 interface props {
   role: string;
   children?: React.ReactNode;
 }
 
 export const ManagerSite: React.FC<props> = (props) => {
-  const [page, setPage] = useState<string>("products");
+  const [page, setPage] = useState<string>("allproducts");
   const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
   const [productID, setProductID] = useState<string>("");
@@ -84,6 +86,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       )}
       {page == "products" && <ProductsDisplay></ProductsDisplay>}
       <div>{JSON.stringify(context)}</div>
+      {page == "allproducts" && <ProductsAll></ProductsAll>}
     </>
   );
 };
