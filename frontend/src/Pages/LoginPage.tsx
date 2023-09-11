@@ -49,19 +49,18 @@ export const LoginPage: React.FC<props> = (props) => {
     } else {
       console.log("error");
       console.log(res.data);
+      alert(res.data);
     }
   };
 
   return (
     <div className={styles.loginPage}>
-      <div>{JSON.stringify(context)}</div>
       <div className={styles.loginImgDiv}>
         <img
           className={styles.loginImg}
           src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3024&q=80"
           alt="inventory"
         ></img>
-        d
       </div>
       <div className={styles.loginFormDiv}>
         <img className={styles.companyLogo} src="/simulation.png"></img>

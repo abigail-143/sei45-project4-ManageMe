@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import UserContext from "../context/user";
+
 import { Header } from "../Components/Header";
 import { NavBar } from "../Components/NavBar";
 import { RegisterUser } from "../Components/ManagerOnly/RegisterUser";
@@ -20,6 +22,7 @@ interface props {
 
 export const ManagerSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
+  const context = useContext(UserContext);
 
   // navbar, onclick should set the page to something
 
@@ -52,6 +55,7 @@ export const ManagerSite: React.FC<props> = (props) => {
         <StockLevelStore role={props.role}></StockLevelStore>
       )}
       {page == "dashboard" && <DashboardManager></DashboardManager>}
+      <div>{JSON.stringify(context)}</div>
     </>
   );
 };
