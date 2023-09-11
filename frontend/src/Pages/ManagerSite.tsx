@@ -23,6 +23,7 @@ interface props {
 export const ManagerSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
   const context = useContext(UserContext);
+  const [poID, setPOID] = useState<number>(0);
 
   // navbar, onclick should set the page to something
 
@@ -31,11 +32,20 @@ export const ManagerSite: React.FC<props> = (props) => {
       <Header role={props.role} setPage={setPage} page={page}></Header>
       <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "register" && <RegisterUser role={props.role}></RegisterUser>}
-      {page == "purchase" && <PurchaseDisplay></PurchaseDisplay>}
+      {page == "purchase" && (
+        <PurchaseDisplay
+          poID={poID}
+          setPOID={setPOID}
+          setPage={setPage}
+          page={page}
+        ></PurchaseDisplay>
+      )}
       {page == "newPO" && (
         <NewPurchaseOrder setPage={setPage} page={page}></NewPurchaseOrder>
       )}
-      {page == "poSummary" && <PurchaseOrderSummary></PurchaseOrderSummary>}
+      {page == "poSummary" && poID != 0 && (
+        <PurchaseOrderSummary poID={poID}></PurchaseOrderSummary>
+      )}
       {page == "delivery" && (
         <DeliveryDisplay role={props.role}></DeliveryDisplay>
       )}
@@ -49,7 +59,9 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "doSummary" && (
         <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
       )}
-      {page == "stocklevel" && <StockLevelDisplay></StockLevelDisplay>}
+      {page == "stocklevel" && (
+        <StockLevelDisplay page={page} setPage={setPage}></StockLevelDisplay>
+      )}
       {page == "stockwarehouse" && <StockLevelWarehouse></StockLevelWarehouse>}
       {page == "stockstore" && (
         <StockLevelStore role={props.role}></StockLevelStore>

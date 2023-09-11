@@ -3,7 +3,15 @@ import styles from "./PurchaseDisplay.module.css";
 import { useFetch } from "../../hooks/useFetch";
 import UserContext from "../../context/user";
 
-export const PurchaseDisplay: React.FC = () => {
+interface props {
+  poID: number;
+  setPOID: React.Dispatch<React.SetStateAction<number>>;
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  children?: React.ReactNode;
+}
+
+export const PurchaseDisplay: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [completedPO, setCompletedPO] = useState<
@@ -69,7 +77,6 @@ export const PurchaseDisplay: React.FC = () => {
     }
   };
 
-
   // move the map into jsx
   // const deliveredOrders = purchaseOrders.map((item, index) => {
   //   return (
@@ -126,7 +133,15 @@ export const PurchaseDisplay: React.FC = () => {
               const orderDate = String(item.order_placed_date).split("T")[0];
               const deliveredDate = String(item.received_date).split("T")[0];
               return (
-                <div key={index} className={styles.listBodyRows}>
+                <div
+                  key={index}
+                  className={styles.listBodyRows}
+                  onClick={() => {
+                    console.log(item.order_id);
+                    props.setPOID(item.order_id);
+                    props.setPage("poSummary");
+                  }}
+                >
                   <p className={styles.orderID}>{item.order_id}</p>
                   <p className={styles.orderItem}>{item.product_id}</p>
                   <p className={styles.orderUser}>{item.username}</p>
