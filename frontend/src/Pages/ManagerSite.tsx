@@ -24,6 +24,7 @@ export const ManagerSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
   const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
+  const [productID, setProductID] = useState<string>("");
 
   // navbar, onclick should set the page to something
 
@@ -38,13 +39,18 @@ export const ManagerSite: React.FC<props> = (props) => {
           setPOID={setPOID}
           setPage={setPage}
           page={page}
+          productID={productID}
+          setProductID={setProductID}
         ></PurchaseDisplay>
       )}
       {page == "newPO" && (
         <NewPurchaseOrder setPage={setPage} page={page}></NewPurchaseOrder>
       )}
       {page == "poSummary" && poID != 0 && (
-        <PurchaseOrderSummary poID={poID}></PurchaseOrderSummary>
+        <PurchaseOrderSummary
+          poID={poID}
+          productID={productID}
+        ></PurchaseOrderSummary>
       )}
       {page == "delivery" && (
         <DeliveryDisplay role={props.role}></DeliveryDisplay>
@@ -66,7 +72,16 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "stockstore" && (
         <StockLevelStore role={props.role}></StockLevelStore>
       )}
-      {page == "dashboard" && <DashboardManager></DashboardManager>}
+      {page == "dashboard" && (
+        <DashboardManager
+          poID={poID}
+          setPOID={setPOID}
+          setPage={setPage}
+          page={page}
+          productID={productID}
+          setProductID={setProductID}
+        ></DashboardManager>
+      )}
       <div>{JSON.stringify(context)}</div>
     </>
   );

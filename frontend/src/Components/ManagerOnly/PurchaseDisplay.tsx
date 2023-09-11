@@ -8,6 +8,8 @@ interface props {
   setPOID: React.Dispatch<React.SetStateAction<number>>;
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
+  productID: string;
+  setProductID: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
 }
 
@@ -77,31 +79,6 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
     }
   };
 
-  // move the map into jsx
-  // const deliveredOrders = purchaseOrders.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.listBodyRows}>
-  //       <p className={styles.orderID}>{item.poID}</p>
-  //       <p className={styles.orderItem}>{item.orderItem}</p>
-  //       <p className={styles.orderUser}>{item.orderUser}</p>
-  //       <p className={styles.orderDate}>{item.poDate}</p>
-  //       <p className={styles.deliveredDate}>{item.deliveredDate}</p>
-  //     </div>
-  //   );
-  // });
-
-  // const pendingOrders = purchaseOrders.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.listBodyRows}>
-  //       <p className={styles.orderID}>{item.poID}</p>
-  //       <p className={styles.orderItem}>{item.orderItem}</p>
-  //       <p className={styles.orderUser}>{item.orderUser}</p>
-  //       <p className={styles.orderDate}>{item.poDate}</p>
-  //       <p className={styles.estimatedDate}>{item.estimatedDate}</p>
-  //     </div>
-  //   );
-  // });
-
   useEffect(() => {
     pullAllCompletedPO();
     pullAllPendingPO();
@@ -139,6 +116,7 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
                   onClick={() => {
                     console.log(item.order_id);
                     props.setPOID(item.order_id);
+                    props.setProductID(item.product_id);
                     props.setPage("poSummary");
                   }}
                 >
@@ -150,12 +128,6 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
                 </div>
               );
             })}
-            {/* {deliveredOrders}
-            {deliveredOrders}
-            {deliveredOrders}
-            {deliveredOrders}
-            {deliveredOrders}
-            {deliveredOrders} */}
           </div>
         </div>
       </div>
@@ -185,7 +157,16 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
                 "T"
               )[0];
               return (
-                <div key={index} className={styles.listBodyRows}>
+                <div
+                  key={index}
+                  className={styles.listBodyRows}
+                  onClick={() => {
+                    console.log(item.order_id);
+                    props.setPOID(item.order_id);
+                    props.setProductID(item.product_id);
+                    props.setPage("poSummary");
+                  }}
+                >
                   <p className={styles.orderID}>{item.order_id}</p>
                   <p className={styles.orderItem}>{item.product_id}</p>
                   <p className={styles.orderUser}>{item.username}</p>

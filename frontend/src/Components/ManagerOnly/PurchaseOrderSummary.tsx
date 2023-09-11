@@ -5,6 +5,7 @@ import UserContext from "../../context/user";
 
 interface props {
   poID: number;
+  productID: string;
   children?: React.ReactNode;
 }
 
@@ -32,6 +33,21 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     fulfilled: null,
     on_time: null,
   });
+  const [productDetails, setProductDetails] = useState<{
+    inventory_id: number;
+    product_id: string;
+    product_description: string;
+    unit_of_measurement: string;
+    supplier: string;
+    supplier_leadtime: number;
+  }>({
+    inventory_id: 0,
+    product_id: "",
+    product_description: "",
+    unit_of_measurement: "",
+    supplier: "",
+    supplier_leadtime: 0,
+  });
 
   // fetch data for 1 PO
   const getOnePO = async () => {
@@ -53,14 +69,32 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
   };
 
   // fetch data for 1 product
-  // const getOneProduct = async () => {
-  //   const res = await fetchData()
-  // }
-  useEffect(() => {
-    if (props.poID != 0) {
-      getOnePO();
+  const getOneProduct = async () => {
+    const res = await fetchData(
+      "/products/" + props.productID,
+      "POST",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("1 product ok");
+      console.log(res.data);
+      setProductDetails(res.data[0]);
+    } else {
+      console.log("1 product error");
+      console.log(res.data);
     }
+  };
+
+  useEffect(() => {
+    getOneProduct();
+    getOnePO();
   }, []);
+
+  // useEffect(() => {
+  //   getOneProduct();
+  // }, [poDetails]);
 
   return (
     <div className={styles.purchaseOrderPage}>
@@ -128,14 +162,16 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
           <div className={styles.columnInputs}>
             <p className={styles.first}>{poDetails.product_id}</p>
             <p className={styles.middle}>
-              ycl toothbrushasdaskjdlaksjldjasldja
+              {productDetails.product_description}
             </p>
             <p className={styles.middle}>{poDetails.order_quantity}</p>
-            <p className={styles.middle}>CTN</p>
             <p className={styles.middle}>
-              toothbrush & co toothbrush & co toothbrush & co toothbrush & co
+              {productDetails.unit_of_measurement}
             </p>
-            <p className={styles.last}>30 days</p>
+            <p className={styles.middle}>{productDetails.supplier}</p>
+            <p className={styles.last}>
+              {productDetails.supplier_leadtime} days
+            </p>
           </div>
         </div>
         <button className={styles.submitButton}>

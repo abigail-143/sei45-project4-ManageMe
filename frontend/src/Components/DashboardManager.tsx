@@ -3,7 +3,17 @@ import styles from "./DashboardManager.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
 
-export const DashboardManager: React.FC = () => {
+interface props {
+  poID: number;
+  setPOID: React.Dispatch<React.SetStateAction<number>>;
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  productID: string;
+  setProductID: React.Dispatch<React.SetStateAction<string>>;
+  children?: React.ReactNode;
+}
+
+export const DashboardManager: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [poData, setPOData] = useState<
@@ -30,7 +40,6 @@ export const DashboardManager: React.FC = () => {
     }[]
   >([]);
 
-
   const pullAllPO = async () => {
     const res = await fetchData(
       "/po/all",
@@ -48,18 +57,6 @@ export const DashboardManager: React.FC = () => {
       console.log(res.data);
     }
   };
-  // map data from PO table: moved this into JSX
-  // const poRows = poTableRows.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.poTableRows}>
-  //       <p>Order {item.poID}</p>
-  //       <p>{item.productID}</p>
-  //       <p>{item.user}</p>
-  //       <p>{item.orderDate}</p>
-  //       <p>{item.expectedDate}</p>
-  //     </div>
-  //   );
-  // });
 
   const pullAllDO = async () => {
     const res = await fetchData(
@@ -77,18 +74,6 @@ export const DashboardManager: React.FC = () => {
       console.log(res.data);
     }
   };
-
-  // map out date from DO Table
-  // const doRow = doTableRows.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.doTableRows}>
-  //       <p>Order {item.doID}</p>
-  //       <p>{item.user}</p>
-  //       <p>{item.orderDate}</p>
-  //       <p>{item.toDeliver}</p>
-  //     </div>
-  //   );
-  // });
 
   useEffect(() => {
     pullAllPO();
@@ -113,7 +98,16 @@ export const DashboardManager: React.FC = () => {
               {poData.map((item, index) => {
                 const orderDate = String(item.order_placed_date).split("T")[0];
                 return (
-                  <div key={index} className={styles.poTableRows}>
+                  <div
+                    key={index}
+                    className={styles.poTableRows}
+                    onClick={() => {
+                      console.log(item.order_id);
+                      props.setPOID(item.order_id);
+                      props.setProductID(item.product_id);
+                      props.setPage("poSummary");
+                    }}
+                  >
                     <p>Order {item.order_id}</p>
                     <p>{item.product_id}</p>
                     <p>{item.username}</p>

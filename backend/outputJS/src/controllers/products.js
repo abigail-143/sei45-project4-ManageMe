@@ -26,7 +26,7 @@ exports.getAllProducts = getAllProducts;
 const getOneProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product_id = req.params.productID.toUpperCase();
-        const oneProduct = yield database_1.pool.query("SELECT inventory_id, product_id, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)", [product_id]);
+        const oneProduct = yield database_1.pool.query("SELECT inventory_id, product_id, product_description, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)", [product_id]);
         if (oneProduct.rows.length != 0) {
             res.json(oneProduct.rows);
         }

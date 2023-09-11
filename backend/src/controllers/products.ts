@@ -18,7 +18,7 @@ export const getOneProduct = async (req: Request, res: Response) => {
     const product_id: string = req.params.productID.toUpperCase();
 
     const oneProduct = await pool.query(
-      "SELECT inventory_id, product_id, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)",
+      "SELECT inventory_id, product_id, product_description, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)",
       [product_id]
     );
 
