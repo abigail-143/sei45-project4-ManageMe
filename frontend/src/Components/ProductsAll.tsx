@@ -20,6 +20,7 @@ export const ProductsAll: React.FC = () => {
     }[]
   >([]);
 
+  // GET all products from product_inventory table
   const pullAllProducts = async () => {
     const res = await fetchData(
       "/products/all",
