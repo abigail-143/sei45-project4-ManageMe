@@ -19,6 +19,17 @@ export const DashboardManager: React.FC = () => {
       on_time: boolean;
     }[]
   >([]);
+  const [doData, setDOData] = useState<
+    {
+      delivery_id: number;
+      username: string;
+      delivery_placed_date: Date;
+      to_deliver_date: Date;
+      delivered_date: Date;
+      completed: boolean;
+    }[]
+  >([]);
+
   // pull data from PO Table
   // const poTableRows: {
   //   poID: number;
@@ -66,11 +77,11 @@ export const DashboardManager: React.FC = () => {
     );
 
     if (res.ok) {
-      console.log("ok");
+      console.log("PO ok");
       // console.log(res.data);
       setPOData(res.data);
     } else {
-      console.log("error");
+      console.log("fetch PO error");
       console.log(res.data);
     }
   };
@@ -120,6 +131,23 @@ export const DashboardManager: React.FC = () => {
     },
   ];
 
+  const pullAllDO = async () => {
+    const res = await fetchData(
+      "/do/all",
+      "GET",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("DO ok");
+      setDOData(res.data);
+    } else {
+      console.log("fetch DO error");
+      console.log(res.data);
+    }
+  };
+
   // map out date from DO Table
   const doRow = doTableRows.map((item, index) => {
     return (
@@ -134,7 +162,7 @@ export const DashboardManager: React.FC = () => {
 
   useEffect(() => {
     pullAllPO();
-    console.log(mapAllPO);
+    pullAllDO();
   }, []);
 
   return (
@@ -174,12 +202,22 @@ export const DashboardManager: React.FC = () => {
               <p>DO ID</p>
               <p>Raised By</p>
               <p>Order Date</p>
-              <p>To Deliver Date</p>
+              <p>Completed</p>
             </div>
             <div className={styles.doTableRowsDiv}>
-              {doRow}
-              {doRow}
-              {doRow}
+              {doData.map((item, index) => {
+                const orderDate = String(item.delivery_placed_date).split(
+                  "T"
+                )[0];
+                return (
+                  <div key={index} className={styles.doTableRows}>
+                    <p>Order {item.delivery_id}</p>
+                    <p>{item.username}</p>
+                    <p>{orderDate}</p>
+                    <p>{item.completed ? "Completed" : "Pending"}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
