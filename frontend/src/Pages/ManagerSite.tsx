@@ -86,7 +86,9 @@ export const ManagerSite: React.FC<props> = (props) => {
           setProductID={setProductID}
         ></DashboardManager>
       )}
-      {page == "products" && <ProductsDisplay></ProductsDisplay>}
+      {page == "products" && (
+        <ProductsDisplay page={page} setPage={setPage}></ProductsDisplay>
+      )}
       <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
       {page == "storeproducts" && <ProductStore></ProductStore>}

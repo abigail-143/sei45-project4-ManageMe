@@ -14,7 +14,6 @@ export const StockLevelDisplay: React.FC<props> = (props) => {
         className={styles.tab}
         onClick={() => {
           props.setPage("stockstore");
-          console.log("div");
         }}
       >
         <h1 className={styles.title}>Store</h1>
