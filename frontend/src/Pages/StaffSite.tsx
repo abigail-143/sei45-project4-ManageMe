@@ -37,7 +37,9 @@ export const StaffSite: React.FC<props> = (props) => {
         <StockLevelStore role={props.role}></StockLevelStore>
       )}
       {page == "dashboard" && <DashboardStaff></DashboardStaff>}
-      {page == "storeproducts" && <ProductStore></ProductStore>}
+      {page == "storeproducts" && (
+        <ProductStore role={props.role}></ProductStore>
+      )}
     </>
   );
 };

@@ -1,7 +1,48 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./ProductWarehouse.module.css";
+import { useFetch } from "../hooks/useFetch";
+import UserContext from "../context/user";
 
 export const ProductWarehouse: React.FC = () => {
+  const fetchData = useFetch();
+  const context = useContext(UserContext);
+  const [warehouseProduct, setWarehouseProduct] = useState<
+    {
+      product_id: string;
+      warehouse_quantity: number;
+      warehouse_stocklevel: number | null;
+      cost_per_uom: number;
+      product_description: string;
+      unit_of_measurement: string;
+      piece_per_uom: number;
+      supplier: string;
+      in_use: boolean;
+      supplier_leadtime: number;
+    }[]
+  >([]);
+
+  const pullWarehouseProducts = async () => {
+    const res = await fetchData(
+      "/warehouse/all",
+      "GET",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("all warehouse product ok");
+      console.log(res.data);
+      setWarehouseProduct(res.data);
+    } else {
+      console.log("all warehouse product error");
+      console.log(res.data);
+    }
+  };
+
+  useEffect(() => {
+    pullWarehouseProducts();
+  }, []);
+
   return (
     <div className={styles.warehouseProductsPage}>
       <div className={styles.firstRow}>
@@ -46,7 +87,37 @@ export const ProductWarehouse: React.FC = () => {
             </div>
           </div>
           <div className={styles.listBody}>
-            <div className={styles.listRows}>
+            {warehouseProduct.map((item, index) => {
+              return (
+                <div key={index} className={styles.listRows}>
+                  <p className={`${styles.bodyInput} ${styles.first}`}>
+                    {item.product_id}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    {item.product_description}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    {item.unit_of_measurement}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    {item.piece_per_uom}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    ${item.cost_per_uom}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    {item.supplier}
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.middle}`}>
+                    {item.supplier_leadtime} days
+                  </p>
+                  <p className={`${styles.bodyInput} ${styles.last}`}>
+                    {item.in_use ? "in use" : "not in use"}
+                  </p>
+                </div>
+              );
+            })}
+            {/* <div className={styles.listRows}>
               <p className={`${styles.bodyInput} ${styles.first}`}>
                 Product ID
               </p>
@@ -65,8 +136,8 @@ export const ProductWarehouse: React.FC = () => {
                 Supplier Leadtime
               </p>
               <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div>
-            <div className={styles.listRows}>
+            </div> */}
+            {/* <div className={styles.listRows}>
               <p className={`${styles.bodyInput} ${styles.first}`}>
                 Product ID
               </p>
@@ -85,7 +156,7 @@ export const ProductWarehouse: React.FC = () => {
                 Supplier Leadtime
               </p>
               <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

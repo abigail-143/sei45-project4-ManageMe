@@ -91,7 +91,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       )}
       <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
-      {page == "storeproducts" && <ProductStore></ProductStore>}
+      {page == "storeproducts" && <ProductStore role={props.role}></ProductStore>}
       {page == "warehouseproducts" && <ProductWarehouse></ProductWarehouse>}
     </>
   );

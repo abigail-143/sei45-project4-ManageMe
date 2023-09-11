@@ -14,7 +14,7 @@ const database_1 = require("../db/database");
 // GET all products in warehouse
 const getAllProductsInWarehouse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const warehouseProducts = yield database_1.pool.query("SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id");
+        const warehouseProducts = yield database_1.pool.query("SELECT warehouse.product_id, warehouse.warehouse_quantity, warehouse.warehouse_stocklevel, product_inventory.unit_of_measurement, product_inventory.product_description, product_inventory.cost_per_uom, product_inventory.piece_per_uom, product_inventory.supplier, product_inventory.in_use, product_inventory.supplier_leadtime FROM warehouse JOIN product_inventory ON warehouse.product_id = product_inventory.product_id");
         res.json(warehouseProducts.rows);
     }
     catch (error) {

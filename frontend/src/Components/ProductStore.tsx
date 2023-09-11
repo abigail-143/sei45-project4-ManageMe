@@ -3,7 +3,12 @@ import styles from "./ProductStore.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
 
-export const ProductStore: React.FC = () => {
+interface props {
+  role: string;
+  children?: React.ReactNode;
+}
+
+export const ProductStore: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [storeProduct, setStoreProduct] = useState<
@@ -18,6 +23,7 @@ export const ProductStore: React.FC = () => {
     }[]
   >([]);
 
+  // GET all store products from store table
   const pullStoreProducts = async () => {
     const res = await fetchData(
       "/store/all",
@@ -53,7 +59,13 @@ export const ProductStore: React.FC = () => {
             <label className={styles.label}>Quantity</label>
             <input className={styles.input} placeholder="input"></input>
           </div>
-          <button className={styles.addBtn}>Add To Store</button>
+          <button
+            className={`${styles.addBtn} ${
+              props.role == "Manager" ? styles.blue : styles.green
+            }`}
+          >
+            Add To Store
+          </button>
         </div>
       </div>
       <div className={styles.secondRow}>
