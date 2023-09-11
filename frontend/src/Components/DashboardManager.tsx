@@ -1,57 +1,91 @@
-import React from "react";
-import styles from "./DashboardManager.module.css"
+import React, { useContext, useEffect, useState } from "react";
+import styles from "./DashboardManager.module.css";
+import { useFetch } from "../hooks/useFetch";
+import UserContext from "../context/user";
 
 export const DashboardManager: React.FC = () => {
+  const fetchData = useFetch();
+  const context = useContext(UserContext);
+  const [poData, setPOData] = useState<
+    {
+      order_id: number;
+      username: string;
+      product_id: string;
+      order_quantity: number;
+      order_placed_date: Date;
+      estimated_receive_date: Date;
+      received_date: Date;
+      fulfilled: boolean;
+      on_time: boolean;
+    }[]
+  >([]);
   // pull data from PO Table
-  const poTableRows: {
-    poID: number;
-    productID: string;
-    user: string;
-    orderDate: string;
-    expectedDate: string;
-  }[] = [
-    {
-      poID: 1,
-      productID: "item 1",
-      user: "user1",
-      orderDate: new Date().toISOString().split("T")[0],
-      expectedDate: new Date().toISOString().split("T")[0],
-    },
-    {
-      poID: 3,
-      productID: "item 1",
-      user: "user2",
-      orderDate: new Date().toISOString().split("T")[0],
-      expectedDate: new Date().toISOString().split("T")[0],
-    },
-    {
-      poID: 3,
-      productID: "item 2",
-      user: "user1",
-      orderDate: new Date().toISOString().split("T")[0],
-      expectedDate: new Date().toISOString().split("T")[0],
-    },
-    {
-      poID: 4,
-      productID: "item 3",
-      user: "user1",
-      orderDate: new Date().toISOString().split("T")[0],
-      expectedDate: new Date().toISOString().split("T")[0],
-    },
-  ];
+  // const poTableRows: {
+  //   poID: number;
+  //   productID: string;
+  //   user: string;
+  //   orderDate: string;
+  //   expectedDate: string;
+  // }[] = [
+  //   {
+  //     poID: 1,
+  //     productID: "item 1",
+  //     user: "user1",
+  //     orderDate: new Date().toISOString().split("T")[0],
+  //     expectedDate: new Date().toISOString().split("T")[0],
+  //   },
+  //   {
+  //     poID: 3,
+  //     productID: "item 1",
+  //     user: "user2",
+  //     orderDate: new Date().toISOString().split("T")[0],
+  //     expectedDate: new Date().toISOString().split("T")[0],
+  //   },
+  //   {
+  //     poID: 3,
+  //     productID: "item 2",
+  //     user: "user1",
+  //     orderDate: new Date().toISOString().split("T")[0],
+  //     expectedDate: new Date().toISOString().split("T")[0],
+  //   },
+  //   {
+  //     poID: 4,
+  //     productID: "item 3",
+  //     user: "user1",
+  //     orderDate: new Date().toISOString().split("T")[0],
+  //     expectedDate: new Date().toISOString().split("T")[0],
+  //   },
+  // ];
 
-  // map data from PO table
-  const poRows = poTableRows.map((item, index) => {
-    return (
-      <div key={index} className={styles.poTableRows}>
-        <p>Order {item.poID}</p>
-        <p>{item.productID}</p>
-        <p>{item.user}</p>
-        <p>{item.orderDate}</p>
-        <p>{item.expectedDate}</p>
-      </div>
+  const pullAllPO = async () => {
+    const res = await fetchData(
+      "/po/all",
+      "GET",
+      undefined,
+      context?.accessToken
     );
-  });
+
+    if (res.ok) {
+      console.log("ok");
+      // console.log(res.data);
+      setPOData(res.data);
+    } else {
+      console.log("error");
+      console.log(res.data);
+    }
+  };
+  // map data from PO table: moved this into JSX
+  // const poRows = poTableRows.map((item, index) => {
+  //   return (
+  //     <div key={index} className={styles.poTableRows}>
+  //       <p>Order {item.poID}</p>
+  //       <p>{item.productID}</p>
+  //       <p>{item.user}</p>
+  //       <p>{item.orderDate}</p>
+  //       <p>{item.expectedDate}</p>
+  //     </div>
+  //   );
+  // });
 
   // fetch data from DO Table
   const doTableRows: {
@@ -97,6 +131,12 @@ export const DashboardManager: React.FC = () => {
       </div>
     );
   });
+
+  useEffect(() => {
+    pullAllPO();
+    console.log(mapAllPO);
+  }, []);
+
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.first}>
@@ -108,9 +148,23 @@ export const DashboardManager: React.FC = () => {
               <p>Product ID</p>
               <p>Raised By</p>
               <p>Order Date</p>
-              <p>Expected Date</p>
+              <p>Fulfilled</p>
             </div>
-            <div className={styles.poTableRowsDiv}>{poRows}</div>
+            <div className={styles.poTableRowsDiv}>
+              {/* {poRows} */}
+              {poData.map((item, index) => {
+                const orderDate = String(item.order_placed_date).split("T")[0];
+                return (
+                  <div key={index} className={styles.poTableRows}>
+                    <p>Order {item.order_id}</p>
+                    <p>{item.product_id}</p>
+                    <p>{item.username}</p>
+                    <p>{orderDate}</p>
+                    <p>{item.fulfilled ? "Fulfilled" : "Pending"}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className={`${styles.firstTable} ${styles.two}`}>
