@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPurchaseOrders = void 0;
+exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPendingPurchaseOrders = exports.getAllCompletedPurchaseOrders = exports.getAllPurchaseOrders = void 0;
 const database_1 = require("../db/database");
 // GET all purchase orders
 const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +22,28 @@ const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getAllPurchaseOrders = getAllPurchaseOrders;
+// GET all COMPLETED purchase orders
+const getAllCompletedPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allCompletedPO = yield database_1.pool.query("SELECT * FROM purchase_order WHERE fulfilled = TRUE");
+        res.json(allCompletedPO.rows);
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getAllCompletedPurchaseOrders = getAllCompletedPurchaseOrders;
+// GET all PENDING purchase orders
+const getAllPendingPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allPendingPO = yield database_1.pool.query("SELECT * FROM purchase_order WHERE fulfilled IS NULL OR fulfilled = FALSE");
+        res.json(allPendingPO.rows);
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getAllPendingPurchaseOrders = getAllPendingPurchaseOrders;
 // GET one purchase order
 const getOnePurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

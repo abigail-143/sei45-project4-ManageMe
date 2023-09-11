@@ -1,6 +1,8 @@
 import express from "express";
 import {
   addNewPurchaseOrder,
+  getAllCompletedPurchaseOrders,
+  getAllPendingPurchaseOrders,
   getAllPurchaseOrders,
   getOnePurchaseOrder,
   updatePurchaseOrderWhenReceived,
@@ -16,6 +18,8 @@ import { authManager } from "../middlewares/authUsers";
 const router = express.Router();
 
 router.get("/all", authManager, getAllPurchaseOrders);
+router.get("/all/completed", authManager, getAllCompletedPurchaseOrders);
+router.get("/all/pending", authManager, getAllPendingPurchaseOrders);
 router.post(
   "/:poID",
   authManager,

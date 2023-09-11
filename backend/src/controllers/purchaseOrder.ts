@@ -12,6 +12,38 @@ export const getAllPurchaseOrders = async (req: Request, res: Response) => {
   }
 };
 
+// GET all COMPLETED purchase orders
+export const getAllCompletedPurchaseOrders = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const allCompletedPO = await pool.query(
+      "SELECT * FROM purchase_order WHERE fulfilled = TRUE"
+    );
+
+    res.json(allCompletedPO.rows);
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
+// GET all PENDING purchase orders
+export const getAllPendingPurchaseOrders = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const allPendingPO = await pool.query(
+      "SELECT * FROM purchase_order WHERE fulfilled IS NULL OR fulfilled = FALSE"
+    );
+
+    res.json(allPendingPO.rows);
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
 // GET one purchase order
 export const getOnePurchaseOrder = async (req: Request, res: Response) => {
   try {
@@ -80,7 +112,7 @@ export const updatePurchaseOrderWhenReceived = async (
   req: Request,
   res: Response
 ) => {
-    // take from req
+  // take from req
   const received_date: Date = new Date(req.body.receivedDate);
   const fulfilled: boolean = req.body.fulfilled;
   const order_id: Number = Number(req.params.poID);
