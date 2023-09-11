@@ -3,7 +3,7 @@ export const useFetch = () => {
     endpoint: string,
     method: string | undefined,
     body: object | undefined,
-    token: string
+    token: string | undefined
   ) => {
     const res: Response = await fetch(import.meta.env.VITE_SERVER + endpoint, {
       method,

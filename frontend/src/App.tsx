@@ -5,21 +5,31 @@ import { ManagerSite } from "./Pages/ManagerSite";
 import { StaffSite } from "./Pages/StaffSite";
 
 const App: React.FC = () => {
-  const [login, setLogin] = useState<boolean>(true);
-  const [role, setRole] = useState<string>("Manager");
+  const [login, setLogin] = useState<boolean>(false);
+  const [role, setRole] = useState<string>("Staff");
 
   return (
     <div>
       <Suspense>
         <Routes>
-          <Route path="/" element={<LoginPage></LoginPage>}></Route>
-          {role === "Manager" && (
+          <Route
+            path="/"
+            element={
+              <LoginPage
+                role={role}
+                setRole={setRole}
+                login={login}
+                setLogin={setLogin}
+              ></LoginPage>
+            }
+          ></Route>
+          {role === "Manager" && login && (
             <Route
               path="/main"
               element={<ManagerSite role={role}></ManagerSite>}
             ></Route>
           )}
-          {role === "Staff" && (
+          {role === "Staff" && login && (
             <Route
               path="/main"
               element={<StaffSite role={role}></StaffSite>}
