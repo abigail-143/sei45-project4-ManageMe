@@ -1,6 +1,8 @@
 import express from "express";
 import {
   addNewStoreDeliveryOrder,
+  getAllCompletedStoreDeliveryOrders,
+  getAllPendingStoreDeliveryOrders,
   getAllStoreDeliveryOrders,
   getOneStoreDeliveryOrder,
   updateOneStoreDeliveryOrder,
@@ -16,6 +18,8 @@ import { auth } from "../middlewares/authUsers";
 const router = express.Router();
 
 router.get("/all", auth, getAllStoreDeliveryOrders);
+router.get("/all/completed", auth, getAllCompletedStoreDeliveryOrders);
+router.get("/all/pending", auth, getAllPendingStoreDeliveryOrders);
 router.post(
   "/:doID",
   auth,

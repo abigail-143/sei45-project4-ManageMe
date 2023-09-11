@@ -15,6 +15,38 @@ export const getAllStoreDeliveryOrders = async (
   }
 };
 
+// GET all COMPLETED Delivery Orders
+export const getAllCompletedStoreDeliveryOrders = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const allCompletedStoreDelivery = await pool.query(
+      "SELECT * FROM store_delivery WHERE completed = TRUE"
+    );
+
+    res.json(allCompletedStoreDelivery.rows);
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
+// GET all PENDING / INCOMPLETE Delivery Orders
+export const getAllPendingStoreDeliveryOrders = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const allPendingStoreDelivery = await pool.query(
+      "SELECT * FROM store_delivery WHERE completed IS NULL or completed = False"
+    );
+
+    res.json(allPendingStoreDelivery.rows);
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
 // GET one Delivery Order using delivery_id
 export const getOneStoreDeliveryOrder = async (req: Request, res: Response) => {
   try {

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateOneStoreDeliveryOrder = exports.addNewStoreDeliveryOrder = exports.getOneStoreDeliveryOrder = exports.getAllStoreDeliveryOrders = void 0;
+exports.updateOneStoreDeliveryOrder = exports.addNewStoreDeliveryOrder = exports.getOneStoreDeliveryOrder = exports.getAllPendingStoreDeliveryOrders = exports.getAllCompletedStoreDeliveryOrders = exports.getAllStoreDeliveryOrders = void 0;
 const database_1 = require("../db/database");
 // GET all Delivery Orders
 const getAllStoreDeliveryOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +22,28 @@ const getAllStoreDeliveryOrders = (req, res) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.getAllStoreDeliveryOrders = getAllStoreDeliveryOrders;
+// GET all COMPLETED Delivery Orders
+const getAllCompletedStoreDeliveryOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allCompletedStoreDelivery = yield database_1.pool.query("SELECT * FROM store_delivery WHERE completed = TRUE");
+        res.json(allCompletedStoreDelivery.rows);
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getAllCompletedStoreDeliveryOrders = getAllCompletedStoreDeliveryOrders;
+// GET all PENDING / INCOMPLETE Delivery Orders
+const getAllPendingStoreDeliveryOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allPendingStoreDelivery = yield database_1.pool.query("SELECT * FROM store_delivery WHERE completed IS NULL or completed = False");
+        res.json(allPendingStoreDelivery.rows);
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getAllPendingStoreDeliveryOrders = getAllPendingStoreDeliveryOrders;
 // GET one Delivery Order using delivery_id
 const getOneStoreDeliveryOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
