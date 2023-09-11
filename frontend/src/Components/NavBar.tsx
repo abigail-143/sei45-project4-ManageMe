@@ -82,6 +82,17 @@ export const NavBar: React.FC<props> = (props) => {
                 Register User
               </a>
             </li>
+            <li>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("products");
+                  console.log(props.page);
+                }}
+              >
+                Products
+              </a>
+            </li>
           </ul>
         </div>
       ) : (
@@ -134,6 +145,17 @@ export const NavBar: React.FC<props> = (props) => {
                 }}
               >
                 Reports
+              </a>
+            </li>
+            <li>
+              <a
+                href="javascript:void(0)"
+                onClick={() => {
+                  props.setPage("storeproducts");
+                  console.log(props.page);
+                }}
+              >
+                Products
               </a>
             </li>
           </ul>

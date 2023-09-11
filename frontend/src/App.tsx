@@ -6,8 +6,8 @@ import { StaffSite } from "./Pages/StaffSite";
 import UserContext from "./context/user";
 
 const App: React.FC = () => {
-  const [login, setLogin] = useState<boolean>(false);
-  const [role, setRole] = useState<string>("Staff");
+  const [login, setLogin] = useState<boolean>(true);
+  const [role, setRole] = useState<string>("Manager");
   const [accessToken, setAccessToken] = useState<string>("");
   const [userID, setUserID] = useState<string>("");
   const [username, setUsername] = useState<string>("");

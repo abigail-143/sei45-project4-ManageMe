@@ -6,6 +6,7 @@ import { NewDeliveryOrder } from "../Components/NewDeliveryOrder";
 import { DeliveryOrderSummary } from "../Components/DeliveryOrderSummary";
 import { StockLevelStore } from "../Components/StockLevelStore";
 import { DashboardStaff } from "../Components/DashboardStaff";
+import { ProductStore } from "../Components/ProductStore";
 
 interface props {
   role: string;
@@ -36,6 +37,7 @@ export const StaffSite: React.FC<props> = (props) => {
         <StockLevelStore role={props.role}></StockLevelStore>
       )}
       {page == "dashboard" && <DashboardStaff></DashboardStaff>}
+      {page == "storeproducts" && <ProductStore></ProductStore>}
     </>
   );
 };
