@@ -12,6 +12,26 @@ export const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+// POST get 1 product from inventory list
+export const getOneProduct = async (req: Request, res: Response) => {
+  try {
+    const product_id: string = req.params.productID.toUpperCase();
+
+    const oneProduct = await pool.query(
+      "SELECT inventory_id, product_id, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)",
+      [product_id]
+    );
+
+    if (oneProduct.rows.length != 0) {
+      res.json(oneProduct.rows);
+    } else {
+      res.json({ status: "error", message: "no such product" });
+    }
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
 // PUT one product into inventory list
 export const addOneProduct = async (req: Request, res: Response) => {
   try {

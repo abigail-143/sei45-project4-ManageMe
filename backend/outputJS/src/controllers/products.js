@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateIfProductInUse = exports.addOneProduct = exports.getAllProducts = void 0;
+exports.updateIfProductInUse = exports.addOneProduct = exports.getOneProduct = exports.getAllProducts = void 0;
 const database_1 = require("../db/database");
 // GET all products in inventory list
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +22,23 @@ const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getAllProducts = getAllProducts;
+// POST get 1 product from inventory list
+const getOneProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const product_id = req.params.productID.toUpperCase();
+        const oneProduct = yield database_1.pool.query("SELECT inventory_id, product_id, unit_of_measurement, supplier, supplier_leadtime FROM product_inventory WHERE product_id = ($1)", [product_id]);
+        if (oneProduct.rows.length != 0) {
+            res.json(oneProduct.rows);
+        }
+        else {
+            res.json({ status: "error", message: "no such product" });
+        }
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getOneProduct = getOneProduct;
 // PUT one product into inventory list
 const addOneProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

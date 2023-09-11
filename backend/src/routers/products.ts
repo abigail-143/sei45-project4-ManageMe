@@ -2,6 +2,7 @@ import express from "express";
 import {
   addOneProduct,
   getAllProducts,
+  getOneProduct,
   updateIfProductInUse,
 } from "../controllers/products";
 import {
@@ -10,11 +11,12 @@ import {
   checkProductInUseInput,
 } from "../validators/inputValidators";
 import { inputValidation } from "../middlewares/inputValidatorsCheck";
-import { authManager } from "../middlewares/authUsers";
+import { auth, authManager } from "../middlewares/authUsers";
 
 const router = express.Router();
 
 router.get("/all", authManager, getAllProducts);
+router.post("/:productID", auth, checkProductIDParams, getOneProduct);
 router.put(
   "/new",
   authManager,
