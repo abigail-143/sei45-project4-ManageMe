@@ -71,7 +71,7 @@ export const NewPurchaseOrder: React.FC<props> = (props) => {
     }
   };
 
-  // get 1 product to auto-populate fields
+  // get 1 product to auto-populate fields. in the jsx, use ternary in the input defaultValue to do autopopulation
   const getOneProduct = async () => {
     if (productIDRef.current) {
       const res = await fetchData(
