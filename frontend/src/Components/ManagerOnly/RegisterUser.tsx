@@ -100,34 +100,43 @@ export const RegisterUser: React.FC<props> = (props) => {
 
   // ADD new user
   const addNewUser = async () => {
-    const res = await fetchData(
-      "/user/register",
-      "PUT",
-      {
-        username: usernameRef.current.value,
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-        company: companyRef.current.value,
-        status: statusRef.current.value,
-        account: accountRef.current.value,
-      },
-      context?.accessToken
-    );
+    if (
+      usernameRef.current &&
+      emailRef.current &&
+      passwordRef.current &&
+      companyRef.current &&
+      statusRef.current &&
+      accountRef.current
+    ) {
+      const res = await fetchData(
+        "/user/register",
+        "PUT",
+        {
+          username: usernameRef.current.value,
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+          company: companyRef.current.value,
+          status: statusRef.current.value,
+          account: accountRef.current.value,
+        },
+        context?.accessToken
+      );
 
-    if (res.ok) {
-      console.log("add user successfully");
-      console.log(res.data);
-      console.log(emailRef);
-      pullAllUsers();
+      if (res.ok) {
+        console.log("add user successfully");
+        console.log(res.data);
+        pullAllUsers();
+      } else {
+        console.log("add user error");
+        console.log(res.data);
+      }
     } else {
-      console.log("add user error");
-      console.log(res.data);
+      console.log("missing inputs");
     }
   };
 
   useEffect(() => {
     pullAllUsers();
-    console.log(emailRef);
   }, []);
 
   return (
@@ -225,21 +234,24 @@ export const RegisterUser: React.FC<props> = (props) => {
               </div>
             </div>
             <div className={styles.listBody}>
-              {managerAccounts.map((user, index) => {
-                return (
-                  <div key={index} className={styles.listBodyRows}>
-                    <p className={`${styles.column} ${styles.username}`}>
-                      {user.username}
-                    </p>
-                    <p className={`${styles.column} ${styles.email}`}>
-                      {user.email}
-                    </p>
-                    <p className={`${styles.column} ${styles.status}`}>
-                      {user.user_status ? "Active" : "Not Active"}
-                    </p>
-                  </div>
-                );
-              })}
+              {managerAccounts
+                .slice()
+                .reverse()
+                .map((user, index) => {
+                  return (
+                    <div key={index} className={styles.listBodyRows}>
+                      <p className={`${styles.column} ${styles.username}`}>
+                        {user.username}
+                      </p>
+                      <p className={`${styles.column} ${styles.email}`}>
+                        {user.email}
+                      </p>
+                      <p className={`${styles.column} ${styles.status}`}>
+                        {user.user_status ? "Active" : "Not Active"}
+                      </p>
+                    </div>
+                  );
+                })}
               {/* {staff}
               {staff} */}
             </div>
@@ -267,21 +279,24 @@ export const RegisterUser: React.FC<props> = (props) => {
               </div>
             </div>
             <div className={styles.listBody}>
-              {staffAccounts.map((user, index) => {
-                return (
-                  <div key={index} className={styles.listBodyRows}>
-                    <p className={`${styles.column} ${styles.username}`}>
-                      {user.username}
-                    </p>
-                    <p className={`${styles.column} ${styles.email}`}>
-                      {user.email}
-                    </p>
-                    <p className={`${styles.column} ${styles.status}`}>
-                      {user.user_status ? "Active" : "Not Active"}
-                    </p>
-                  </div>
-                );
-              })}
+              {staffAccounts
+                .slice()
+                .reverse()
+                .map((user, index) => {
+                  return (
+                    <div key={index} className={styles.listBodyRows}>
+                      <p className={`${styles.column} ${styles.username}`}>
+                        {user.username}
+                      </p>
+                      <p className={`${styles.column} ${styles.email}`}>
+                        {user.email}
+                      </p>
+                      <p className={`${styles.column} ${styles.status}`}>
+                        {user.user_status ? "Active" : "Not Active"}
+                      </p>
+                    </div>
+                  );
+                })}
               {/* {staff}
               {staff} */}
             </div>
