@@ -29,6 +29,7 @@ export const ManagerSite: React.FC<props> = (props) => {
   const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
   const [productID, setProductID] = useState<string>("");
+  const [doID, setDOID] = useState<number>(4);
 
   // navbar, onclick should set the page to something
 
@@ -67,7 +68,11 @@ export const ManagerSite: React.FC<props> = (props) => {
         ></NewDeliveryOrder>
       )}
       {page == "doSummary" && (
-        <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
+        <DeliveryOrderSummary
+          role={props.role}
+          doID={doID}
+          setDOID={setDOID}
+        ></DeliveryOrderSummary>
       )}
       {page == "stocklevel" && (
         <StockLevelDisplay page={page} setPage={setPage}></StockLevelDisplay>
@@ -91,7 +96,9 @@ export const ManagerSite: React.FC<props> = (props) => {
       )}
       <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
-      {page == "storeproducts" && <ProductStore role={props.role}></ProductStore>}
+      {page == "storeproducts" && (
+        <ProductStore role={props.role}></ProductStore>
+      )}
       {page == "warehouseproducts" && <ProductWarehouse></ProductWarehouse>}
     </>
   );

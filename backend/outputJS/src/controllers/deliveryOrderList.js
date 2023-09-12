@@ -15,7 +15,7 @@ const database_1 = require("../db/database");
 const getAllListItemsForOneDeliveryOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const delivery_id = Number(req.params.doID);
-        const allListItemsOneDO = yield database_1.pool.query("SELECT * FROM delivery_list WHERE delivery_id = ($1)", [delivery_id]);
+        const allListItemsOneDO = yield database_1.pool.query("SELECT delivery_list.delivery_id, delivery_list.product_id, delivery_list.delivery_quantity, product_inventory.product_description, product_inventory.unit_of_measurement FROM delivery_list JOIN product_inventory on delivery_list.product_id = product_inventory.product_id WHERE delivery_id = ($1)", [delivery_id]);
         if (allListItemsOneDO.rows.length != 0) {
             res.json(allListItemsOneDO.rows);
         }

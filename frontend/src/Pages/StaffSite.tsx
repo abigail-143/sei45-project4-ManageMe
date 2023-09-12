@@ -15,6 +15,7 @@ interface props {
 
 export const StaffSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
+  const [doID, setDOID] = useState<number>(0);
 
   return (
     <>
@@ -31,7 +32,11 @@ export const StaffSite: React.FC<props> = (props) => {
         ></NewDeliveryOrder>
       )}
       {page == "doSummary" && (
-        <DeliveryOrderSummary role={props.role}></DeliveryOrderSummary>
+        <DeliveryOrderSummary
+          role={props.role}
+          doID={doID}
+          setDOID={setDOID}
+        ></DeliveryOrderSummary>
       )}
       {page == "stockstore" && (
         <StockLevelStore role={props.role}></StockLevelStore>
