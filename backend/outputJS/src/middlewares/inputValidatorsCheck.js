@@ -4,11 +4,11 @@ exports.inputValidation = void 0;
 const express_validator_1 = require("express-validator");
 const inputValidation = (req, res, next) => {
     const errors = (0, express_validator_1.validationResult)(req);
-    if (errors.isEmpty()) {
-        next();
+    if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
     }
     else {
-        res.json({ error: errors.array() });
+        next();
     }
 };
 exports.inputValidation = inputValidation;

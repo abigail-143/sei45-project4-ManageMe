@@ -8,9 +8,9 @@ export const inputValidation = (
 ) => {
   const errors = validationResult(req);
 
-  if (errors.isEmpty()) {
-    next();
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
   } else {
-    res.json({ error: errors.array() });
+    next();
   }
 };
