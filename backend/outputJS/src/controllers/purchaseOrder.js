@@ -49,7 +49,7 @@ const getOnePurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const order_id = Number(req.params.poID);
         // check if purchase order exists
-        const onePurchaseOrder = yield database_1.pool.query("SELECT * FROM purchase_order WHERE order_id = ($1)", [order_id]);
+        const onePurchaseOrder = yield database_1.pool.query("SELECT purchase_order.order_id, purchase_order.username, purchase_order.product_id, purchase_order.order_quantity, purchase_order.order_placed_date, purchase_order.estimated_receive_date, purchase_order.received_date, purchase_order.fulfilled, product_inventory.product_description, product_inventory.supplier, product_inventory.supplier_leadtime, product_inventory.unit_of_measurement FROM purchase_order JOIN product_inventory ON purchase_order.product_id = product_inventory.product_id WHERE purchase_order.order_id = ($1);", [order_id]);
         if (onePurchaseOrder.rows.length != 0) {
             res.json(onePurchaseOrder.rows);
         }
