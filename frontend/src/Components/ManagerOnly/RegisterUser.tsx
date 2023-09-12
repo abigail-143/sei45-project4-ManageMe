@@ -1,10 +1,4 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./RegisterUser.module.css";
 import { useFetch } from "../../hooks/useFetch";
 import UserContext from "../../context/user";
