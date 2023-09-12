@@ -185,7 +185,9 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
                 <input
                   className={`${styles.checkbox}`}
                   type="checkbox"
-                  checked={doDetails.completed ? true : false}
+                  checked={doDetails.completed ? true : undefined}
+                  name="completed"
+                  value="true"
                 ></input>
               </div>
             </div>

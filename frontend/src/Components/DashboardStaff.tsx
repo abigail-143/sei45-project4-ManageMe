@@ -3,7 +3,14 @@ import styles from "./DashboardStaff.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
 
-export const DashboardStaff: React.FC = () => {
+interface props {
+  doID: number;
+  setDOID: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  children?: React.ReactNode;
+}
+
+export const DashboardStaff: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [doData, setDOData] = useState<
@@ -56,7 +63,15 @@ export const DashboardStaff: React.FC = () => {
                   "T"
                 )[0];
                 return (
-                  <div key={index} className={styles.doTableRows}>
+                  <div
+                    key={index}
+                    className={styles.doTableRows}
+                    onClick={() => {
+                      console.log(item.delivery_id);
+                      props.setDOID(item.delivery_id);
+                      props.setPage("doSummary");
+                    }}
+                  >
                     <p>Order {item.delivery_id}</p>
                     <p>{item.username}</p>
                     <p>{orderDate}</p>
