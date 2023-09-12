@@ -30,11 +30,11 @@ export const LoginPage: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("ok");
-      console.log(res.data);
+      // console.log(res.data);
 
       const decoded = jwtDecode<JwtPayload | any>(res.data.access);
       console.log("decoded");
-      console.log(decoded);
+      // console.log(decoded);
       context?.setAccessToken(res.data.access);
       context?.setUserID(decoded.user_id);
       context?.setUsername(decoded.username);
