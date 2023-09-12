@@ -71,6 +71,7 @@ export const ManagerSite: React.FC<props> = (props) => {
           role={props.role}
           setPage={setPage}
           page={page}
+          setDOID={setDOID}
         ></NewDeliveryOrder>
       )}
       {page == "doSummary" && (
