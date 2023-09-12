@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import UserContext from "../context/user";
-
+import React, { useState } from "react";
 import { Header } from "../Components/Header";
 import { NavBar } from "../Components/NavBar";
 import { RegisterUser } from "../Components/ManagerOnly/RegisterUser";
@@ -26,7 +24,6 @@ interface props {
 
 export const ManagerSite: React.FC<props> = (props) => {
   const [page, setPage] = useState<string>("dashboard");
-  const context = useContext(UserContext);
   const [poID, setPOID] = useState<number>(0);
   const [productID, setProductID] = useState<string>("");
   const [doID, setDOID] = useState<number>(4);
@@ -49,7 +46,11 @@ export const ManagerSite: React.FC<props> = (props) => {
         ></PurchaseDisplay>
       )}
       {page == "newPO" && (
-        <NewPurchaseOrder setPage={setPage} page={page}></NewPurchaseOrder>
+        <NewPurchaseOrder
+          setPOID={setPOID}
+          setPage={setPage}
+          page={page}
+        ></NewPurchaseOrder>
       )}
       {page == "poSummary" && poID != 0 && (
         <PurchaseOrderSummary
@@ -101,7 +102,6 @@ export const ManagerSite: React.FC<props> = (props) => {
       {page == "products" && (
         <ProductsDisplay page={page} setPage={setPage}></ProductsDisplay>
       )}
-      <div>{JSON.stringify(context)}</div>
       {page == "allproducts" && <ProductsAll></ProductsAll>}
       {page == "storeproducts" && (
         <ProductStore role={props.role}></ProductStore>
