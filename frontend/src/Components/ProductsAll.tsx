@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./ProductsAll.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -19,6 +19,14 @@ export const ProductsAll: React.FC = () => {
       cost_per_uom: Number;
     }[]
   >([]);
+  const productIDRef = useRef<HTMLInputElement | null>(null);
+  const productDescriptionRef = useRef<HTMLInputElement | null>(null);
+  const supplierRef = useRef<HTMLInputElement | null>(null);
+  const supplierLeadtimeRef = useRef<HTMLInputElement | null>(null);
+  const piecePerUOMRef = useRef<HTMLInputElement | null>(null);
+  const costPerUOMRef = useRef<HTMLInputElement | null>(null);
+  const inUseRef = useRef<HTMLSelectElement | null>(null);
+  const uomRef = useRef<HTMLSelectElement | null>(null);
 
   // GET all products from product_inventory table
   const pullAllProducts = async () => {
@@ -39,6 +47,53 @@ export const ProductsAll: React.FC = () => {
     }
   };
 
+  // ADD new product to product_inventory table
+  const addNewProduct = async () => {
+    if (
+      productIDRef.current &&
+      productDescriptionRef.current &&
+      uomRef.current &&
+      inUseRef.current &&
+      supplierRef.current &&
+      supplierLeadtimeRef.current &&
+      piecePerUOMRef.current &&
+      costPerUOMRef.current
+    ) {
+      const res = await fetchData(
+        "/products/new",
+        "PUT",
+        {
+          productID: productIDRef.current.value,
+          productDescription: productDescriptionRef.current.value,
+          unitOfMeasurement: uomRef.current.value,
+          inUse: inUseRef.current.value,
+          supplier: supplierRef.current.value,
+          supplierLeadtime: supplierLeadtimeRef.current.value,
+          piecePerUOM: piecePerUOMRef.current.value,
+          costPerUOM: costPerUOMRef.current.value,
+        },
+        context?.accessToken
+      );
+
+      if (res.ok) {
+        console.log("add product successful");
+        console.log(res.data);
+        pullAllProducts();
+        productIDRef.current.value = "";
+        productDescriptionRef.current.value = "";
+        uomRef.current.value = "CTN";
+        inUseRef.current.value = "true";
+        supplierRef.current.value = "";
+        supplierLeadtimeRef.current.value = "";
+        piecePerUOMRef.current.value = "";
+        costPerUOMRef.current.value = "";
+      } else {
+        console.log("add product error");
+        console.log(res.data);
+      }
+    }
+  };
+
   useEffect(() => {
     pullAllProducts();
   }, []);
@@ -50,18 +105,28 @@ export const ProductsAll: React.FC = () => {
           <h1 className={styles.formTitle}>Add New Product</h1>
           <div className={styles.formInput}>
             <label className={styles.label}>Product ID:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={productIDRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Product Description:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={productDescriptionRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Unit Of Measurement:</label>
             <select
               className={styles.inputSelect}
               id="uom"
-              name="Unit of Measurement"
+              name="uom"
+              defaultValue={"CTN"}
+              ref={uomRef}
             >
               <option value="CTN">CTN</option>
               <option value="BOX">BOX</option>
@@ -70,28 +135,56 @@ export const ProductsAll: React.FC = () => {
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Piece Per UOM:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={piecePerUOMRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Cost Per UOM:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={costPerUOMRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Supplier:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={supplierRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>Supplier Leadtime:</label>
-            <input className={styles.input} placeholder="input"></input>
+            <input
+              ref={supplierLeadtimeRef}
+              className={styles.input}
+              placeholder="input"
+            ></input>
           </div>
           <div className={styles.formInput}>
             <label className={styles.label}>In Use:</label>
-            <select className={styles.inputSelect} id="inUse" name="in use">
+            <select
+              ref={inUseRef}
+              className={styles.inputSelect}
+              id="inUse"
+              name="inUse"
+            >
               <option value="true">In Use</option>
               <option value="false">Not In Use</option>
             </select>
           </div>
-          <button className={styles.addBtn}>Add New Product</button>
+          <button
+            className={styles.addBtn}
+            onClick={() => {
+              addNewProduct();
+            }}
+          >
+            Add New Product
+          </button>
         </div>
       </div>
       <div className={styles.secondRow}>
@@ -122,7 +215,8 @@ export const ProductsAll: React.FC = () => {
             </div>
           </div>
           <div className={styles.listBody}>
-            {productList.map((item, index) => {
+            {/* this will reverse the map so that the last item in the array gets mapped first. we do .slice() to create a shadow copy before reverse() so that the original array won't get messed up */}
+            {productList.slice().reverse().map((item, index) => {
               return (
                 <div key={index} className={styles.listRows}>
                   <p className={`${styles.bodyInput} ${styles.first}`}>
@@ -152,47 +246,6 @@ export const ProductsAll: React.FC = () => {
                 </div>
               );
             })}
-            {/* <div className={styles.listRows}>
-              <p className={`${styles.bodyInput} ${styles.first}`}>
-                Product ID
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Product Description
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>UOM</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Piece per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Cost per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>Supplier</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Supplier Leadtime
-              </p>
-              <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div> */}
-
-            {/* <div className={styles.listRows}>
-              <p className={`${styles.bodyInput} ${styles.first}`}>
-                Product ID
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Product Description
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>UOM</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Piece per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Cost per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>Supplier</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Supplier Leadtime
-              </p>
-              <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div> */}
           </div>
         </div>
       </div>
