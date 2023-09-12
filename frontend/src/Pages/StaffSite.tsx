@@ -22,7 +22,12 @@ export const StaffSite: React.FC<props> = (props) => {
       <Header role={props.role} setPage={setPage} page={page}></Header>
       <NavBar role={props.role} setPage={setPage} page={page}></NavBar>
       {page == "delivery" && (
-        <DeliveryDisplay role={props.role}></DeliveryDisplay>
+        <DeliveryDisplay
+          role={props.role}
+          doID={doID}
+          setDOID={setDOID}
+          setPage={setPage}
+        ></DeliveryDisplay>
       )}
       {page == "newDO" && (
         <NewDeliveryOrder
