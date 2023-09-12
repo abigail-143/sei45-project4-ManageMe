@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  HtmlHTMLAttributes,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "./RegisterUser.module.css";
 import { useFetch } from "../../hooks/useFetch";
 import UserContext from "../../context/user";
@@ -38,6 +44,12 @@ export const RegisterUser: React.FC<props> = (props) => {
       account_type: string;
     }[]
   >([]);
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const companyRef = useRef<HTMLInputElement | null>(null);
+  const statusRef = useRef<HTMLInputElement | null>(null);
+  const accountRef = useRef<HTMLInputElement | null>(null);
 
   // GET all data in user_list table
   const pullAllUsers = async () => {
@@ -86,8 +98,36 @@ export const RegisterUser: React.FC<props> = (props) => {
     setManagerAccounts(managerUsers);
   };
 
+  // ADD new user
+  const addNewUser = async () => {
+    const res = await fetchData(
+      "/user/register",
+      "PUT",
+      {
+        username: usernameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+        company: companyRef.current.value,
+        status: statusRef.current.value,
+        account: accountRef.current.value,
+      },
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("add user successfully");
+      console.log(res.data);
+      console.log(emailRef);
+      pullAllUsers();
+    } else {
+      console.log("add user error");
+      console.log(res.data);
+    }
+  };
+
   useEffect(() => {
     pullAllUsers();
+    console.log(emailRef);
   }, []);
 
   return (
@@ -98,30 +138,66 @@ export const RegisterUser: React.FC<props> = (props) => {
             <h1 className={styles.register}>Register New User</h1>
             <div className={styles.registerInput}>
               <label className={styles.label}>Username:</label>
-              <input className={styles.input} placeholder="username"></input>
+              <input
+                ref={usernameRef}
+                type="text"
+                className={styles.input}
+                placeholder="username"
+              ></input>
             </div>
             <div className={styles.registerInput}>
               <label className={styles.label}>Email:</label>
-              <input className={styles.input} placeholder="email"></input>
+              <input
+                ref={emailRef}
+                type="text"
+                className={styles.input}
+                placeholder="email"
+              ></input>
             </div>
             <div className={styles.registerInput}>
               <label className={styles.label}>Password:</label>
-              <input className={styles.input} placeholder="password"></input>
+              <input
+                ref={passwordRef}
+                type="text"
+                className={styles.input}
+                placeholder="password"
+              ></input>
             </div>
             <div className={styles.registerInput}>
               <label className={styles.label}>Company:</label>
-              <input className={styles.input} placeholder="company"></input>
+              <input
+                ref={companyRef}
+                type="text"
+                className={styles.input}
+                placeholder="company"
+              ></input>
             </div>
             <div className={styles.registerInput}>
               <label className={styles.label}>Status:</label>
-              <input className={styles.input} placeholder="status"></input>
+              <input
+                ref={statusRef}
+                type="text"
+                className={styles.input}
+                placeholder="active / inactive"
+                defaultValue={"true"}
+              ></input>
             </div>
             <div className={styles.registerInput}>
               <label className={styles.label}>Account Type:</label>
-              <input className={styles.input} placeholder="active"></input>
+              <input
+                ref={accountRef}
+                type="text"
+                className={styles.input}
+                placeholder="manager / staff"
+              ></input>
             </div>
             <div className={styles.btnDiv}>
-              <button className={styles.registerBtn}>Register</button>
+              <button
+                className={styles.registerBtn}
+                onClick={() => addNewUser()}
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>
