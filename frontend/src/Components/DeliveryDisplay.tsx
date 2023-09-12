@@ -5,6 +5,9 @@ import UserContext from "../context/user";
 
 interface props {
   role: string;
+  doID: number;
+  setDOID: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
 }
 
@@ -120,7 +123,15 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
               const orderDate = String(item.delivery_placed_date).split("T")[0];
               const deliveredDate = String(item.delivered_date).split("T")[0];
               return (
-                <div key={index} className={styles.listBodyRows}>
+                <div
+                  key={index}
+                  className={styles.listBodyRows}
+                  onClick={() => {
+                    console.log(item.delivery_id);
+                    props.setDOID(item.delivery_id);
+                    props.setPage("doSummary");
+                  }}
+                >
                   <p className={styles.orderID}>{item.delivery_id}</p>
                   <p className={styles.orderDate}>{orderDate}</p>
                   <p className={styles.deliveredDate}>{deliveredDate}</p>
@@ -161,7 +172,15 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
               const orderDate = String(item.delivery_placed_date).split("T")[0];
               const deliveredDate = String(item.delivered_date).split("T")[0];
               return (
-                <div key={index} className={styles.listBodyRows}>
+                <div
+                  key={index}
+                  className={styles.listBodyRows}
+                  onClick={() => {
+                    console.log(item.delivery_id);
+                    props.setDOID(item.delivery_id);
+                    props.setPage("doSummary");
+                  }}
+                >
                   <p className={styles.orderID}>{item.delivery_id}</p>
                   <p className={styles.orderDate}>{orderDate}</p>
                   <p className={styles.deliveredDate}>{deliveredDate}</p>

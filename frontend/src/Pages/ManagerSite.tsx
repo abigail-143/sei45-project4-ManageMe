@@ -58,7 +58,12 @@ export const ManagerSite: React.FC<props> = (props) => {
         ></PurchaseOrderSummary>
       )}
       {page == "delivery" && (
-        <DeliveryDisplay role={props.role}></DeliveryDisplay>
+        <DeliveryDisplay
+          role={props.role}
+          doID={doID}
+          setDOID={setDOID}
+          setPage={setPage}
+        ></DeliveryDisplay>
       )}
       {page == "newDO" && (
         <NewDeliveryOrder
