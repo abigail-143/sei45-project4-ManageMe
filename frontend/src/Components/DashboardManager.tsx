@@ -6,6 +6,8 @@ import UserContext from "../context/user";
 interface props {
   poID: number;
   setPOID: React.Dispatch<React.SetStateAction<number>>;
+  doID: number;
+  setDOID: React.Dispatch<React.SetStateAction<number>>;
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
   productID: string;
@@ -134,7 +136,15 @@ export const DashboardManager: React.FC<props> = (props) => {
                   "T"
                 )[0];
                 return (
-                  <div key={index} className={styles.doTableRows}>
+                  <div
+                    key={index}
+                    className={styles.doTableRows}
+                    onClick={() => {
+                      console.log(item.delivery_id);
+                      props.setDOID(item.delivery_id);
+                      props.setPage("doSummary");
+                    }}
+                  >
                     <p>Order {item.delivery_id}</p>
                     <p>{item.username}</p>
                     <p>{orderDate}</p>

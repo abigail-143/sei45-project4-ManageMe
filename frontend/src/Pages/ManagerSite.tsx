@@ -86,6 +86,8 @@ export const ManagerSite: React.FC<props> = (props) => {
           poID={poID}
           setPOID={setPOID}
           setPage={setPage}
+          doID={doID}
+          setDOID={setDOID}
           page={page}
           productID={productID}
           setProductID={setProductID}
