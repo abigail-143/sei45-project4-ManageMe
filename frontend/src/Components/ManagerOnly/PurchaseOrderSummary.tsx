@@ -21,7 +21,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     estimated_receive_date: Date | null;
     received_date: Date | null;
     fulfilled: boolean | null;
-    on_time: boolean | null;
+    product_description: string;
+    supplier: string;
+    supplier_leadtime: number;
+    unit_of_measurement: string;
   }>({
     order_id: 0,
     username: "",
@@ -31,22 +34,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     estimated_receive_date: null,
     received_date: null,
     fulfilled: null,
-    on_time: null,
-  });
-  const [productDetails, setProductDetails] = useState<{
-    inventory_id: number;
-    product_id: string;
-    product_description: string;
-    unit_of_measurement: string;
-    supplier: string;
-    supplier_leadtime: number;
-  }>({
-    inventory_id: 0,
-    product_id: "",
     product_description: "",
-    unit_of_measurement: "",
     supplier: "",
     supplier_leadtime: 0,
+    unit_of_measurement: "",
   });
 
   // fetch data for 1 PO
@@ -68,27 +59,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     }
   };
 
-  // fetch data for 1 product
-  const getOneProduct = async () => {
-    const res = await fetchData(
-      "/products/" + props.productID,
-      "POST",
-      undefined,
-      context?.accessToken
-    );
-
-    if (res.ok) {
-      console.log("1 product ok");
-      console.log(res.data);
-      setProductDetails(res.data[0]);
-    } else {
-      console.log("1 product error");
-      console.log(res.data);
-    }
-  };
-
   useEffect(() => {
-    getOneProduct();
     getOnePO();
   }, []);
 
@@ -161,16 +132,12 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
           </div>
           <div className={styles.columnInputs}>
             <p className={styles.first}>{poDetails.product_id}</p>
-            <p className={styles.middle}>
-              {productDetails.product_description}
-            </p>
+            <p className={styles.middle}>{poDetails.product_description}</p>
             <p className={styles.middle}>{poDetails.order_quantity}</p>
-            <p className={styles.middle}>
-              {productDetails.unit_of_measurement}
-            </p>
-            <p className={styles.middle}>{productDetails.supplier}</p>
+            <p className={styles.middle}>{poDetails.unit_of_measurement}</p>
+            <p className={styles.middle}>{poDetails.supplier}</p>
             <p className={styles.last}>
-              {productDetails.supplier_leadtime} days
+              {poDetails.supplier_leadtime} days
             </p>
           </div>
         </div>
