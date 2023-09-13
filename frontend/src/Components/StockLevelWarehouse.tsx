@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./StockLevelWarehouse.module.css";
+import { WarehouseStockChart } from "./Charts/WarehouseStockChart";
 
 export const StockLevelWarehouse: React.FC = () => {
   return (
@@ -22,7 +23,9 @@ export const StockLevelWarehouse: React.FC = () => {
       </div>
       <div className={styles.tableDisplay}>
         <h1 className={styles.title}>Warehouse Stock Levels</h1>
-        <div className={styles.table}>this is a table</div>
+        <div className={styles.table}>
+          <WarehouseStockChart></WarehouseStockChart>
+        </div>
       </div>
     </div>
   );
