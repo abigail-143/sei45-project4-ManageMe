@@ -86,6 +86,48 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     }
   };
 
+  // add to warehouse quantity
+
+  const updateWarehouseQuantity = async () => {
+    let warehouseQty: number = 0;
+    // fetch product in warehouse first
+    const res = await fetchData(
+      "/warehouse/" + poDetails.product_id,
+      "POST",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("get 1 warehouse product ok");
+      warehouseQty = res.data[0].warehouse_quantity;
+      console.log(res.data[0].warehouse_quantity);
+    } else {
+      console.log("get 1 warehouse product error");
+      console.log(res.data);
+    }
+
+    const updatedQty = warehouseQty + poDetails.order_quantity;
+
+    const update = await fetchData(
+      "/warehouse/" + poDetails.product_id,
+      "PATCH",
+      {
+        warehouseQuantity: updatedQty,
+      },
+      context?.accessToken
+    );
+
+    if (update.ok) {
+      console.log("warehouse qty update ok");
+      console.log(res.data);
+      console.log(updatedQty);
+    } else {
+      console.log("warehouse qty update error");
+      console.log(res.data);
+    }
+  };
+
   useEffect(() => {
     getOnePO();
   }, []);
@@ -174,7 +216,13 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
             <p className={styles.last}>{poDetails.supplier_leadtime} days</p>
           </div>
         </div>
-        <button className={styles.submitButton} onClick={updatePO}>
+        <button
+          className={styles.submitButton}
+          onClick={() => {
+            updatePO();
+            updateWarehouseQuantity();
+          }}
+        >
           Save Purchase Order Summary
         </button>
       </div>
