@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./DeliveryOrderSummary.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -20,8 +15,8 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [doDetails, setDODetails] = useState<{
-    delivery_id: Number;
-    username: String;
+    delivery_id: number;
+    username: string;
     delivery_placed_date: Date;
     to_deliver_date: Date | null;
     delivered_date: Date | null;
@@ -36,11 +31,11 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
   });
   const [listItems, setListItems] = useState<
     {
-      delivery_id: Number;
-      product_id: String;
-      delivery_quantity: Number;
-      product_description: String;
-      unit_of_measurement: String;
+      delivery_id: number;
+      product_id: string;
+      delivery_quantity: number;
+      product_description: string;
+      unit_of_measurement: string;
     }[]
   >([]);
   const deliveredDateRef = useRef<HTMLInputElement | null>(null);
@@ -84,6 +79,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     }
   };
 
+  // update date and time only
   const updateDO = async () => {
     if (deliveredDateRef.current && completedRef.current) {
       const res = await fetchData(
@@ -99,6 +95,13 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
       if (res.ok) {
         console.log("update ok");
         console.log(res.data);
+        console.log("listItems: ", listItems);
+
+        listItems.forEach((item) => {
+          console.log(item);
+          updateStoreQuantity(item.product_id, item.delivery_quantity);
+          updateWarehouseQuantity(item.product_id, item.delivery_quantity);
+        });
         props.setPage("delivery");
       } else {
         console.log("update error");
@@ -107,56 +110,99 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     }
   };
 
+  // update store quantity
+  const updateStoreQuantity = async (
+    productID: string,
+    deliveryQuantity: number
+  ) => {
+    let storeQuantity: number = 0;
+    // fetch product from store first
+    const res = await fetchData(
+      "/store/" + productID,
+      "POST",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("get 1 store product ok");
+      storeQuantity = res.data[0].store_quantity;
+      console.log(res.data[0].store_quantity);
+    } else {
+      console.log("get 1 store product error");
+      console.log(res.data);
+    }
+
+    const updatedQuantity: number = storeQuantity + deliveryQuantity;
+
+    // update quantity in store
+    const update = await fetchData(
+      "/store/" + productID,
+      "PATCH",
+      { storeQuantity: updatedQuantity },
+      context?.accessToken
+    );
+
+    if (update.ok) {
+      console.log("store quantity update ok");
+      console.log(res.data);
+      console.log(updatedQuantity);
+    } else {
+      console.log("store quantity update error");
+      console.log(res.data);
+    }
+  };
+
+  // update warehouse quantity
+  const updateWarehouseQuantity = async (
+    productID: string,
+    deliveryQuantity: number
+  ) => {
+    let warehouseQty: number = 0;
+    // fetch product in warehouse first
+    const res = await fetchData(
+      "/warehouse/" + productID,
+      "POST",
+      undefined,
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("get 1 warehouse product ok");
+      warehouseQty = res.data[0].warehouse_quantity;
+      console.log(res.data[0].warehouse_quantity);
+    } else {
+      console.log("get 1 warehouse product error");
+      console.log(res.data);
+    }
+
+    // new quantity to be updated
+    const updatedQty = warehouseQty - deliveryQuantity;
+
+    // update quantity in warehouse
+    const update = await fetchData(
+      "/warehouse/" + productID,
+      "PATCH",
+      {
+        warehouseQuantity: updatedQty,
+      },
+      context?.accessToken
+    );
+
+    if (update.ok) {
+      console.log("warehouse qty update ok");
+      console.log(res.data);
+      console.log(updatedQty);
+    } else {
+      console.log("warehouse qty update error");
+      console.log(res.data);
+    }
+  };
+
   useEffect(() => {
     getOneDO();
     getDOListItems();
   }, []);
-
-  // should pull this data from backend and store into a state
-  // const deliveryRowDetails: {
-  //   productID: string;
-  //   productDescription: string;
-  //   quantity: number;
-  //   uom: string;
-  // }[] = [
-  //   {
-  //     productID: "item1",
-  //     productDescription:
-  //       "tooth lorem ipsum toreil loogooseok lorem ipsum okokoaks",
-  //     quantity: 200,
-  //     uom: "CTN",
-  //   },
-  //   {
-  //     productID: "item2",
-  //     productDescription: "comb",
-  //     quantity: 150,
-  //     uom: "CTN",
-  //   },
-  //   {
-  //     productID: "item3",
-  //     productDescription: "tissue",
-  //     quantity: 10,
-  //     uom: "CTN",
-  //   },
-  //   {
-  //     productID: "item4",
-  //     productDescription: "pen",
-  //     quantity: 20,
-  //     uom: "CTN",
-  //   },
-  // ];
-
-  // map the state
-  // const rows = deliveryRowDetails.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.columnInputs}>
-  //       <p className={styles.first}>{item.productID}</p>
-  //       <p className={styles.middle}>{item.productDescription}</p>
-  //       <p className={styles.middle}>{item.quantity}</p>
-  //       <p className={styles.last}>{item.uom}</p>
-  //     </div>
-  //   );
-  // });
 
   return (
     <div className={styles.purchaseOrderPage}>

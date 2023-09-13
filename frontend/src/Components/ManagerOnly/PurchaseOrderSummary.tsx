@@ -87,7 +87,6 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
   };
 
   // add to warehouse quantity
-
   const updateWarehouseQuantity = async () => {
     let warehouseQty: number = 0;
     // fetch product in warehouse first
@@ -107,8 +106,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
       console.log(res.data);
     }
 
+    // new quantity to be updated in warehouse
     const updatedQty = warehouseQty + poDetails.order_quantity;
 
+    // update quantity in warehouse
     const update = await fetchData(
       "/warehouse/" + poDetails.product_id,
       "PATCH",
