@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import styles from "./DeliveryOrderSummary.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -7,6 +13,7 @@ interface props {
   role: string;
   doID: number;
   setDOID: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
 }
 
@@ -37,6 +44,8 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
       unit_of_measurement: String;
     }[]
   >([]);
+  const deliveredDateRef = useRef<HTMLInputElement | null>(null);
+  const completedRef = useRef<HTMLInputElement | null>(null);
 
   // pull one DO from table
   const getOneDO = async () => {
@@ -76,56 +85,79 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     }
   };
 
+  const updateDO = async () => {
+    if (deliveredDateRef.current && completedRef.current) {
+      const res = await fetchData(
+        "/do/" + props.doID,
+        "PATCH",
+        {
+          deliveredDate: deliveredDateRef.current.value,
+          completed: completedRef.current.value,
+        },
+        context?.accessToken
+      );
+
+      if (res.ok) {
+        console.log("update ok");
+        console.log(res.data);
+        props.setPage("delivery");
+      } else {
+        console.log("update error");
+        console.log(res.data);
+      }
+    }
+  };
+
   useEffect(() => {
     getOneDO();
     getDOListItems();
   }, []);
 
   // should pull this data from backend and store into a state
-  const deliveryRowDetails: {
-    productID: string;
-    productDescription: string;
-    quantity: number;
-    uom: string;
-  }[] = [
-    {
-      productID: "item1",
-      productDescription:
-        "tooth lorem ipsum toreil loogooseok lorem ipsum okokoaks",
-      quantity: 200,
-      uom: "CTN",
-    },
-    {
-      productID: "item2",
-      productDescription: "comb",
-      quantity: 150,
-      uom: "CTN",
-    },
-    {
-      productID: "item3",
-      productDescription: "tissue",
-      quantity: 10,
-      uom: "CTN",
-    },
-    {
-      productID: "item4",
-      productDescription: "pen",
-      quantity: 20,
-      uom: "CTN",
-    },
-  ];
+  // const deliveryRowDetails: {
+  //   productID: string;
+  //   productDescription: string;
+  //   quantity: number;
+  //   uom: string;
+  // }[] = [
+  //   {
+  //     productID: "item1",
+  //     productDescription:
+  //       "tooth lorem ipsum toreil loogooseok lorem ipsum okokoaks",
+  //     quantity: 200,
+  //     uom: "CTN",
+  //   },
+  //   {
+  //     productID: "item2",
+  //     productDescription: "comb",
+  //     quantity: 150,
+  //     uom: "CTN",
+  //   },
+  //   {
+  //     productID: "item3",
+  //     productDescription: "tissue",
+  //     quantity: 10,
+  //     uom: "CTN",
+  //   },
+  //   {
+  //     productID: "item4",
+  //     productDescription: "pen",
+  //     quantity: 20,
+  //     uom: "CTN",
+  //   },
+  // ];
 
   // map the state
-  const rows = deliveryRowDetails.map((item, index) => {
-    return (
-      <div key={index} className={styles.columnInputs}>
-        <p className={styles.first}>{item.productID}</p>
-        <p className={styles.middle}>{item.productDescription}</p>
-        <p className={styles.middle}>{item.quantity}</p>
-        <p className={styles.last}>{item.uom}</p>
-      </div>
-    );
-  });
+  // const rows = deliveryRowDetails.map((item, index) => {
+  //   return (
+  //     <div key={index} className={styles.columnInputs}>
+  //       <p className={styles.first}>{item.productID}</p>
+  //       <p className={styles.middle}>{item.productDescription}</p>
+  //       <p className={styles.middle}>{item.quantity}</p>
+  //       <p className={styles.last}>{item.uom}</p>
+  //     </div>
+  //   );
+  // });
 
   return (
     <div className={styles.purchaseOrderPage}>
@@ -169,6 +201,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
               <label className={styles.label}>Delivered On:</label>
               <div className={styles.labelContent}>
                 <input
+                  ref={deliveredDateRef}
                   className={styles.labelContentInput}
                   type="date"
                   defaultValue={
@@ -183,6 +216,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
               <label className={styles.label}>Delivery Order Completed:</label>
               <div className={styles.label}>
                 <input
+                  ref={completedRef}
                   className={`${styles.checkbox}`}
                   type="checkbox"
                   checked={doDetails.completed ? true : undefined}
@@ -206,7 +240,9 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
                 <div key={index} className={styles.columnInputs}>
                   <p className={styles.first}>{item.product_id}</p>
                   <p className={styles.middle}>{item.product_description}</p>
-                  <p className={styles.middle}>{String(item.delivery_quantity)}</p>
+                  <p className={styles.middle}>
+                    {String(item.delivery_quantity)}
+                  </p>
                   <p className={styles.last}>{item.unit_of_measurement}</p>
                 </div>
               );
@@ -216,6 +252,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
           </div>
         </div>
         <button
+          onClick={updateDO}
           className={`${styles.submitButton} ${
             props.role == "Manager" ? styles.blueBG : styles.greenBG
           }`}

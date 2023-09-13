@@ -64,23 +64,25 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
 
   // update PO with date and time only
   const updatePO = async () => {
-    const res = await fetchData(
-      "/po/" + props.poID,
-      "PATCH",
-      {
-        receivedDate: receivedDateRef.current.value,
-        fulfilled: fulfilledRef.current.value,
-      },
-      context?.accessToken
-    );
+    if (receivedDateRef.current && fulfilledRef.current) {
+      const res = await fetchData(
+        "/po/" + props.poID,
+        "PATCH",
+        {
+          receivedDate: receivedDateRef.current.value,
+          fulfilled: fulfilledRef.current.value,
+        },
+        context?.accessToken
+      );
 
-    if (res.ok) {
-      console.log("update ok");
-      console.log(res.data);
-      props.setPage("purchase");
-    } else {
-      console.log("update error");
-      console.log(res.data);
+      if (res.ok) {
+        console.log("update ok");
+        console.log(res.data);
+        props.setPage("purchase");
+      } else {
+        console.log("update error");
+        console.log(res.data);
+      }
     }
   };
 

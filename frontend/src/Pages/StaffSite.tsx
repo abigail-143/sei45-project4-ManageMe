@@ -33,6 +33,7 @@ export const StaffSite: React.FC<props> = (props) => {
         <NewDeliveryOrder
           role={props.role}
           setPage={setPage}
+          setDOID={setDOID}
           page={page}
         ></NewDeliveryOrder>
       )}
@@ -41,6 +42,7 @@ export const StaffSite: React.FC<props> = (props) => {
           role={props.role}
           doID={doID}
           setDOID={setDOID}
+          setPage={setPage}
         ></DeliveryOrderSummary>
       )}
       {page == "stockstore" && (

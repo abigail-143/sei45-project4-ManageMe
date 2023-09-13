@@ -80,6 +80,7 @@ export const ManagerSite: React.FC<props> = (props) => {
           role={props.role}
           doID={doID}
           setDOID={setDOID}
+          setPage={setPage}
         ></DeliveryOrderSummary>
       )}
       {page == "stocklevel" && (
