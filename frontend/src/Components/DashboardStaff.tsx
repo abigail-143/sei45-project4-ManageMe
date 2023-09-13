@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./DashboardStaff.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
+import { StoreStockChart } from "./Charts/StoreStockChart";
 
 interface props {
+  role: string;
   doID: number;
   setDOID: React.Dispatch<React.SetStateAction<number>>;
   setPage: React.Dispatch<React.SetStateAction<string>>;
@@ -88,7 +90,9 @@ export const DashboardStaff: React.FC<props> = (props) => {
       </div>
       <div className={styles.second}>
         <h1 className={styles.secondTitle}>Store Stock Quantity</h1>
-        <div className={styles.secondDisplayDiv}>this is a table</div>
+        <div className={styles.secondDisplayDiv}>
+          <StoreStockChart role={props.role}></StoreStockChart>
+        </div>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ export const StockLevelStore: React.FC<props> = (props) => {
           Store Stock Levels
         </h1>
         <div className={styles.table}>
-          <StoreStockChart></StoreStockChart>
+          <StoreStockChart role={props.role}></StoreStockChart>
         </div>
       </div>
     </div>

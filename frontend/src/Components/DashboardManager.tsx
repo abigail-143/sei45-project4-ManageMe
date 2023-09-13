@@ -6,6 +6,7 @@ import { WarehouseStockChart } from "./Charts/WarehouseStockChart";
 import { StoreStockChart } from "./Charts/StoreStockChart";
 
 interface props {
+  role: string;
   poID: number;
   setPOID: React.Dispatch<React.SetStateAction<number>>;
   doID: number;
@@ -167,7 +168,7 @@ export const DashboardManager: React.FC<props> = (props) => {
       <div className={styles.second}>
         <h1 className={styles.secondTitle}>Store Stock Level</h1>
         <div className={styles.secondDisplayDiv}>
-          <StoreStockChart></StoreStockChart>
+          <StoreStockChart role={props.role}></StoreStockChart>
         </div>
       </div>
     </div>

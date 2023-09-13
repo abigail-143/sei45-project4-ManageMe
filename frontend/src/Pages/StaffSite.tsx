@@ -50,6 +50,7 @@ export const StaffSite: React.FC<props> = (props) => {
       )}
       {page == "dashboard" && (
         <DashboardStaff
+          role={props.role}
           setPage={setPage}
           doID={doID}
           setDOID={setDOID}

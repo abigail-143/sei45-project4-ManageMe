@@ -12,7 +12,12 @@ import {
   Legend,
 } from "chart.js";
 
-export const StoreStockChart: React.FC = () => {
+interface props {
+  role: string;
+  children?: React.ReactNode
+}
+
+export const StoreStockChart: React.FC<props> = (props) => {
   Chart.register(
     CategoryScale,
     LinearScale,
@@ -65,11 +70,11 @@ export const StoreStockChart: React.FC = () => {
       {
         label: "Store Quantities",
         data: productQuantities,
-        backgroundColor: "rgba(75,192,192,0.6)", // Customize the color
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: props.role == "Manager" ? "rgb(124, 157, 187)" : "rgb(180, 205, 147)", // Customize the color
+        borderColor:  props.role == "Manager" ? "rgb(124, 157, 187)" : "rgb(180, 205, 147)",
         borderWidth: 1,
-        hoverBackgroundColor: "rgba(75,192,192,0.8)",
-        hoverBorderColor: "rgba(75,192,192,1)",
+        hoverBackgroundColor: props.role == "Manager" ? "rgb(37, 112, 179)" : "rgb(66, 121, 91)",
+        hoverBorderColor: props.role == "Manager" ? "rgb(37, 112, 179)" : "rgb(66, 121, 91)",
       },
     ],
   };
@@ -90,11 +95,13 @@ export const StoreStockChart: React.FC = () => {
         },
       },
     },
+    maintainAspectRatio: false,
+    responsive: true,
   };
 
   useEffect(() => {
     getStoreData();
   }, []);
 
-  return <Bar data={chartData} options={chartOptions}></Bar>;
+  return <Bar data={chartData} options={chartOptions} height="420px"></Bar>;
 };

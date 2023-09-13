@@ -93,6 +93,7 @@ export const ManagerSite: React.FC<props> = (props) => {
       )}
       {page == "dashboard" && (
         <DashboardManager
+          role={props.role}
           poID={poID}
           setPOID={setPOID}
           setPage={setPage}

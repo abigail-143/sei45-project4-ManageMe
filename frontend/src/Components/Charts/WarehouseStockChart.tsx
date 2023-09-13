@@ -70,11 +70,11 @@ export const WarehouseStockChart: React.FC = () => {
       {
         label: "Warehouse Quantities",
         data: productQuantities,
-        backgroundColor: "rgba(75,192,192,0.6)", // Customize the color
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgb(124, 157, 187)", // Customize the color
+        borderColor: "rgb(180, 205, 147)",
         borderWidth: 1,
-        hoverBackgroundColor: "rgba(75,192,192,0.8)",
-        hoverBorderColor: "rgba(75,192,192,1)",
+        hoverBackgroundColor: "rgb(37, 112, 179)",
+        hoverBorderColor: "rgb(37, 112, 179)",
       },
     ],
   };
@@ -95,11 +95,20 @@ export const WarehouseStockChart: React.FC = () => {
         },
       },
     },
+    maintainAspectRatio: false,
+    responsive: true,
   };
 
   useEffect(() => {
     getWarehouseData();
   }, []);
 
-  return <Bar data={chartData} options={chartOptions}></Bar>;
+  return (
+    <Bar
+      className="warehouseChart"
+      data={chartData}
+      options={chartOptions}
+      height="420px"
+    ></Bar>
+  );
 };
