@@ -56,6 +56,7 @@ export const ManagerSite: React.FC<props> = (props) => {
         <PurchaseOrderSummary
           poID={poID}
           productID={productID}
+          setPage={setPage}
         ></PurchaseOrderSummary>
       )}
       {page == "delivery" && (

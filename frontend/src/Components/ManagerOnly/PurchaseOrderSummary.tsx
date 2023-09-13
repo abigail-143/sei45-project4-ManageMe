@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./PurchaseOrderSummary.module.css";
 import { useFetch } from "../../hooks/useFetch";
 import UserContext from "../../context/user";
@@ -6,6 +6,7 @@ import UserContext from "../../context/user";
 interface props {
   poID: number;
   productID: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
 }
 
@@ -39,6 +40,8 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     supplier_leadtime: 0,
     unit_of_measurement: "",
   });
+  const receivedDateRef = useRef<HTMLInputElement | null>(null);
+  const fulfilledRef = useRef<HTMLInputElement | null>(null);
 
   // fetch data for 1 PO
   const getOnePO = async () => {
@@ -55,6 +58,28 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
       setPODetails(res.data[0]);
     } else {
       console.log("1 PO error");
+      console.log(res.data);
+    }
+  };
+
+  // update PO with date and time only
+  const updatePO = async () => {
+    const res = await fetchData(
+      "/po/" + props.poID,
+      "PATCH",
+      {
+        receivedDate: receivedDateRef.current.value,
+        fulfilled: fulfilledRef.current.value,
+      },
+      context?.accessToken
+    );
+
+    if (res.ok) {
+      console.log("update ok");
+      console.log(res.data);
+      props.setPage("purchase");
+    } else {
+      console.log("update error");
       console.log(res.data);
     }
   };
@@ -103,6 +128,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
               <label className={styles.label}>Shipment Arrived On:</label>
               <div className={styles.labelContent}>
                 <input
+                  ref={receivedDateRef}
                   className={styles.labelContentInput}
                   type="date"
                   defaultValue={
@@ -114,9 +140,16 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
               </div>
             </div>
             <div className={styles.labelInput}>
-              <label className={styles.label}>Purchase Order Completed:</label>
+              <label className={styles.label}>Purchase Order Fulfilled:</label>
               <div className={styles.label}>
-                <input className={`${styles.checkbox}`} type="checkbox"></input>
+                <input
+                  ref={fulfilledRef}
+                  className={`${styles.checkbox}`}
+                  type="checkbox"
+                  name="fulfilled"
+                  value="true"
+                  checked={poDetails.fulfilled ? true : undefined}
+                ></input>
               </div>
             </div>
           </div>
@@ -136,12 +169,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
             <p className={styles.middle}>{poDetails.order_quantity}</p>
             <p className={styles.middle}>{poDetails.unit_of_measurement}</p>
             <p className={styles.middle}>{poDetails.supplier}</p>
-            <p className={styles.last}>
-              {poDetails.supplier_leadtime} days
-            </p>
+            <p className={styles.last}>{poDetails.supplier_leadtime} days</p>
           </div>
         </div>
-        <button className={styles.submitButton}>
+        <button className={styles.submitButton} onClick={updatePO}>
           Save Purchase Order Summary
         </button>
       </div>
