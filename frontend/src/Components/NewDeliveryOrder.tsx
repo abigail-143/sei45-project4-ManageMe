@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import styles from "./NewDeliveryOrder.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
+import { NewRow } from "./DeliveryOrderInputRow";
 
 interface props {
   role: string;
@@ -15,32 +16,13 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
   const [newDOID, setNewDOID] = useState<number>(0);
-  const [product, setProduct] = useState<{
-    inventory_id: number | null;
-    product_id: string | null;
-    product_description: string | null;
-    unit_of_measurement: string | null;
-    in_use: boolean;
-    supplier: string | null;
-    supplier_leadtime: number | null;
-    piece_per_uom: number | null;
-    cost_per_uom: number | null;
-  }>({
-    inventory_id: null,
-    product_id: null,
-    product_description: null,
-    unit_of_measurement: null,
-    in_use: true,
-    supplier: null,
-    supplier_leadtime: null,
-    piece_per_uom: null,
-    cost_per_uom: null,
-  });
+
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const deliveryPlacedDateRef = useRef<HTMLInputElement | null>(null);
   const toDeliverDateRef = useRef<HTMLInputElement | null>(null);
-  const productIDRef = useRef<HTMLInputElement | null>(null);
-  const deliveryQuantityRef = useRef<HTMLInputElement | null>(null);
+
+  // this is to track all the inputs from the rows
+  const mainRef = useRef([]);
 
   // + 2 days from current date
   const estimatedDeliveryDate = new Date(
@@ -70,11 +52,10 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
         console.log(res.data.order.delivery_id);
         setNewDOID(res.data.order.delivery_id);
 
-        // after creating the delivery order, we'll add the list items to the delivery order
-        const id = res.data.order.delivery_id;
-        // use a loop to iterate through all the row inputs
-        rowData.forEach((item) => {
-          addItemsToDO(id, item);
+        mainArray.forEach((item) => {
+          addItemsToDO(res.data.order.delivery_id, item[0], item[1]);
+          console.log("item added");
+          console.log(item);
         });
 
         // this is to set the delivery order id for the summary page
@@ -86,18 +67,18 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
     }
   };
 
-  // pass in the newly created product delivery id so that the items can be added
   const addItemsToDO = async (
-    id: string,
-    item: { productID: string; deliveryQuantity: string }
+    id: number,
+    productID: string,
+    deliveryQuantity: number
   ) => {
     const res = await fetchData(
       "/list/add",
       "PUT",
       {
         deliveryID: id,
-        productID: item.productID,
-        deliveryQuantity: item.deliveryQuantity,
+        productID: productID,
+        deliveryQuantity: deliveryQuantity,
       },
       context?.accessToken
     );
@@ -108,109 +89,32 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
     } else {
       console.log("add 1 item to DO error");
       console.log(res.data);
-      console.log(newDOID);
     }
   };
 
-  // for autopopulation, this works but the useRef is not individualise to the row, it's for all the rows
-  const getOneProduct = async () => {
-    if (productIDRef.current) {
-      const res = await fetchData(
-        "/products/" + productIDRef.current.value,
-        "POST",
-        undefined,
-        context?.accessToken
-      );
-
-      if (res.ok) {
-        console.log("get 1 product ok");
-        console.log(res.data);
-        setProduct(res.data[0]);
-      } else {
-        console.log("get 1 product error");
-        console.log(res.data);
-        console.log(product);
-      }
-    }
-  };
-
-  // declare a new row
-  const newRow: JSX.Element = (
-    <div className={styles.columnInputs}>
-      <input
-        ref={productIDRef}
-        className={`${styles.newInput} ${styles.first}`}
-        placeholder="Product ID"
-        // onInput={getOneProduct}
-        onChange={(event) => {
-          getOneProduct();
-          handleRowInputChange(index, "productID", event.target.value);
-        }}
-      ></input>
-      <input
-        className={`${styles.newInput} ${styles.middle}`}
-        placeholder="Product Description"
-        defaultValue={
-          product.product_description ? product.product_description : ""
-        }
-      ></input>
-      <input
-        ref={deliveryQuantityRef}
-        className={`${styles.newInput} ${styles.middle}`}
-        placeholder="Quantity"
-        onChange={(event) => {
-          handleRowInputChange(index, "deliveryQuantity", event.target.value);
-        }}
-      ></input>
-      <div className={`${styles.newInput} ${styles.last}`}>
-        <select
-          className={`${styles.select}`}
-          id="uom"
-          name="Unit of Measurement"
-          defaultValue={
-            product.unit_of_measurement ? product.unit_of_measurement : ""
-          }
-        >
-          <option value="CTN">CTN</option>
-          <option value="BOX">BOX</option>
-          <option value="EA">EA</option>
-        </select>
-      </div>
-    </div>
-  );
-
-  // this is the array of JSX rows to be mapped. the initial array has 1 jsx row so that it shows when the page is loaded
-  const [rows, setRows] = useState<JSX.Element[]>([newRow]);
   // this rowRef is to toggle the scroll bar height
   const rowRef = useRef<HTMLDivElement | null>(null);
-  // this is to track the user input for EACH row
-  const [rowData, setRowData] = useState<
-    { productID: string; deliveryQuantity: string }[]
-  >([{ productID: "", deliveryQuantity: "" }]);
 
-  // handle input at row change and track the user input
-  const handleRowInputChange = (
-    index: number,
-    field: string,
-    value: string
+  // this is to track the user inputs from each row
+  const [mainArray, setMainArray] = useState<[string, number][]>([["", 0]]);
+
+  // this will pass to child, this is to update the already created array of arrays when user type in some input
+  const updateArray = (
+    idx: number,
+    productName: string,
+    productQuantity: number
   ) => {
-    const updatedDate = [...rowData];
-    // basically, take array[0]['productID'] = 'value'
-    updatedDate[index][field] = value;
-    // then you update the rowData state again
-    setRowData(updatedDate);
+    console.log({ productName, productQuantity });
+    const currArray = JSON.parse(JSON.stringify(mainArray));
+    currArray[idx] = [productName, productQuantity];
+    setMainArray(currArray);
   };
 
-  // this is to handle click and add new row
-  const addRow = () => {
-    // adding a new jsx element to the array to be mapped
-    setRows([...rows, newRow]);
-    // adding a new row input to the array to be updated and looped to add list items to DO
-    setRowData([...rowData, { productID: "", deliveryQuantity: "" }]);
-    if (rowRef.current) {
-      rowRef.current.scrollTop = rowRef.current.scrollHeight;
-    }
-    console.log(rowData);
+  // this is add row, adds an array to the mainArray array
+  const addItem = () => {
+    const currArray = JSON.parse(JSON.stringify(mainArray));
+    currArray.push(["", 0]);
+    setMainArray(currArray);
   };
 
   // when submitting, wait for DO to be created then show summary
@@ -219,15 +123,10 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
     props.setPage("doSummary");
   };
 
-  useEffect(() => {
-    console.log("rows");
-    console.log(rows);
-    console.log("rowData");
-    console.log(rowData);
-  }, []);
-
   return (
     <div className={styles.deliveryOrderPage}>
+      {JSON.stringify(mainArray)}
+
       <div className={styles.deliveryOrderBox}>
         <h1
           className={`${
@@ -299,62 +198,14 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
           </div>
           {/* map out the number of rows here */}
           <div className={styles.inputRows} ref={rowRef}>
-            {/* {rows.map((row) => row)} */}
-            {rows.map((row, index) => {
+            {mainArray.map((item, idx) => {
               return (
-                <div key={index} className={styles.columnInputs}>
-                  <input
-                    ref={productIDRef}
-                    className={`${styles.newInput} ${styles.first}`}
-                    placeholder="Product ID"
-                    // onInput={getOneProduct}
-                    onChange={(event) => {
-                      getOneProduct();
-                      handleRowInputChange(
-                        index,
-                        "productID",
-                        event.target.value
-                      );
-                    }}
-                  ></input>
-                  <input
-                    className={`${styles.newInput} ${styles.middle}`}
-                    placeholder="Product Description"
-                    defaultValue={
-                      product.product_description
-                        ? product.product_description
-                        : ""
-                    }
-                  ></input>
-                  <input
-                    ref={deliveryQuantityRef}
-                    className={`${styles.newInput} ${styles.middle}`}
-                    placeholder="Quantity"
-                    onChange={(event) => {
-                      handleRowInputChange(
-                        index,
-                        "deliveryQuantity",
-                        event.target.value
-                      );
-                    }}
-                  ></input>
-                  <div className={`${styles.newInput} ${styles.last}`}>
-                    <select
-                      className={`${styles.select}`}
-                      id="uom"
-                      name="Unit of Measurement"
-                      defaultValue={
-                        product.unit_of_measurement
-                          ? product.unit_of_measurement
-                          : ""
-                      }
-                    >
-                      <option value="CTN">CTN</option>
-                      <option value="BOX">BOX</option>
-                      <option value="EA">EA</option>
-                    </select>
-                  </div>
-                </div>
+                <NewRow
+                  updateArray={updateArray}
+                  idx={idx}
+                  productName={item[0]}
+                  productQuantity={item[1]}
+                ></NewRow>
               );
             })}
           </div>
@@ -364,7 +215,9 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
             props.role == "Manager" ? styles.lightBlueBG : styles.lightGreenBG
           }`}
           onClick={() => {
-            addRow();
+            // addRow();
+            addItem();
+            console.log(mainArray);
           }}
         >
           Add New Row
