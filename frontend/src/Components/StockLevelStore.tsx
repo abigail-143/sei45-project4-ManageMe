@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./StockLevelStore.module.css";
+import { StoreStockChart } from "./Charts/StoreStockChart";
 
 interface props {
   role: string;
@@ -36,7 +37,9 @@ export const StockLevelStore: React.FC<props> = (props) => {
         >
           Store Stock Levels
         </h1>
-        <div className={styles.table}>this is a table</div>
+        <div className={styles.table}>
+          <StoreStockChart></StoreStockChart>
+        </div>
       </div>
     </div>
   );

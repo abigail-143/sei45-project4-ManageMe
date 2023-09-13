@@ -3,6 +3,7 @@ import styles from "./DashboardManager.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { WarehouseStockChart } from "./Charts/WarehouseStockChart";
+import { StoreStockChart } from "./Charts/StoreStockChart";
 
 interface props {
   poID: number;
@@ -165,7 +166,9 @@ export const DashboardManager: React.FC<props> = (props) => {
       </div>
       <div className={styles.second}>
         <h1 className={styles.secondTitle}>Store Stock Level</h1>
-        <div className={styles.secondDisplayDiv}>this is a table</div>
+        <div className={styles.secondDisplayDiv}>
+          <StoreStockChart></StoreStockChart>
+        </div>
       </div>
     </div>
   );
