@@ -18,7 +18,7 @@
   }
   
   .registerForm {
-    background-color: white;
+    background-color: whitesmoke;
     width: 470px;
     height: 335px;
     border-radius: 10px;
@@ -52,6 +52,7 @@
   }
   
   .input {
+    background: none;
     width: 60%;
     text-indent: 10px;
     border: 1px solid var(--light-grey);
@@ -86,7 +87,7 @@
   }
   
   .userList {
-    background-color: white;
+    background-color: whitesmoke;
     width: 600px;
     height: 430px;
     padding: 0;

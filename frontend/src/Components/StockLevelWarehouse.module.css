@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .tabRow {
@@ -83,9 +84,10 @@
   /* background-color: navajowhite;
     border: 1px solid indigo; */
   width: calc(100vw - 250px);
-  height: calc(100vh - 210px);
+  min-height: calc(100vh - 210px);
   padding: 10px 0;
   margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -94,13 +96,47 @@
   background-color: white;
 }
 
+.one {
+  margin-bottom: 10px;
+}
+
+.two {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.secondTableHeader {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 30px);
+  /* background-color: pink; */
+  justify-content: space-between;
+}
+
 .title {
   padding: 0;
   margin: 0;
   font-size: 24px;
-  width: calc(100% - 30px);
   /* background-color: lightblue; */
   color: var(--blue);
+}
+
+.searchBar {
+  /* background-color: lavender; */
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  justify-content: right;
+  padding-right: 28px;
+}
+
+.searchBar > input {
+  width: 60%;
+  background: none;
+  border: 1px solid var(--light-grey);
+  text-indent: 10px;
+  outline: none;
 }
 
 .table {

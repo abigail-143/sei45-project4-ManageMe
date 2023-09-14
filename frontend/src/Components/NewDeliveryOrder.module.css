@@ -162,6 +162,7 @@
   /* background-color: honeydew; */
   height: 25px;
   outline: none;
+  background: none;
 }
 
 .select {

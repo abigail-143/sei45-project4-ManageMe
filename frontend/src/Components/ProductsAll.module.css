@@ -64,6 +64,7 @@
   border-radius: 3px;
   font-size: 14px;
   outline: none;
+  background: none;
 }
 
 .inputSelect {
@@ -74,6 +75,7 @@
   border-radius: 3px;
   font-size: 14px;
   outline: none;
+  background: none;
 }
 
 .addBtn {
