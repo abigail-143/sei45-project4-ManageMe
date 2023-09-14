@@ -164,46 +164,6 @@ export const ProductWarehouse: React.FC = () => {
                   </div>
                 );
               })}
-            {/* <div className={styles.listRows}>
-              <p className={`${styles.bodyInput} ${styles.first}`}>
-                Product ID
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Product Description
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>UOM</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Piece per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Cost per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>Supplier</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Supplier Leadtime
-              </p>
-              <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div> */}
-            {/* <div className={styles.listRows}>
-              <p className={`${styles.bodyInput} ${styles.first}`}>
-                Product ID
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Product Description
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>UOM</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Piece per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Cost per UOM
-              </p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>Supplier</p>
-              <p className={`${styles.bodyInput} ${styles.middle}`}>
-                Supplier Leadtime
-              </p>
-              <p className={`${styles.bodyInput} ${styles.last}`}>In Use</p>
-            </div> */}
           </div>
         </div>
       </div>
