@@ -1,0 +1,147 @@
+.storeProductsPage {
+  width: calc(100vw - 200px);
+  height: calc(100vh - 60px);
+  position: fixed;
+  top: 60px;
+  right: 0;
+  /* background-color: lavender;
+    border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.firstRow {
+  width: 100%;
+  min-height: 300px;
+  /* background-color: lavenderblush; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondRow {
+  width: 100%;
+  min-height: 850px;
+  /* background-color: lightsalmon; */
+  display: flex;
+  justify-content: center;
+}
+
+.addForm {
+  width: 780px;
+  min-height: 200px;
+  /* background-color: lightblue; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 0 30px -5px lightgray;
+}
+
+.formTitle {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.formInput {
+  display: flex;
+  width: 600px;
+  /* background-color: lightpink; */
+  margin: 7px 0;
+}
+
+.label {
+  width: 300px;
+}
+
+.input {
+  width: 300px;
+  border: 1px solid var(--light-grey);
+  text-indent: 10px;
+  padding: 3px 0;
+  border-radius: 3px;
+  font-size: 14px;
+  outline: none;
+}
+
+.inputSelect {
+  width: 300px;
+  border: 1px solid var(--light-grey);
+  text-indent: 5px;
+  padding: 3px 0;
+  border-radius: 3px;
+  font-size: 14px;
+  outline: none;
+}
+
+.addBtn {
+  padding: 5px 0;
+  margin: 12px 0;
+  width: 200px;
+  height: 35px;
+  border: none;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.blue {
+  background-color: var(--blue);
+}
+
+.green {
+  background-color: var(--green);
+}
+
+.productList {
+  width: calc(100% - 90px);
+  max-height: 820px;
+  /* background-color: papayawhip; */
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px -5px lightgray;
+}
+
+.listTitle {
+  margin: 15px 0;
+}
+
+/* .listHeaders {
+    background-color: paleturquoise;
+  } */
+
+.listBody {
+  /* background-color: khaki; */
+  min-height: 700px;
+  overflow-y: scroll;
+}
+
+.listRows {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerInput {
+  width: calc(100% / 5);
+  /* background-color: aliceblue;
+    border: 1px solid greenyellow; */
+  margin: 0;
+  padding-bottom: 2px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--light-grey);
+  font-weight: 500;
+}
+
+.bodyInput {
+  width: calc(100% / 5);
+  /* background-color: aliceblue;
+    border: 1px solid greenyellow; */
+  margin: 0;
+  padding-bottom: 2px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--light-grey);
+}

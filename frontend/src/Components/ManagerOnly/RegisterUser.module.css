@@ -1,0 +1,145 @@
+.registerPage {
+    width: calc(100vw - 200px);
+    height: calc(100vh - 60px);
+    position: fixed;
+    top: 60px;
+    right: 0;
+    overflow-y: scroll;
+  }
+  
+  .formSection {
+    width: calc(100vw - 200px);
+    height: 350px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .registerForm {
+    background-color: whitesmoke;
+    width: 470px;
+    height: 335px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px -5px lightgray;
+  }
+  
+  .register {
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--blue);
+  }
+  
+  .registerInput {
+    padding: 4px 25px;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 40px;
+    height: 29px;
+  }
+  
+  .label {
+    width: 40%;
+    text-align: left;
+    padding: 3px 0;
+    font-size: 14px;
+  }
+  
+  .input {
+    background: none;
+    width: 60%;
+    text-indent: 10px;
+    border: 1px solid var(--light-grey);
+    padding: 3px 0;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  
+  .btnDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .registerBtn {
+    padding: 5px 0;
+    margin: 12px 0;
+    width: 150px;
+    border: none;
+    background-color: var(--blue);
+    color: whitesmoke;
+  }
+  
+  .listSection {
+    width: calc(100vw - 200px);
+    height: calc(100vh - 350px);
+    padding: 35px 0 10px 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  .userList {
+    background-color: whitesmoke;
+    width: 600px;
+    height: 430px;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 25px 2px lightgray;
+    border-top-left-radius: 25px;
+  }
+  
+  .listName {
+    padding: 15px 22px 5px 22px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--blue);
+  }
+  
+  .listHeaders {
+    height: 33px;
+  }
+  
+  .column {
+    padding: 3px 0;
+    margin: 0;
+    border-bottom: 1px solid var(--light-grey);
+  }
+  
+  .header {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--dark-grey);
+  }
+  
+  .username {
+    width: 30%;
+  }
+  
+  .email {
+    width: 45%;
+  }
+  
+  .status {
+    width: 25%;
+  }
+  
+  .listBody {
+    height: 330px;
+    overflow-y: scroll;
+  }
+  
+  .listBodyRows {
+    display: flex;
+    flex-direction: row;
+    padding: 3px 20px;
+    font-size: 14px;
+  }

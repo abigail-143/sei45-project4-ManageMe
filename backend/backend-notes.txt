@@ -1,0 +1,15 @@
+npm init -y
+npm i express dotenv cors
+npm i jsonwebtoken uuid bcrypt
+npm i -D nodemon
+npm i -D typescript @types/express @types/node
+npx tsc --init // this is to create the tsconfig.js file
+*update outDir folder in tsconfig.js file*
+npx tsc // this creates the outDir folder (which will contain the converted server.js file)
+npm install rimraf
+*update package.js 'scripts', to include 'build', 'start', 'dev'*
+npm i express-rate-limite express-validator helmet
+npm i ts-postgres@latest
+npm i pg
+npm i -D @types/pg
+npm i -D @types/jsonwebtoken @types/uuid
