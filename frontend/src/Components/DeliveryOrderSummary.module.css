@@ -39,7 +39,7 @@
   /* background-color: lemonchiffon;
   border: 1px solid sandybrown; */
   width: inherit;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   display: flex;
   flex-direction: row;
 }
@@ -118,9 +118,9 @@
 .orderInput {
   /* background-color: antiquewhite;
   border: 1px solid #ee82ee; */
-  height: 300px;
+  max-height: 300px;
   width: inherit;
-  margin: 30px 0 30px 0;
+  margin: 30px 0 20px 0;
 }
 
 .labelInput > input {
@@ -140,53 +140,64 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  margin: 0;
+  padding: 0 40px;
 }
 
 .columnHeaders > p {
   width: calc(100% / 4);
   text-align: center;
   font-weight: 500;
-  /* border: 1px solid pink; */
+  /* border: 1px solid red; */
+  border-bottom: 1px solid var(--light-grey);
+  padding-bottom: 3px;
+  margin: 0;
 }
 
 .orderRows {
-  /* background-color: pink; */
-  height: 250px;
+  /* background-color: lightsalmon; */
+  /* border: 1px solid green; */
+  height: 230px;
   overflow-y: scroll;
+  padding: 0 40px;
 }
 
 .columnInputs {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--light-grey);
+  /* background-color: teal; */
 }
 
 .columnInputs > p {
   width: calc(100% / 4);
   text-align: center;
-  /* border: 1px solid green; */
-  /* background-color: honeydew; */
-  height: 40px;
+  /* border: 1px solid green;
+  background-color: honeydew; */
+  margin: 0;
+  padding: 10px 0 5px 0;
+  /* height: 30px; */
   overflow-x: scroll;
   white-space: nowrap;
-  border-bottom: 1px solid var(--light-grey);
 }
 
 .first {
   margin-top: 0;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   margin-left: 1.5px;
 }
 
 .middle {
   margin-top: 0;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   margin-left: 3px;
 }
 
 .last {
   margin-top: 0;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   margin-left: 3px;
   margin-right: 1.5px;
 }

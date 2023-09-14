@@ -23,6 +23,7 @@
     align-items: center;
     height: 300px;
     margin-bottom: 10px;
+    margin-top: 10px;
   }
   
   .second {
@@ -38,7 +39,7 @@
   
   .firstTable {
     width: calc(100% / 2);
-    height: 80%;
+    height: 90%;
     /* background-color: skyblue;
     border: 1px solid purple; */
     padding: 10px 15px;
@@ -76,7 +77,8 @@
   }
   
   .poTableRowsDiv {
-    height: 170px;
+    height: 190px;
+    /* margin-bottom: 10px; */
     /* background-color: lightgray; */
     overflow-y: scroll;
   }
@@ -110,8 +112,9 @@
   }
   
   .doTableRowsDiv {
-    height: 170px;
-    /* background-color: greenyellow; */
+    height: 190px;
+    /* margin-bottom: 10px; */
+    /* background-color: lightgray; */
     overflow-y: scroll;
   }
   
