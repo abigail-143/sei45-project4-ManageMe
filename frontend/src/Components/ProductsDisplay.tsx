@@ -19,13 +19,13 @@ export const ProductsDisplay: React.FC<props> = (props) => {
         </div>
       </div>
       <div className={styles.pageRowTwo}>
-        <div className={styles.tab} onClick={() => {
+        <div className={`${styles.tab} ${styles.one}`} onClick={() => {
           props.setPage("warehouseproducts");
         }}>
           <h1 className={styles.title}>Warehouse Products</h1>
           <img className={styles.img} src="storage.png"></img>
         </div>
-        <div className={styles.tab} onClick={() => {
+        <div className={`${styles.tab} ${styles.two}`} onClick={() => {
           props.setPage("storeproducts");
         }}>
           <h1 className={styles.title}>Store Products</h1>
