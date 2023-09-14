@@ -34,8 +34,8 @@
 .loginImg {
   width: 70%;
   height: 70%;
-  object-fit: cover;
-  border-radius: 50%;
+  object-fit: contain;
+  /* border-radius: 50%; */
 }
 
 .loginFormDiv {

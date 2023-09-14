@@ -58,7 +58,7 @@ export const LoginPage: React.FC<props> = (props) => {
       <div className={styles.loginImgDiv}>
         <img
           className={styles.loginImg}
-          src="/supply-chain.png"
+          src="/line-graph.png"
           alt="inventory"
         ></img>
       </div>

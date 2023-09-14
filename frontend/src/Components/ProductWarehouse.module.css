@@ -135,6 +135,7 @@
     border: 1px solid greenyellow; */
     margin: 0;
     padding-bottom: 2px;
+    padding-right: 5px;
     margin-bottom: 5px;
     border-bottom: 1px solid var(--light-grey);
   }
