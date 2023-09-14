@@ -9,7 +9,6 @@ interface props {
 }
 
 export const NavBar: React.FC<props> = (props) => {
-  // const [role, setRole] = useState<string>("Manager");
   return (
     <>
       {props.role === "Manager" ? (

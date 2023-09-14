@@ -175,8 +175,6 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
                 </div>
               );
             })}
-            {/* {pendingOrders}
-            {pendingOrders} */}
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ export const WarehouseStockChart: React.FC = () => {
 
     if (res.ok) {
       console.log("fetch data ok");
-      console.log(res.data);
+      // console.log(res.data);
       setWarehouseStockData(res.data);
     } else {
       console.log("fetch data error");

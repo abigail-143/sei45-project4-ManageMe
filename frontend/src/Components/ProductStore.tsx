@@ -36,7 +36,7 @@ export const ProductStore: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("all store products ok");
-      console.log(res.data);
+      // console.log(res.data);
       setStoreProduct(res.data);
     } else {
       console.log("all store products error");
@@ -59,7 +59,7 @@ export const ProductStore: React.FC<props> = (props) => {
 
       if (res.ok) {
         console.log("add product to store successful");
-        console.log(res.data);
+        // console.log(res.data);
         pullStoreProducts();
         productIDRef.current.value = "";
         storeQuantityRef.current.value = "";

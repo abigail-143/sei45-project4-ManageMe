@@ -99,7 +99,6 @@ export const DashboardManager: React.FC<props> = (props) => {
               <p>Fulfilled</p>
             </div>
             <div className={styles.poTableRowsDiv}>
-              {/* {poRows} */}
               {poData.map((item, index) => {
                 const orderDate = String(item.order_placed_date).split("T")[0];
                 return (

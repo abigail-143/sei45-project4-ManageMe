@@ -34,7 +34,7 @@ export const ProductWarehouse: React.FC = () => {
 
     if (res.ok) {
       console.log("all warehouse product ok");
-      console.log(res.data);
+      // console.log(res.data);
       setWarehouseProduct(res.data);
     } else {
       console.log("all warehouse product error");
@@ -57,7 +57,7 @@ export const ProductWarehouse: React.FC = () => {
 
       if (res.ok) {
         console.log("add product to warehouse successful");
-        console.log(res.data);
+        // console.log(res.data);
         pullWarehouseProducts();
         productIDRef.current.value = "";
         warehouseQuantityRef.current.value = "";

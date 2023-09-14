@@ -28,8 +28,6 @@ export const ManagerSite: React.FC<props> = (props) => {
   const [productID, setProductID] = useState<string>("");
   const [doID, setDOID] = useState<number>(4);
 
-  // navbar, onclick should set the page to something
-
   return (
     <>
       <Header role={props.role} setPage={setPage} page={page}></Header>

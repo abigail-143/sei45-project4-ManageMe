@@ -54,7 +54,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("1 PO ok");
-      console.log(res.data);
+      // console.log(res.data);
       setPODetails(res.data[0]);
     } else {
       console.log("1 PO error");
@@ -77,7 +77,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
 
       if (res.ok) {
         console.log("update ok");
-        console.log(res.data);
+        // console.log(res.data);
         props.setPage("purchase");
       } else {
         console.log("update error");
@@ -100,7 +100,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     if (res.ok) {
       console.log("get 1 warehouse product ok");
       warehouseQty = res.data[0].warehouse_quantity;
-      console.log(res.data[0].warehouse_quantity);
+      // console.log(res.data[0].warehouse_quantity);
     } else {
       console.log("get 1 warehouse product error");
       console.log(res.data);
@@ -121,8 +121,8 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
 
     if (update.ok) {
       console.log("warehouse qty update ok");
-      console.log(res.data);
-      console.log(updatedQty);
+      // console.log(res.data);
+      // console.log(updatedQty);
     } else {
       console.log("warehouse qty update error");
       console.log(res.data);
@@ -132,10 +132,6 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
   useEffect(() => {
     getOnePO();
   }, []);
-
-  // useEffect(() => {
-  //   getOneProduct();
-  // }, [poDetails]);
 
   return (
     <div className={styles.purchaseOrderPage}>

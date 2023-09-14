@@ -52,7 +52,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("1 DO ok");
-      console.log(res.data);
+      // console.log(res.data);
       setDODetails(res.data[0]);
     } else {
       console.log("1 DO error");
@@ -71,7 +71,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("DO List ok");
-      console.log(res.data);
+      // console.log(res.data);
       setListItems(res.data);
     } else {
       console.log("DO List error");
@@ -94,7 +94,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
 
       if (res.ok) {
         console.log("update ok");
-        console.log(res.data);
+        // console.log(res.data);
         console.log("listItems: ", listItems);
 
         listItems.forEach((item) => {
@@ -127,7 +127,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     if (res.ok) {
       console.log("get 1 store product ok");
       storeQuantity = res.data[0].store_quantity;
-      console.log(res.data[0].store_quantity);
+      // console.log(res.data[0].store_quantity);
     } else {
       console.log("get 1 store product error");
       console.log(res.data);
@@ -145,8 +145,8 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
 
     if (update.ok) {
       console.log("store quantity update ok");
-      console.log(res.data);
-      console.log(updatedQuantity);
+      // console.log(res.data);
+      // console.log(updatedQuantity);
     } else {
       console.log("store quantity update error");
       console.log(res.data);
@@ -170,7 +170,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     if (res.ok) {
       console.log("get 1 warehouse product ok");
       warehouseQty = res.data[0].warehouse_quantity;
-      console.log(res.data[0].warehouse_quantity);
+      // console.log(res.data[0].warehouse_quantity);
     } else {
       console.log("get 1 warehouse product error");
       console.log(res.data);
@@ -191,8 +191,8 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
 
     if (update.ok) {
       console.log("warehouse qty update ok");
-      console.log(res.data);
-      console.log(updatedQty);
+      // console.log(res.data);
+      // console.log(updatedQty);
     } else {
       console.log("warehouse qty update error");
       console.log(res.data);
@@ -292,8 +292,6 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
                 </div>
               );
             })}
-            {/* {rows}
-            {rows} */}
           </div>
         </div>
         <button

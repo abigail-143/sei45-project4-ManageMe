@@ -36,7 +36,7 @@ export const DashboardStaff: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("DO ok");
-      setDOData(res.data);
+      // setDOData(res.data);
     } else {
       console.log("fetch DO error");
       console.log(res.data);
@@ -81,9 +81,6 @@ export const DashboardStaff: React.FC<props> = (props) => {
                   </div>
                 );
               })}
-              {/* {doRow}
-              {doRow}
-              {doRow} */}
             </div>
           </div>
         </div>

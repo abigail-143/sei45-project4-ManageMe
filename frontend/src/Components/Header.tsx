@@ -9,8 +9,6 @@ interface props {
 }
 
 export const Header: React.FC<props> = (props) => {
-  // const [role, setRole] = useState<string>("Manager")
-
   return (
     <>
       {props.role === "Manager" ? (

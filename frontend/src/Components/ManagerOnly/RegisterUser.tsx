@@ -56,7 +56,7 @@ export const RegisterUser: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("all users ok");
-      console.log(res.data);
+      // console.log(res.data);
       setUsers(res.data);
     } else {
       console.log("all users error");
@@ -118,7 +118,7 @@ export const RegisterUser: React.FC<props> = (props) => {
 
       if (res.ok) {
         console.log("add user successfully");
-        console.log(res.data);
+        // console.log(res.data);
         pullAllUsers();
       } else {
         console.log("add user error");
@@ -246,8 +246,6 @@ export const RegisterUser: React.FC<props> = (props) => {
                     </div>
                   );
                 })}
-              {/* {staff}
-              {staff} */}
             </div>
           </div>
           {/* this is the staff list */}

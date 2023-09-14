@@ -39,7 +39,7 @@ export const ProductsAll: React.FC = () => {
 
     if (res.ok) {
       console.log("all products ok");
-      console.log(res.data);
+      // console.log(res.data);
       setProductList(res.data);
     } else {
       console.log("all producst error");
@@ -77,7 +77,7 @@ export const ProductsAll: React.FC = () => {
 
       if (res.ok) {
         console.log("add product successful");
-        console.log(res.data);
+        // console.log(res.data);
         pullAllProducts();
         productIDRef.current.value = "";
         productDescriptionRef.current.value = "";

@@ -45,7 +45,7 @@ export const POChart: React.FC<props> = (props) => {
     );
     if (res.ok) {
       console.log("fetch data ok");
-      console.log(res.data);
+      // console.log(res.data);
 
       const tempMonths = res.data.map(
         (item: {
