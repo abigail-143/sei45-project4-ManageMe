@@ -1,5 +1,4 @@
 .p {
-  margin: 0;
   margin: 0 100px;
   text-align: left;
 }
@@ -7,9 +6,11 @@
 .input {
   width: 350px;
   height: 30px;
-  margin-top: 10px;
+  margin-top: 5px;
   text-indent: 5px;
   border-radius: 5px;
+  border: 1px solid var(--light-grey);
+  background: none;
 }
 
 .loginPage {
@@ -63,6 +64,7 @@
   justify-content: center;
   box-shadow: 0 0 30px rgba(67, 66, 66, 0.4);
   margin-top: 30px;
+  background-color: whitesmoke;
 }
 
 .companyName {
