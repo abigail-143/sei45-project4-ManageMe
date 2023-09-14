@@ -71,7 +71,7 @@ export const WarehouseStockChart: React.FC = () => {
         label: "Warehouse Quantities",
         data: productQuantities,
         backgroundColor: "rgb(124, 157, 187)", // Customize the color
-        borderColor: "rgb(180, 205, 147)",
+        borderColor: "rgb(124, 157, 187)",
         borderWidth: 1,
         hoverBackgroundColor: "rgb(37, 112, 179)",
         hoverBorderColor: "rgb(37, 112, 179)",
