@@ -16,7 +16,6 @@ import { ProductsDisplay } from "../Components/ProductsDisplay";
 import { ProductsAll } from "../Components/ProductsAll";
 import { ProductStore } from "../Components/ProductStore";
 import { ProductWarehouse } from "../Components/ProductWarehouse";
-import { WarehouseStockChart } from "../Components/Charts/WarehouseStockChart";
 
 interface props {
   role: string;
