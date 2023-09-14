@@ -125,8 +125,7 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
 
   return (
     <div className={styles.deliveryOrderPage}>
-      {JSON.stringify(mainArray)}
-
+      {/* {JSON.stringify(mainArray)} */}
       <div className={styles.deliveryOrderBox}>
         <h1
           className={`${
