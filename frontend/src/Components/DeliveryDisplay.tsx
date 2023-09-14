@@ -36,7 +36,6 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
   >([]);
 
   // pull data from backend
-
   const pullAllCompletedDO = async () => {
     const res = await fetchData(
       "/do/all/completed",
@@ -72,18 +71,6 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
       console.log(res.data);
     }
   };
-
-  // this maps the data returned to give the rows in the list MOVED IT INTO JSX
-  // const orders = deliveredOrders.map((item, index) => {
-  //   return (
-  //     <div key={index} className={styles.listBodyRows}>
-  //       <p className={styles.orderID}>{item.orderID}</p>
-  //       <p className={styles.orderDate}>{item.orderDate}</p>
-  //       <p className={styles.deliveredDate}>{item.deliveredDate}</p>
-  //       <p className={styles.orderUser}>{item.orderUser}</p>
-  //     </div>
-  //   );
-  // });
 
   useEffect(() => {
     pullAllCompletedDO();

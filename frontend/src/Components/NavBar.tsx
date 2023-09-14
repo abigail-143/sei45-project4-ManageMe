@@ -60,7 +60,8 @@ export const NavBar: React.FC<props> = (props) => {
                 Stock Levels
               </a>
             </li>
-            <li>
+            {/* build next time */}
+            {/* <li>
               <a
                 href="javascript:void(0)"
                 onClick={() => {
@@ -70,7 +71,7 @@ export const NavBar: React.FC<props> = (props) => {
               >
                 Reports
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 href="javascript:void(0)"

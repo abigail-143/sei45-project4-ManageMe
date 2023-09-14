@@ -15,13 +15,14 @@ export const Header: React.FC<props> = (props) => {
     <>
       {props.role === "Manager" ? (
         <div className={styles.headerBar}>
-          <div className={styles.searchBar}>
+          {/* build next time */}
+          {/* <div className={styles.searchBar}>
             <img className={styles.searchIcon} src="search.png"></img>
             <input
               className={styles.input}
               placeholder="Search Product, Order, Delivery"
             ></input>
-          </div>
+          </div> */}
           <button
             className={`${styles.button} ${styles.purchase}  ${styles.blue}`}
             onClick={() => props.setPage("newPO")}
@@ -41,13 +42,14 @@ export const Header: React.FC<props> = (props) => {
         </div>
       ) : (
         <div className={styles.headerBar}>
-          <div className={styles.searchBar}>
+          {/* build next time */}
+          {/* <div className={styles.searchBar}>
             <img className={styles.searchIcon} src="search.png"></img>
             <input
               className={styles.input}
               placeholder="Search Product, Order, Delivery"
             ></input>
-          </div>
+          </div> */}
           <button
             className={`${styles.button} ${styles.delivery}  ${styles.green}`}
             onClick={() => props.setPage("newDO")}
