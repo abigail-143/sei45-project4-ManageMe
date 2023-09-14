@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPendingPurchaseOrders = exports.getAllCompletedPurchaseOrders = exports.getAllPurchaseOrders = void 0;
+exports.getChartDataPO = exports.updatePurchaseOrderWhenReceived = exports.addNewPurchaseOrder = exports.getOnePurchaseOrder = exports.getAllPendingPurchaseOrders = exports.getAllCompletedPurchaseOrders = exports.getAllPurchaseOrders = void 0;
 const database_1 = require("../db/database");
 // GET all purchase orders
 const getAllPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,7 +44,7 @@ const getAllPendingPurchaseOrders = (req, res) => __awaiter(void 0, void 0, void
     }
 });
 exports.getAllPendingPurchaseOrders = getAllPendingPurchaseOrders;
-// GET one purchase order
+// POST one purchase order
 const getOnePurchaseOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const order_id = Number(req.params.poID);
@@ -129,3 +129,20 @@ const updatePurchaseOrderWhenReceived = (req, res) => __awaiter(void 0, void 0, 
     }
 });
 exports.updatePurchaseOrderWhenReceived = updatePurchaseOrderWhenReceived;
+// POST data for chart
+const getChartDataPO = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const product_id = req.params.productID.toUpperCase();
+        const chartDataPO = yield database_1.pool.query("SELECT product_id, date_trunc('month', order_placed_date) AS month, SUM(order_quantity) AS total_order_quantity FROM purchase_order WHERE product_id=($1) GROUP BY product_id, month ORDER BY product_id, month;", [product_id]);
+        if (chartDataPO.rows.length != 0) {
+            res.json(chartDataPO.rows);
+        }
+        else {
+            res.json({ status: "error", message: "no data for product" });
+        }
+    }
+    catch (error) {
+        res.json({ status: "error", message: error });
+    }
+});
+exports.getChartDataPO = getChartDataPO;

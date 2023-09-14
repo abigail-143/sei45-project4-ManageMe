@@ -4,11 +4,13 @@ import {
   getAllCompletedPurchaseOrders,
   getAllPendingPurchaseOrders,
   getAllPurchaseOrders,
+  getChartDataPO,
   getOnePurchaseOrder,
   updatePurchaseOrderWhenReceived,
 } from "../controllers/purchaseOrder";
 import {
   checkAddNewPurchaseOrderInput,
+  checkProductIDParams,
   checkPurchaseOrderIDParams,
   checkUpdatePurchaseOrderInput,
 } from "../validators/inputValidators";
@@ -41,6 +43,13 @@ router.patch(
   checkUpdatePurchaseOrderInput,
   inputValidation,
   updatePurchaseOrderWhenReceived
+);
+router.post(
+  "/chart/:productID",
+  authManager,
+  checkProductIDParams,
+  inputValidation,
+  getChartDataPO
 );
 
 export default router;

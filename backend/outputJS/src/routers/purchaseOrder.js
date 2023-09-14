@@ -15,4 +15,5 @@ router.get("/all/pending", authUsers_1.authManager, purchaseOrder_1.getAllPendin
 router.post("/:poID", authUsers_1.authManager, inputValidators_1.checkPurchaseOrderIDParams, inputValidatorsCheck_1.inputValidation, purchaseOrder_1.getOnePurchaseOrder);
 router.put("/new", authUsers_1.authManager, inputValidators_1.checkAddNewPurchaseOrderInput, inputValidatorsCheck_1.inputValidation, purchaseOrder_1.addNewPurchaseOrder);
 router.patch("/:poID", authUsers_1.authManager, inputValidators_1.checkPurchaseOrderIDParams, inputValidators_1.checkUpdatePurchaseOrderInput, inputValidatorsCheck_1.inputValidation, purchaseOrder_1.updatePurchaseOrderWhenReceived);
+router.post("/chart/:productID", authUsers_1.authManager, inputValidators_1.checkProductIDParams, inputValidatorsCheck_1.inputValidation, purchaseOrder_1.getChartDataPO);
 exports.default = router;

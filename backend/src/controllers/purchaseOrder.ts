@@ -44,7 +44,7 @@ export const getAllPendingPurchaseOrders = async (
   }
 };
 
-// GET one purchase order
+// POST one purchase order
 export const getOnePurchaseOrder = async (req: Request, res: Response) => {
   try {
     const order_id: number = Number(req.params.poID);
@@ -149,6 +149,26 @@ export const updatePurchaseOrderWhenReceived = async (
     order: updateOnePurchaseOrder.rows[0],
   });
   try {
+  } catch (error) {
+    res.json({ status: "error", message: error });
+  }
+};
+
+// POST data for chart
+export const getChartDataPO = async (req: Request, res: Response) => {
+  try {
+    const product_id: string = req.params.productID.toUpperCase();
+
+    const chartDataPO = await pool.query(
+      "SELECT product_id, date_trunc('month', order_placed_date) AS month, SUM(order_quantity) AS total_order_quantity FROM purchase_order WHERE product_id=($1) GROUP BY product_id, month ORDER BY product_id, month;",
+      [product_id]
+    );
+
+    if (chartDataPO.rows.length != 0) {
+      res.json(chartDataPO.rows);
+    } else {
+      res.json({ status: "error", message: "no data for product" });
+    }
   } catch (error) {
     res.json({ status: "error", message: error });
   }
