@@ -35,7 +35,7 @@ export const Header: React.FC<props> = (props) => {
           </button>
           <img
             className={styles.profilePic}
-            src="https://images.unsplash.com/photo-1570117268106-8e369647c733?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2635&q=80"
+            src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGNhdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
           ></img>
         </div>
       ) : (
@@ -56,7 +56,7 @@ export const Header: React.FC<props> = (props) => {
           </button>
           <img
             className={styles.profilePic}
-            src="https://images.unsplash.com/photo-1570117268106-8e369647c733?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2635&q=80"
+            src="https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fGNhdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
           ></img>
         </div>
       )}
