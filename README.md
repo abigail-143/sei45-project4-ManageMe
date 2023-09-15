@@ -54,18 +54,24 @@ Managers will be able to track basic datasets in graph forms.
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 42" src="https://github.com/abigail-143/sei45-project4/assets/106907059/6bab19c3-924c-4a5a-9a3e-273d6cda9050">
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 58" src="https://github.com/abigail-143/sei45-project4/assets/106907059/8277c3d1-7d3f-4262-83d7-c56dab9641db">
 
-Managers can add store deliveires
+Managers can create new store deliveires which can consists of multiple product items. By default, the delivery date will be set as 2 days after the date of order placed (current date). The user can edit the date of delivery to their desired date. Managers can also mark a delivery order as complete which will amend the store product stock level automatically.
 
 ### Warehouse Purchase Orders
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 18" src="https://github.com/abigail-143/sei45-project4/assets/106907059/1b19df4b-d7ff-410b-a058-e2801adf11a4">
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 31" src="https://github.com/abigail-143/sei45-project4/assets/106907059/f0eca483-ad85-495f-b89d-46d64eff9b76">
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 49" src="https://github.com/abigail-143/sei45-project4/assets/106907059/d1fd4d4a-0790-4c01-b96b-267d1135e925">
 
+Managers can raise purchase orders for individual items as well. They can also mark the purchase order as complete which will amend the warehouse stock level automatically.
+
 ### Register User
 <img width="1678" alt="Screenshot 2023-09-15 at 13 25 25" src="https://github.com/abigail-143/sei45-project4/assets/106907059/3c1ac8a5-4b78-45ef-992a-a2fb19e400bf">
 
+Managers will also have the access to add new users, with either a role of Staff or Manager. By default, the role will be a Staff.
+
 ### Staff Site
 <img width="1678" alt="Screenshot 2023-09-15 at 13 26 15" src="https://github.com/abigail-143/sei45-project4/assets/106907059/3982aa14-e216-49c7-b6be-6c3eda2c29c7">
+
+Staff sites essentailly will only have access to store details and delivery orders.
 
 
 
