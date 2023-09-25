@@ -8,7 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // general authentication to site (can be staff/manager)
 const auth = (req, res, next) => {
     if (!("authorization" in req.headers)) {
-        res.json({ status: "error", message: "no token found" });
+        return res.status(400).json({ status: "error", message: "no token found" });
     }
     const token = req.headers["authorization"].replace("Bearer ", "");
     if (token) {
@@ -19,15 +19,20 @@ const auth = (req, res, next) => {
             next();
         }
         catch (error) {
-            res.json({ status: "error", message: "unauthorised" });
+            return res.status(401).json({ status: "error", message: "unauthorised" });
         }
+    }
+    else {
+        return res
+            .status(402)
+            .json({ status: "error", message: "forbidden error" });
     }
 };
 exports.auth = auth;
 // authentication to site/endpoint only if user is a Manager
 const authManager = (req, res, next) => {
     if (!("authorization" in req.headers)) {
-        res.json({ status: "error", message: "no token found" });
+        return res.status(400).json({ status: "error", message: "no token found" });
     }
     const token = req.headers["authorization"].replace("Bearer ", "");
     if (token) {
@@ -42,11 +47,11 @@ const authManager = (req, res, next) => {
             }
         }
         catch (error) {
-            res.json({ status: "error", message: "unauthorised for Staff" });
+            return res.status(401).json({ status: "error", message: "unauthorised for Staff" });
         }
     }
     else {
-        res.json({ status: "error", message: "no token found" });
+        return res.status(402).json({ status: "error", message: "no token found" });
     }
 };
 exports.authManager = authManager;
