@@ -22,7 +22,6 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
       const decoded = jwt.verify(token, String(process.env.ACCESS_SECRET));
 
       req.decoded = decoded;
-      console.log(decoded);
       next();
     } catch (error) {
       return res.status(401).json({ status: "error", message: "unauthorised" });

@@ -15,7 +15,6 @@ const auth = (req, res, next) => {
         try {
             const decoded = jsonwebtoken_1.default.verify(token, String(process.env.ACCESS_SECRET));
             req.decoded = decoded;
-            console.log(decoded);
             next();
         }
         catch (error) {
