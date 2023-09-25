@@ -139,13 +139,6 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
         <div className={styles.orderDetails}>
           <div className={`${styles.orderDetailsInput} ${styles.left}`}>
             <div className={styles.labelDetails}>
-              <label className={styles.labelOrder}>Delivery Order No.:</label>
-              <input
-                className={styles.inputOrder}
-                placeholder="delivery order no."
-              ></input>
-            </div>
-            <div className={styles.labelDetails}>
               <label className={styles.labelOrder}>Order Placed By:</label>
               <input
                 ref={usernameRef}

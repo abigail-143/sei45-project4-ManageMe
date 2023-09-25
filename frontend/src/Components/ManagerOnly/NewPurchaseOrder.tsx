@@ -87,6 +87,7 @@ export const NewPurchaseOrder: React.FC<props> = (props) => {
         setProduct(res.data[0]);
       } else {
         console.log("get 1 product error");
+        console.log(res);
         console.log(res.data);
         console.log(product);
       }
