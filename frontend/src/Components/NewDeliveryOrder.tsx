@@ -188,6 +188,7 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
               return (
                 <NewRow
                   updateArray={updateArray}
+                  key={idx}
                   idx={idx}
                   productName={item[0]}
                   productQuantity={item[1]}

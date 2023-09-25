@@ -60,13 +60,13 @@ export const NewPurchaseOrder: React.FC<props> = (props) => {
       );
 
       if (res.ok) {
-        console.log("add new PO ok");
+        // console.log("add new PO ok");
         // console.log(res.data.order);
         // setNewPO(res.data.order);
         props.setPOID(res.data.order.order_id);
       } else {
         console.log("add new PO error");
-        console.log(res.data);
+        alert(res.data);
       }
     }
   };
@@ -85,12 +85,10 @@ export const NewPurchaseOrder: React.FC<props> = (props) => {
         console.log("get 1 product ok");
         // console.log(res.data);
         setProduct(res.data[0]);
-      } else {
-        console.log("get 1 product error");
-        console.log(res);
-        console.log(res.data);
-        console.log(product);
       }
+      // else {
+      //   console.log("get 1 product error");
+      // }
     }
   };
 
