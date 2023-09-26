@@ -47,7 +47,7 @@ export const POChart: React.FC<props> = (props) => {
       console.log("fetch data ok");
       // console.log(res.data);
 
-      const tempMonths = res.data.map(
+      const tempMonths: string[] = res.data.map(
         (item: {
           product_id: string;
           month: Date;
