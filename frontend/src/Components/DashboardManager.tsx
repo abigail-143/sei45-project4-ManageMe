@@ -75,7 +75,7 @@ export const DashboardManager: React.FC<props> = (props) => {
       // console.log("DO ok");
       setDOData(res.data);
     } else {
-      console.log("fetch DO error");
+      alert("fetch DO error");
       console.log(res.data);
     }
   };
