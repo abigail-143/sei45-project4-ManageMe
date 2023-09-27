@@ -91,7 +91,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
   // add to warehouse quantity
   const updateWarehouseQuantity = async () => {
     let warehouseQty: number = 0;
-    
+
     // fetch product in warehouse first
     const res = await fetchData(
       "/warehouse/" + poDetails.product_id,
@@ -125,7 +125,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
       } else {
         alert("warehouse qty update error");
         console.log(res.data);
-        alert(res.data)
+        alert(res.data);
       }
     } else {
       alert("get 1 warehouse product error");
@@ -219,9 +219,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
         </div>
         <button
           className={styles.submitButton}
-          onClick={() => {
-            updatePO();
-            updateWarehouseQuantity();
+          // is this best practice?? or should i create a handleclick and await Promise.all
+          onClick={async () => {
+            await updatePO();
+            await updateWarehouseQuantity();
           }}
         >
           Save Purchase Order Summary
