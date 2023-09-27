@@ -54,7 +54,7 @@ export const DashboardManager: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("PO ok");
+      // console.log("PO ok");
       // console.log(res.data);
       setPOData(res.data);
     } else {
@@ -72,7 +72,7 @@ export const DashboardManager: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("DO ok");
+      // console.log("DO ok");
       setDOData(res.data);
     } else {
       console.log("fetch DO error");
