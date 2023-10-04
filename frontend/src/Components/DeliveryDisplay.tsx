@@ -45,11 +45,11 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("Completed DO ok");
+      // console.log("Completed DO ok");
       // console.log(res.data);
       setCompletedDO(res.data);
     } else {
-      console.log("fetch completed DO error");
+      alert("fetch completed DO error");
       console.log(res.data);
     }
   };
@@ -63,11 +63,11 @@ export const DeliveryDisplay: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("Pending DO ok");
+      // console.log("Pending DO ok");
       // console.log(res.data);
       setPendingDO(res.data);
     } else {
-      console.log("fetch pending DO error");
+      alert("fetch pending DO error");
       console.log(res.data);
     }
   };

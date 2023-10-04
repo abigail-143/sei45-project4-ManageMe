@@ -89,13 +89,18 @@ export const loginUser = async (req: Request, res: Response) => {
     // if username doesn't exists
     if (auth.rows.length == 0) {
       res.json({ status: "error", message: "invalid username" });
+      return;
     }
 
     // check if password is correct
-    const comparePW = await bcrypt.compare(password, auth.rows[0].user_password);
+    const comparePW = await bcrypt.compare(
+      password,
+      auth.rows[0].user_password
+    );
 
     if (!comparePW) {
       res.json({ status: "error", message: "incorrect password" });
+      return;
     }
 
     // create payload to be passed to headers

@@ -47,12 +47,13 @@ export const NewRow: React.FC<props> = (props) => {
       );
 
       if (res.ok) {
-        console.log("get 1 product ok");
+        // console.log("get 1 product ok");
         setProduct(res.data[0]);
-      } else {
-        console.log("get 1 product error");
-        console.log(res.data);
-      }
+      } 
+      // else {
+      //   console.log("get 1 product error");
+      //   console.log(res.data);
+      // }
     }
   };
 
@@ -60,7 +61,6 @@ export const NewRow: React.FC<props> = (props) => {
     if (e.target.id === "productID") {
       props.updateArray(props.idx, e.target.value, props.productQuantity);
     } else if (e.target.id === "quantity") {
-      console.log("quantity");
       props.updateArray(props.idx, props.productName, e.target.value);
     }
   };

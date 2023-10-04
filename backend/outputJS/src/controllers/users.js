@@ -84,11 +84,13 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // if username doesn't exists
         if (auth.rows.length == 0) {
             res.json({ status: "error", message: "invalid username" });
+            return;
         }
         // check if password is correct
         const comparePW = yield bcrypt_1.default.compare(password, auth.rows[0].user_password);
         if (!comparePW) {
             res.json({ status: "error", message: "incorrect password" });
+            return;
         }
         // create payload to be passed to headers
         const payload = {

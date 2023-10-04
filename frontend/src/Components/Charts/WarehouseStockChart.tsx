@@ -25,20 +25,8 @@ export const WarehouseStockChart: React.FC = () => {
   const context = useContext(UserContext);
 
   // storing the data
-  const [warehouseStockData, setWarehouseStockData] = useState<
-    {
-      product_id: string;
-      warehouse_quantity: number;
-      warehouse_stocklevel: number | null;
-      cost_per_uom: number;
-      product_description: string;
-      unit_of_measurement: string;
-      piece_per_uom: number;
-      supplier: string;
-      in_use: boolean;
-      supplier_leadtime: number;
-    }[]
-  >([]);
+  const [productID, setProductID] = useState<string[]>([]);
+  const [productQty, setProductQty] = useState<number[]>([]);
 
   // GET data from database
   const getWarehouseData = async () => {
@@ -52,24 +40,55 @@ export const WarehouseStockChart: React.FC = () => {
     if (res.ok) {
       console.log("fetch data ok");
       // console.log(res.data);
-      setWarehouseStockData(res.data);
+
+      const tempProductID: string[] = res.data.map(
+        (item: {
+          product_id: string;
+          warehouse_quantity: number;
+          warehouse_stocklevel: number | null;
+          cost_per_uom: number;
+          product_description: string;
+          unit_of_measurement: string;
+          piece_per_uom: number;
+          supplier: string;
+          in_use: boolean;
+          supplier_leadtime: number;
+        }) => {
+          return item.product_id;
+        }
+      );
+      setProductID(tempProductID);
+
+      const tempProductQty: number[] = res.data.map(
+        (item: {
+          product_id: string;
+          warehouse_quantity: number;
+          warehouse_stocklevel: number | null;
+          cost_per_uom: number;
+          product_description: string;
+          unit_of_measurement: string;
+          piece_per_uom: number;
+          supplier: string;
+          in_use: boolean;
+          supplier_leadtime: number;
+        }) => {
+          return item.warehouse_quantity;
+        }
+      );
+      setProductQty(tempProductQty);
+
     } else {
       console.log("fetch data error");
       console.log(res.data);
     }
   };
 
-  const productIDs = warehouseStockData.map((item) => item.product_id);
-  const productQuantities = warehouseStockData.map(
-    (item) => item.warehouse_quantity
-  );
-
   const chartData = {
-    labels: productIDs,
+    labels: productID,
     datasets: [
       {
         label: "Warehouse Quantities",
-        data: productQuantities,
+        data: productQty,
         backgroundColor: "rgb(124, 157, 187)", // Customize the color
         borderColor: "rgb(124, 157, 187)",
         borderWidth: 1,

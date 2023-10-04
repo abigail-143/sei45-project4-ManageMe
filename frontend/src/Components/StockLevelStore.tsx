@@ -10,7 +10,8 @@ interface props {
 export const StockLevelStore: React.FC<props> = (props) => {
   return (
     <div className={styles.stockWarehouse}>
-      <div className={styles.tabRow}>
+      {/* built next time */}
+      {/* <div className={styles.tabRow}>
         <div className={styles.tabSection}>
           <button className={styles.tabBtn}>Products In Use</button>
         </div>
@@ -28,7 +29,7 @@ export const StockLevelStore: React.FC<props> = (props) => {
             Find
           </button>
         </div>
-      </div>
+      </div> */}
       <div className={styles.tableDisplay}>
         <h1
           className={`${styles.title} ${
