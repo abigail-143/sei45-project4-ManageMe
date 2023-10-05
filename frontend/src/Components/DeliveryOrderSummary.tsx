@@ -51,11 +51,11 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("1 DO ok");
+      // console.log("1 DO ok");
       // console.log(res.data);
       setDODetails(res.data[0]);
     } else {
-      console.log("1 DO error");
+      alert("1 DO error");
       console.log(res.data);
     }
   };
@@ -70,11 +70,11 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("DO List ok");
+      // console.log("DO List ok");
       // console.log(res.data);
       setListItems(res.data);
     } else {
-      console.log("DO List error");
+      alert("DO List error");
       console.log(res.data);
     }
   };
@@ -93,18 +93,21 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
       );
 
       if (res.ok) {
-        console.log("update ok");
         // console.log(res.data);
-        console.log("listItems: ", listItems);
+        // console.log("listItems: ", listItems);
 
-        listItems.forEach((item) => {
+        listItems.forEach(async (item) => {
           console.log(item);
-          updateStoreQuantity(item.product_id, item.delivery_quantity);
-          updateWarehouseQuantity(item.product_id, item.delivery_quantity);
+          await updateStoreQuantity(item.product_id, item.delivery_quantity);
+          await updateWarehouseQuantity(
+            item.product_id,
+            item.delivery_quantity
+          );
         });
         props.setPage("delivery");
+        alert("update successful");
       } else {
-        console.log("update error");
+        alert("update error");
         console.log(res.data);
       }
     }
@@ -115,7 +118,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     productID: string,
     deliveryQuantity: number
   ) => {
-    let storeQuantity: number = 0;
+    // let storeQuantity: number = 0;
     // fetch product from store first
     const res = await fetchData(
       "/store/" + productID,
@@ -125,30 +128,30 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("get 1 store product ok");
-      storeQuantity = res.data[0].store_quantity;
+      // console.log("get 1 store product ok");
       // console.log(res.data[0].store_quantity);
+      // storeQuantity = res.data[0].store_quantity;
+      const updatedQuantity: number =
+        res.data[0].store_quantity + deliveryQuantity;
+
+      // update quantity in store
+      const update = await fetchData(
+        "/store/" + productID,
+        "PATCH",
+        { storeQuantity: updatedQuantity },
+        context?.accessToken
+      );
+
+      if (update.ok) {
+        alert(`${productID}: store quantity update successful`);
+        // console.log(res.data);
+        // console.log(updatedQuantity);
+      } else {
+        alert(`${productID}: store quantity update error`);
+        console.log(res.data);
+      }
     } else {
-      console.log("get 1 store product error");
-      console.log(res.data);
-    }
-
-    const updatedQuantity: number = storeQuantity + deliveryQuantity;
-
-    // update quantity in store
-    const update = await fetchData(
-      "/store/" + productID,
-      "PATCH",
-      { storeQuantity: updatedQuantity },
-      context?.accessToken
-    );
-
-    if (update.ok) {
-      console.log("store quantity update ok");
-      // console.log(res.data);
-      // console.log(updatedQuantity);
-    } else {
-      console.log("store quantity update error");
+      alert(`${productID}: get product from store error`);
       console.log(res.data);
     }
   };
@@ -158,7 +161,7 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     productID: string,
     deliveryQuantity: number
   ) => {
-    let warehouseQty: number = 0;
+    // let warehouseQty: number = 0;
     // fetch product in warehouse first
     const res = await fetchData(
       "/warehouse/" + productID,
@@ -168,33 +171,33 @@ export const DeliveryOrderSummary: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("get 1 warehouse product ok");
-      warehouseQty = res.data[0].warehouse_quantity;
+      // console.log("get 1 warehouse product ok");
       // console.log(res.data[0].warehouse_quantity);
+      // warehouseQty = res.data[0].warehouse_quantity;
+
+      // new quantity to be updated
+      const updatedQty = res.data[0].warehouse_quantity - deliveryQuantity;
+
+      // update quantity in warehouse
+      const update = await fetchData(
+        "/warehouse/" + productID,
+        "PATCH",
+        {
+          warehouseQuantity: updatedQty,
+        },
+        context?.accessToken
+      );
+
+      if (update.ok) {
+        alert(`${productID}: warehouse quantity update successful`);
+        // console.log(res.data);
+        // console.log(updatedQty);
+      } else {
+        alert(`${productID}: warehouse quantity update error`);
+        console.log(res.data);
+      }
     } else {
-      console.log("get 1 warehouse product error");
-      console.log(res.data);
-    }
-
-    // new quantity to be updated
-    const updatedQty = warehouseQty - deliveryQuantity;
-
-    // update quantity in warehouse
-    const update = await fetchData(
-      "/warehouse/" + productID,
-      "PATCH",
-      {
-        warehouseQuantity: updatedQty,
-      },
-      context?.accessToken
-    );
-
-    if (update.ok) {
-      console.log("warehouse qty update ok");
-      // console.log(res.data);
-      // console.log(updatedQty);
-    } else {
-      console.log("warehouse qty update error");
+      alert(`${productID}: get product from warehouse error`);
       console.log(res.data);
     }
   };

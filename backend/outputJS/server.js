@@ -13,7 +13,7 @@ const port = process.env.PORT;
 const app = (0, express_1.default)();
 const limit = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: 1000,
     standardHeaders: true,
     legacyHeaders: false,
 });

@@ -22,16 +22,21 @@ export const useFetch = () => {
 
     if (res.ok) {
       if (data.status === "error") {
-        returnValue = { ok: false, data: data.msg || data.msg };
+        returnValue = { ok: false, data: data.message || data.msg };
+        // console.log("1");
       } else {
         returnValue = { ok: true, data };
       }
     } else {
       if (data?.errors && Array.isArray(data.errors)) {
-        const messages: string[] = data.errors.map((item: any) => item.msg);
+        const messages: string[] = data.errors.map(
+          (item: any) => item.message || item.msg
+        );
         returnValue = { ok: false, data: messages };
+        // console.log("2");
       } else if (data?.status === "error") {
         returnValue = { ok: false, data: data.message || data.msg };
+        // console.log("3");
       } else {
         console.log(data);
         returnValue = { ok: false, data: "An error has occured" };

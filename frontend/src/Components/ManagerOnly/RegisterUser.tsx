@@ -8,18 +8,9 @@ interface props {
   children?: React.ReactNode;
 }
 
-export const RegisterUser: React.FC<props> = (props) => {
+export const RegisterUser: React.FC<props> = () => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
-  const [users, setUsers] = useState<
-    {
-      username: string;
-      email: String;
-      company: Date;
-      user_status: Boolean;
-      account_type: string;
-    }[]
-  >([]);
   const [staffAccounts, setStaffAccounts] = useState<
     {
       username: string;
@@ -56,40 +47,39 @@ export const RegisterUser: React.FC<props> = (props) => {
 
     if (res.ok) {
       console.log("all users ok");
-      // console.log(res.data);
-      setUsers(res.data);
+
+      // get users that are "staff"
+      const staffUsers = await res.data.filter(
+        (user: {
+          username: string;
+          email: String;
+          company: Date;
+          user_status: Boolean;
+          account_type: string;
+        }) => {
+          return user.account_type == "Staff";
+        }
+      );
+      setStaffAccounts(staffUsers);
+
+      // get users that are "managers"
+      const managerUsers = await res.data.filter(
+        (user: {
+          username: string;
+          email: String;
+          company: Date;
+          user_status: Boolean;
+          account_type: string;
+        }) => {
+          return user.account_type == "Manager";
+        }
+      );
+      setManagerAccounts(managerUsers);
     } else {
-      console.log("all users error");
-      console.log(res.data);
+      // console.log("all users error");
+      // console.log(res.data);
+      alert(res.data);
     }
-
-    // get users that are "staff"
-    const staffUsers = await res.data.filter(
-      (user: {
-        username: string;
-        email: String;
-        company: Date;
-        user_status: Boolean;
-        account_type: string;
-      }) => {
-        return user.account_type == "Staff";
-      }
-    );
-    setStaffAccounts(staffUsers);
-
-    // get users that are "managers"
-    const managerUsers = await res.data.filter(
-      (user: {
-        username: string;
-        email: String;
-        company: Date;
-        user_status: Boolean;
-        account_type: string;
-      }) => {
-        return user.account_type == "Manager";
-      }
-    );
-    setManagerAccounts(managerUsers);
   };
 
   // ADD new user
@@ -119,13 +109,21 @@ export const RegisterUser: React.FC<props> = (props) => {
       if (res.ok) {
         console.log("add user successfully");
         // console.log(res.data);
+        usernameRef.current.value = "";
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+        companyRef.current.value = "";
+        statusRef.current.value = "true";
+        accountRef.current.value = "";
         pullAllUsers();
       } else {
-        console.log("add user error");
-        console.log(res.data);
+        // console.log("add user error");
+        // console.log(res.data);
+        alert(res.data);
       }
     } else {
-      console.log("missing inputs");
+      // console.log("missing inputs");
+      alert("missing inputs");
     }
   };
 
@@ -289,8 +287,6 @@ export const RegisterUser: React.FC<props> = (props) => {
                     </div>
                   );
                 })}
-              {/* {staff}
-              {staff} */}
             </div>
           </div>
         </div>

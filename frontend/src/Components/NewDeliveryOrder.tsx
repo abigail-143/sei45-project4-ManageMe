@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styles from "./NewDeliveryOrder.module.css";
 import { useFetch } from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -15,14 +15,10 @@ interface props {
 export const NewDeliveryOrder: React.FC<props> = (props) => {
   const fetchData = useFetch();
   const context = useContext(UserContext);
-  const [newDOID, setNewDOID] = useState<number>(0);
 
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const deliveryPlacedDateRef = useRef<HTMLInputElement | null>(null);
   const toDeliverDateRef = useRef<HTMLInputElement | null>(null);
-
-  // this is to track all the inputs from the rows
-  const mainRef = useRef([]);
 
   // + 2 days from current date
   const estimatedDeliveryDate = new Date(
@@ -49,8 +45,6 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
 
       if (res.ok) {
         console.log("new DO ok");
-        console.log(res.data.order.delivery_id);
-        setNewDOID(res.data.order.delivery_id);
 
         mainArray.forEach((item) => {
           addItemsToDO(res.data.order.delivery_id, item[0], item[1]);
@@ -139,13 +133,6 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
         <div className={styles.orderDetails}>
           <div className={`${styles.orderDetailsInput} ${styles.left}`}>
             <div className={styles.labelDetails}>
-              <label className={styles.labelOrder}>Delivery Order No.:</label>
-              <input
-                className={styles.inputOrder}
-                placeholder="delivery order no."
-              ></input>
-            </div>
-            <div className={styles.labelDetails}>
               <label className={styles.labelOrder}>Order Placed By:</label>
               <input
                 ref={usernameRef}
@@ -201,6 +188,7 @@ export const NewDeliveryOrder: React.FC<props> = (props) => {
               return (
                 <NewRow
                   updateArray={updateArray}
+                  key={idx}
                   idx={idx}
                   productName={item[0]}
                   productQuantity={item[1]}

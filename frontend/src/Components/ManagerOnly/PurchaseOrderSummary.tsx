@@ -53,12 +53,13 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("1 PO ok");
+      // console.log("1 PO ok");
       // console.log(res.data);
       setPODetails(res.data[0]);
     } else {
-      console.log("1 PO error");
-      console.log(res.data);
+      // console.log("1 PO error");
+      // console.log(res.data);
+      alert(res.data);
     }
   };
 
@@ -76,12 +77,13 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
       );
 
       if (res.ok) {
-        console.log("update ok");
+        // console.log("update ok");
         // console.log(res.data);
         props.setPage("purchase");
       } else {
-        console.log("update error");
-        console.log(res.data);
+        // console.log("update error");
+        // console.log(res.data);
+        alert(res.data);
       }
     }
   };
@@ -89,6 +91,7 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
   // add to warehouse quantity
   const updateWarehouseQuantity = async () => {
     let warehouseQty: number = 0;
+
     // fetch product in warehouse first
     const res = await fetchData(
       "/warehouse/" + poDetails.product_id,
@@ -100,31 +103,32 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
     if (res.ok) {
       console.log("get 1 warehouse product ok");
       warehouseQty = res.data[0].warehouse_quantity;
-      // console.log(res.data[0].warehouse_quantity);
+      // console.log("warehouse qty", res.data[0].warehouse_quantity);
+
+      // new quantity to be updated in warehouse
+      const updatedQty = warehouseQty + poDetails.order_quantity;
+
+      // update quantity in warehouse
+      const update = await fetchData(
+        "/warehouse/" + poDetails.product_id,
+        "PATCH",
+        {
+          warehouseQuantity: updatedQty,
+        },
+        context?.accessToken
+      );
+
+      if (update.ok) {
+        console.log("warehouse qty update ok");
+        // console.log(res.data);
+        // console.log("updated qty", updatedQty);
+      } else {
+        alert("warehouse qty update error");
+        console.log(res.data);
+        alert(res.data);
+      }
     } else {
-      console.log("get 1 warehouse product error");
-      console.log(res.data);
-    }
-
-    // new quantity to be updated in warehouse
-    const updatedQty = warehouseQty + poDetails.order_quantity;
-
-    // update quantity in warehouse
-    const update = await fetchData(
-      "/warehouse/" + poDetails.product_id,
-      "PATCH",
-      {
-        warehouseQuantity: updatedQty,
-      },
-      context?.accessToken
-    );
-
-    if (update.ok) {
-      console.log("warehouse qty update ok");
-      // console.log(res.data);
-      // console.log(updatedQty);
-    } else {
-      console.log("warehouse qty update error");
+      alert("get 1 warehouse product error");
       console.log(res.data);
     }
   };
@@ -215,9 +219,10 @@ export const PurchaseOrderSummary: React.FC<props> = (props) => {
         </div>
         <button
           className={styles.submitButton}
-          onClick={() => {
-            updatePO();
-            updateWarehouseQuantity();
+          // is this best practice?? or should i create a handleclick and await Promise.all
+          onClick={async () => {
+            await updatePO();
+            await updateWarehouseQuantity();
           }}
         >
           Save Purchase Order Summary

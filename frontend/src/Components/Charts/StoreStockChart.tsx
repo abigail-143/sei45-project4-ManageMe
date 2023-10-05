@@ -30,8 +30,8 @@ export const StoreStockChart: React.FC<props> = (props) => {
   const context = useContext(UserContext);
 
   // storing the data
-  const [productID, setProductID] = useState([]);
-  const [productQuantity, setProductQuantity] = useState([]);
+  const [productID, setProductID] = useState<string[]>([]);
+  const [productQuantity, setProductQuantity] = useState<number[]>([]);
 
   // GET data from database
   const getStoreData = async () => {
@@ -47,7 +47,7 @@ export const StoreStockChart: React.FC<props> = (props) => {
       // console.log(res.data);
       // setStoreStockData(res.data);
 
-      const tempProductID = res.data.map(
+      const tempProductID: string[] = res.data.map(
         (item: {
           store_id: number;
           store_quantity: number;
@@ -62,7 +62,7 @@ export const StoreStockChart: React.FC<props> = (props) => {
       );
       setProductID(tempProductID);
 
-      const tempProductQuantity = res.data.map(
+      const tempProductQuantity: number[] = res.data.map(
         (item: {
           store_id: number;
           store_quantity: number;

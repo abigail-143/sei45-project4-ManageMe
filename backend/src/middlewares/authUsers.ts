@@ -12,7 +12,7 @@ declare global {
 // general authentication to site (can be staff/manager)
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   if (!("authorization" in req.headers)) {
-    res.json({ status: "error", message: "no token found" });
+    return res.status(400).json({ status: "error", message: "no token found" });
   }
 
   const token = (req.headers["authorization"] as any).replace("Bearer ", "");
@@ -22,11 +22,14 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
       const decoded = jwt.verify(token, String(process.env.ACCESS_SECRET));
 
       req.decoded = decoded;
-      console.log(decoded);
       next();
     } catch (error) {
-      res.json({ status: "error", message: "unauthorised" });
+      return res.status(401).json({ status: "error", message: "unauthorised" });
     }
+  } else {
+    return res
+      .status(402)
+      .json({ status: "error", message: "forbidden error" });
   }
 };
 
@@ -37,7 +40,7 @@ export const authManager = (
   next: NextFunction
 ) => {
   if (!("authorization" in req.headers)) {
-    res.json({ status: "error", message: "no token found" });
+    return res.status(400).json({ status: "error", message: "no token found" });
   }
 
   const token = (req.headers["authorization"] as any).replace("Bearer ", "");
@@ -56,9 +59,9 @@ export const authManager = (
         throw new Error();
       }
     } catch (error) {
-      res.json({ status: "error", message: "unauthorised for Staff" });
+      return res.status(401).json({ status: "error", message: "unauthorised for Staff" });
     }
   } else {
-    res.json({ status: "error", message: "no token found" });
+    return res.status(402).json({ status: "error", message: "no token found" });
   }
 };

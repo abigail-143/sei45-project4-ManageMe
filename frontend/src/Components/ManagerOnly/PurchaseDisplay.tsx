@@ -52,7 +52,7 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("Completed PO ok");
+      // console.log("Completed PO ok");
       // console.log(res.data);
       setCompletedPO(res.data);
     } else {
@@ -70,7 +70,7 @@ export const PurchaseDisplay: React.FC<props> = (props) => {
     );
 
     if (res.ok) {
-      console.log("Pending PO ok");
+      // console.log("Pending PO ok");
       // console.log(res.data);
       setPendingPO(res.data);
     } else {
