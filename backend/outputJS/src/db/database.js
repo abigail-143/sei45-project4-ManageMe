@@ -5,8 +5,9 @@ const pg_1 = require("pg");
 exports.pool = new pg_1.Pool({
     user: process.env.USER,
     password: process.env.PASSWORD,
-    host: "localhost",
+    host: process.env.HOST,
     port: 5432,
-    database: 'manageme',
+    database: process.env.DATABASE,
     max: 10,
+    ssl: true,
 });
