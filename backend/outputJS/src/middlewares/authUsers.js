@@ -46,7 +46,9 @@ const authManager = (req, res, next) => {
             }
         }
         catch (error) {
-            return res.status(401).json({ status: "error", message: "unauthorised for Staff" });
+            return res
+                .status(401)
+                .json({ status: "error", message: "unauthorised for Staff" });
         }
     }
     else {
