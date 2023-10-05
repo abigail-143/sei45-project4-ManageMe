@@ -1,13 +1,6 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
-declare global {
-  namespace Express {
-    interface Request {
-      decoded: string | JwtPayload;
-    }
-  }
-}
 
 // general authentication to site (can be staff/manager)
 export const auth = (req: Request, res: Response, next: NextFunction) => {
