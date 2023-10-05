@@ -5,9 +5,9 @@
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npx rimraf outputJS && npx tsc",
-        "start": "node outputJS/server.js",
-        "dev": "npx tsc -w & nodemon outputJS/server.js"
+        "build": "npx rimraf dist && npx tsc",
+        "start": "node dist/server.js",
+        "dev": "npx tsc -w & nodemon dist/server.js"
     },
     "keywords": [],
     "author": "",
