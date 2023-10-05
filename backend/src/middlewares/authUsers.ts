@@ -1,6 +1,15 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
+type JwtPayload = typeof JwtPayload;
+
+declare global {
+  namespace Express {
+    interface Request {
+      decoded: string | JwtPayload;
+    }
+  }
+}
 
 // general authentication to site (can be staff/manager)
 export const auth = (req: Request, res: Response, next: NextFunction) => {
@@ -52,7 +61,9 @@ export const authManager = (
         throw new Error();
       }
     } catch (error) {
-      return res.status(401).json({ status: "error", message: "unauthorised for Staff" });
+      return res
+        .status(401)
+        .json({ status: "error", message: "unauthorised for Staff" });
     }
   } else {
     return res.status(402).json({ status: "error", message: "no token found" });
